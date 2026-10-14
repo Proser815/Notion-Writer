@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Novel Studio & Anytype Hub</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fbf5ed;
+            color: #4a3e3d;
+        }
+        /* Custom Scrollbar for cozy feel */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f4ecdf;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb {
+            name: scrollbar;
+            background: #d4c5b9;
+            border-radius: 8px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #bfaea0;
+        }
+    </style>
+</head>
+<body class="min-h-screen p-3 sm:p-6 flex flex-col items-center justify-start">
+    <div class="w-full max-w-2xl bg-[#fffaf5] border border-[#f0e4d7] rounded-3xl shadow-sm p-4 sm:p-6 flex flex-col gap-5">
+        
+        <!-- Header -->
+        <header class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 border-b border-[#f0e4d7] pb-4">
+            <div>
+                <h1 class="text-xl sm:text-2xl font-bold text-[#4a3e3d] flex items-center gap-2">
+                    <span>✨</span> Novel Studio & Anytype Hub
+                </h1>
+                <p class="text-xs sm:text-sm text-[#7a6a68]">Write anytime, sync seamlessly with Anytype.</p>
+            </div>
+            <!-- Quick View Toggle / Status -->
+            <div class="flex items-center gap-2 bg-[#f4ecdf] px-3 py-1.5 rounded-full text-xs font-medium text-[#5a4d4b]">
+                <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span>Auto-saved to Vault</span>
+            </div>
+        </header>
+
+        <section class="bg-white/80 border border-[#f0e4d7] rounded-2xl p-4 shadow-2xs flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">🎯</span>
+                    <h2 class="font-semibold text-sm sm:text-base text-[#4a3e3d]">Daily Writing Goal</h2>
+                </div>
+                <div class="flex items-center gap-2 text-xs sm:text-sm">
+                    <span id="wordCountDisplay" class="font-bold text-[#4a3e3d]">0</span>
+                    <span class="text-[#7a6a68]">/</span>
+                    <span id="goalTargetDisplay" class="font-semibold text-[#7a6a68]">500</span> words
+                    <button id="editGoalBtn" onclick="openGoalModal()" class="ml-1 text-xs text-amber-700 hover:underline bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Edit</button>
+                </div>
+            </div>
+            <!-- Progress Bar -->
+            <div class="w-full bg-[#f4ecdf] h-3 rounded-full overflow-hidden">
+                <div id="progressBar" class="bg-gradient-to-r from-amber-400 to-amber-600 h-full transition-all duration-300 rounded-full" style="width: 0%"></div>
+            </div>
+        </section>
+
+        <section class="flex flex-col gap-3">
+            <div class="flex items-center justify-between">
+                <h2 class="font-semibold text-sm sm:text-base text-[#4a3e3d] flex items-center gap-2">
+                    <span>📚</span> Anytype Vault Access
+                </h2>
+                <button onclick="openLinkModal()" class="text-xs bg-[#f4ecdf] hover:bg-[#eadfcb] text-[#4a3e3d] font-medium px-3 py-1.5 rounded-xl transition-all flex items-center gap-1 border border-[#e3d3c2]">
+                    <span>+ Add Page</span>
+                </button>
+            </div>
+            <!-- Links Grid -->
+            <div id="linksGrid" class="grid grid-cols-2 sm:grid-cols-4 gap-2.5">
+                <!-- Populated dynamically via JavaScript -->
+            </div>
+        </section>
+
+        <section class="bg-white/90 border border-[#f0e4d7] rounded-2xl p-4 shadow-2xs flex flex-col gap-3">
+            <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">✍️</span>
+                    <h2 class="font-semibold text-sm sm:text-base text-[#4a3e3d]">Quick Chapter Scratchpad</h2>
+                </div>
+                <!-- Stats & Actions -->
+                <div class="flex items-center gap-3 text-xs text-[#7a6a68]">
+                    <span id="padWordCount">0 words</span>
+                    <span>•</span>
+                    <span id="padCharCount">0 chars</span>
+                </div>
+            </div>
+
+            <!-- Textarea -->
+            <textarea id="scratchpad" 
+                class="w-full h-48 sm:h-56 p-3 text-sm sm:text-base bg-[#fdfbf7] border border-[#f0e4d7] rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-300 resize-y text-[#4a3e3d] placeholder-[#bfaea0]"
+                placeholder="Type your novel scene or chapter idea here... It saves automatically as you type."
+                oninput="handleScratchpadInput()"></textarea>
+
+            <!-- Bottom Action Toolbar -->
+            <div class="flex items-center justify-between flex-wrap gap-2 pt-1">
+                <div class="flex items-center gap-2">
+                    <button onclick="copyScratchpad()" class="bg-[#f4ecdf] hover:bg-[#eadfcb] text-[#4a3e3d] text-xs font-medium px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border border-[#e3d3c2]">
+                        <span>📋</span> Copy Text
+                    </button>
+                    <button onclick="exportMarkdown()" class="bg-[#f4ecdf] hover:bg-[#eadfcb] text-[#4a3e3d] text-xs font-medium px-3 py-1.5 rounded-lg transition-all flex items-center gap-1.5 border border-[#e3d3c2]">
+                        <span>💾</span> Export .md
+                    </button>
+                </div>
+                <button onclick="clearScratchpad()" class="text-xs text-rose-600 hover:text-rose-700 hover:bg-rose-50 px-2.5 py-1.5 rounded-lg transition-all">
+                    Clear Pad
+                </button>
+            </div>
+        </section>
+
+        <!-- Footer Note -->
+        <footer class="text-center text-xs text-[#8c7a76] pt-1">
+            Tip: Click Anytype buttons to open pages instantly. Keep this widget open in Notion for distraction-free writing!
+        </footer>
+    </div>
+
+    <!-- Goal Modal -->
+    <div id="goalModal" class="fixed inset-0 bg-black/30 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#fffaf5] border border-[#f0e4d7] rounded-2xl p-5 w-full max-w-sm shadow-xl flex flex-col gap-4">
+            <h3 class="font-bold text-base text-[#4a3e3d]">Set Daily Word Goal</h3>
+            <div>
+                <label class="text-xs text-[#7a6a68] block mb-1">Target word count for today:</label>
+                <input type="number" id="goalInput" min="50" step="50" class="w-full p-2.5 bg-white border border-[#f0e4d7] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-300">
+            </div>
+            <div class="flex justify-end gap-2 mt-2">
+                <button onclick="closeGoalModal()" class="px-3 py-1.5 text-xs font-medium text-[#7a6a68] hover:bg-[#f4ecdf] rounded-lg">Cancel</button>
+                <button onclick="saveGoal()" class="px-4 py-1.5 text-xs font-medium bg-amber-600 text-white hover:bg-amber-700 rounded-xl shadow-xs">Save Goal</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Link Modal -->
+    <div id="linkModal" class="fixed inset-0 bg-black/30 backdrop-blur-xs hidden items-center justify-center p-4 z-50">
+        <div class="bg-[#fffaf5] border border-[#f0e4d7] rounded-2xl p-5 w-full max-w-md shadow-xl flex flex-col gap-4">
+            <div class="flex items-center justify-between">
+                <h3 class="font-bold text-base text-[#4a3e3d]" id="linkModalTitle">Add Anytype Quick Link</h3>
+                <button onclick="closeLinkModal()" class="text-xs text-[#7a6a68] hover:text-[#4a3e3d]">✕</button>
+            </div>
+            <input type="hidden" id="editLinkId">
+            <div class="flex flex-col gap-3">
+                <div>
+                    <label class="text-xs text-[#7a6a68] block mb-1">Page Title:</label>
+                    <input type="text" id="linkTitleInput" placeholder="e.g. Active Novel Bible" class="w-full p-2.5 bg-white border border-[#f0e4d7] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-300">
+                </div>
+                <div>
+                    <label class="text-xs text-[#7a6a68] block mb-1">Anytype Protocol URL or Custom Link:</label>
+                    <input type="text" id="linkUrlInput" placeholder="anytype://object?id=... or https://..." class="w-full p-2.5 bg-white border border-[#f0e4d7] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-300">
+                </div>
+                <div>
+                    <label class="text-xs text-[#7a6a68] block mb-1">Choose Icon:</label>
+                    <select id="linkIconInput" class="w-full p-2.5 bg-white border border-[#f0e4d7] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-amber-300">
+                        <option value="📖">📖 Book / Bible</option>
+                        <option value="📝">📝 Chapters / Drafts</option>
+                        <option value="🗺️">🗺️ Worldbuilding</option>
+                        <option value="👥">👥 Characters</option>
+                        <option value="💡">💡 Ideas & Plot</option>
+                        <option value="📌">📌 Quick Note</option>
+                        <option value="⭐">⭐ Favorite</option>
+                    </select>
+                </div>
+            </div>
+            <div class="flex items-center justify-between mt-2">
+                <button id="deleteLinkBtn" onclick="deleteCurrentLink()" class="text-xs text-rose-600 hover:underline hidden">Delete Link</button>
+                <div class="flex gap-2 ml-auto">
+                    <button onclick="closeLinkModal()" class="px-3 py-1.5 text-xs font-medium text-[#7a6a68] hover:bg-[#f4ecdf] rounded-lg">Cancel</button>
+                    <button onclick="saveLink()" class="px-4 py-1.5 text-xs font-medium bg-amber-600 text-white hover:bg-amber-700 rounded-xl shadow-xs">Save Page</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Toast Notification -->
+    <div id="toast" class="fixed bottom-4 right-4 bg-[#4a3e3d] text-[#fffaf5] px-4 py-2.5 rounded-xl shadow-lg text-xs font-medium transition-all opacity-0 pointer-events-none z-50">
+        Action completed successfully
+    </div>
+
+    <script>
+        // Default links if none saved
+        const defaultLinks = [
+            { id: '1', title: 'Novel Bible', url: 'anytype://', icon: '📖', color: 'bg-amber-50 border-amber-200 text-amber-900' },
+            { id: '2', title: 'Chapter Drafts', url: 'anytype://', icon: '📝', color: 'bg-orange-50 border-orange-200 text-orange-900' },
+            { id: '3', title: 'Worldbuilding', url: 'anytype://', icon: '🗺️', color: 'bg-emerald-50 border-emerald-200 text-emerald-900' },
+            { id: '4', title: 'Characters', url: 'anytype://', icon: '👥', color: 'bg-purple-50 border-purple-200 text-purple-900' }
+        ];
+
+        let links = JSON.parse(localStorage.getItem('novel_hub_links')) || defaultLinks;
+        let dailyGoal = parseInt(localStorage.getItem('novel_hub_goal')) || 500;
+        let scratchpadText = localStorage.getItem('novel_hub_scratchpad') || '';
+
+        // Soft pastel color cycle for custom links
+        const pastelColors = [
+            'bg-amber-50 border-amber-200 text-amber-900',
+            'bg-orange-50 border-orange-200 text-orange-900',
+            'bg-emerald-50 border-emerald-200 text-emerald-900',
+            'bg-purple-50 border-purple-200 text-purple-900',
+            'bg-sky-50 border-sky-200 text-sky-900',
+            'bg-rose-50 border-rose-200 text-rose-900'
+        ];
+
+        window.onload = function() {
+            document.getElementById('scratchpad').value = scratchpadText;
+            document.getElementById('goalTargetDisplay').innerText = dailyGoal;
+            renderLinks();
+            updateStats(scratchpadText);
+        };
+
+        function renderLinks() {
+            const grid = document.getElementById('linksGrid');
+            grid.innerHTML = '';
+            links.forEach((link, index) => {
+                const colorClass = link.color || pastelColors[index % pastelColors.length];
+                const card = document.createElement('div');
+                card.className = `relative group flex flex-col items-center justify-center p-3 rounded-2xl border ${colorClass} hover:shadow-sm transition-all text-center cursor-pointer`;
+                card.onclick = (e) => {
+                    // Prevent triggering if edit button clicked
+                    if (e.target.closest('.edit-btn')) return;
+                    window.location.href = link.url;
+                };
+
+                card.innerHTML = `
+                    <span class="text-2xl mb-1">${link.icon || '📌'}</span>
+                    <span class="font-semibold text-xs truncate w-full">${link.title}</span>
+                    <span class="text-[10px] opacity-75 mt-0.5">Open Anytype ↗</span>
+                    <button onclick="openEditLinkModal('${link.id}')" class="edit-btn absolute top-1.5 right-1.5 opacity-0 group-hover:opacity-100 bg-white/80 hover:bg-white text-xs p-1 rounded-md shadow-2xs transition-all">⚙️</button>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function handleScratchpadInput() {
+            const text = document.getElementById('scratchpad').value;
+            localStorage.setItem('novel_hub_scratchpad', text);
+            updateStats(text);
+        }
+
+        function updateStats(text) {
+            const words = text.trim() ? text.trim().split(/\s+/).length : 0;
+            const chars = text.length;
+
+            document.getElementById('wordCountDisplay').innerText = words;
+            document.getElementById('padWordCount').innerText = `${words} words`;
+            document.getElementById('padCharCount').innerText = `${chars} chars`;
+
+            // Progress bar
+            const percent = Math.min(100, Math.round((words / dailyGoal) * 100));
+            document.getElementById('progressBar').style.width = `${percent}%`;
+        }
+
+        function copyScratchpad() {
+            const text = document.getElementById('scratchpad').value;
+            if (!text.trim()) {
+                showToast('Scratchpad is empty!');
+                return;
+            }
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('Copied scratchpad text to clipboard!');
+                }).catch(() => {
+                    fallbackCopy(text);
+                });
+            } else {
+                fallbackCopy(text);
+            }
+        }
+
+        function fallbackCopy(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            try {
+                document.execCommand('copy');
+                showToast('Copied text successfully!');
+            } catch (err) {
+                showToast('Failed to copy text.');
+            }
+            document.body.removeChild(textarea);
+        }
+
+        function exportMarkdown() {
+            const text = document.getElementById('scratchpad').value;
+            if (!text.trim()) {
+                showToast('Nothing to export!');
+                return;
+            }
+            const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `novel-draft-${new Date().toISOString().slice(0,10)}.md`;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showToast('Exported Markdown file!');
+        }
+
+        function clearScratchpad() {
+            if (confirmClear()) {
+                document.getElementById('scratchpad').value = '';
+                localStorage.removeItem('novel_hub_scratchpad');
+                updateStats('');
+                showToast('Scratchpad cleared.');
+            }
+        }
+
+        function confirmClear() {
+            return window.confirm("Are you sure you want to clear your scratchpad? Unsaved text will be removed.");
+        }
+
+        // Modal Controls
+        function openGoalModal() {
+            document.getElementById('goalInput').value = dailyGoal;
+            document.getElementById('goalModal').classList.remove('hidden');
+            document.getElementById('goalModal').classList.add('flex');
+        }
+
+        function closeGoalModal() {
+            document.getElementById('goalModal').classList.remove('flex');
+            document.getElementById('goalModal').classList.add('hidden');
+        }
+
+        function saveGoal() {
+            const val = parseInt(document.getElementById('goalInput').value);
+            if (val && val > 0) {
+                dailyGoal = val;
+                localStorage.setItem('novel_hub_goal', dailyGoal);
+                document.getElementById('goalTargetDisplay').innerText = dailyGoal;
+                updateStats(document.getElementById('scratchpad').value);
+                closeGoalModal();
+                showToast('Daily goal updated!');
+            } else {
+                showToast('Please enter a valid word count.');
+            }
+        }
+
+        function openLinkModal() {
+            document.getElementById('linkModalTitle').innerText = 'Add Anytype Quick Link';
+            document.getElementById('editLinkId').value = '';
+            document.getElementById('linkTitleInput').value = '';
+            document.getElementById('linkUrlInput').value = 'anytype://';
+            document.getElementById('linkIconInput').value = '📖';
+            document.getElementById('deleteLinkBtn').classList.add('hidden');
+            document.getElementById('linkModal').classList.remove('hidden');
+            document.getElementById('linkModal').classList.add('flex');
+        }
+
+        function openEditLinkModal(id) {
+            const link = links.find(l => l.id === id);
+            if (!link) return;
+            document.getElementById('linkModalTitle').innerText = 'Edit Anytype Quick Link';
+            document.getElementById('editLinkId').value = link.id;
+            document.getElementById('linkTitleInput').value = link.title;
+            document.getElementById('linkUrlInput').value = link.url;
+            document.getElementById('linkIconInput').value = link.icon || '📖';
+            document.getElementById('deleteLinkBtn').classList.remove('hidden');
+            document.getElementById('linkModal').classList.remove('hidden');
+            document.getElementById('linkModal').classList.add('flex');
+        }
+
+        function closeLinkModal() {
+            document.getElementById('linkModal').classList.remove('flex');
+            document.getElementById('linkModal').classList.add('hidden');
+        }
+
+        function saveLink() {
+            const id = document.getElementById('editLinkId').value;
+            const title = document.getElementById('linkTitleInput').value.trim();
+            const url = document.getElementById('linkUrlInput').value.trim();
+            const icon = document.getElementById('linkIconInput').value;
+
+            if (!title) {
+                showToast('Please enter a page title.');
+                return;
+            }
+
+            if (id) {
+                // Edit existing
+                links = links.map(l => l.id === id ? { ...l, title, url: url || 'anytype://', icon } : l);
+            } else {
+                // Add new
+                const newId = Date.now().toString();
+                const randomColor = pastelColors[links.length % pastelColors.length];
+                links.push({ id: newId, title, url: url || 'anytype://', icon, color: randomColor });
+            }
+
+            localStorage.setItem('novel_hub_links', JSON.stringify(links));
+            renderLinks();
+            closeLinkModal();
+            showToast('Anytype link saved successfully!');
+        }
+
+        function deleteCurrentLink() {
+            const id = document.getElementById('editLinkId').value;
+            if (id) {
+                links = links.filter(l => l.id !== id);
+                localStorage.setItem('novel_hub_links', JSON.stringify(links));
+                renderLinks();
+                closeLinkModal();
+                showToast('Link removed.');
+            }
+        }
+
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.innerText = message;
+            toast.classList.remove('opacity-0', 'pointer-events-none');
+            toast.classList.add('opacity-100');
+            setTimeout(() => {
+                toast.classList.remove('opacity-100');
+                toast.classList.add('opacity-0', 'pointer-events-none');
+            }, 2500);
+        }
+    </script>
+</body>
+</html>
