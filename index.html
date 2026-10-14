@@ -1,38 +1,56 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Anytype Novel Hub</title>
     <style>
         :root {
-            --bg-color: #ffffff; /* Pure white for Notion Light Mode */
-            --card-bg: #f7f6f3;
-            --text-main: #37352f;
-            --text-secondary: #787774;
-            --border-color: #e9e9e7;
-            --accent-color: #dfab33; /* Default Gold */
-            --accent-hover: #d29d22;
-            --danger-color: #eb5757;
-            --radius: 8px;
-            --font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            --bg-color: rgba(255, 255, 255, 0.75);
+            --card-bg: rgba(255, 255, 255, 0.55);
+            --panel-bg: rgba(255, 255, 255, 0.45);
+            --text-main: #1d1d1f;
+            --text-secondary: #86868b;
+            --border-color: rgba(209, 209, 214, 0.4);
+            --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.08);
+            --accent-color: #007aff;
+            --danger-color: #ff3b30;
+            --radius: 12px;
+            --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Helvetica, Arial, sans-serif;
         }
 
-        [data-theme="dark"] {
-            --bg-color: #191919; /* Notion Dark Mode */
-            --card-bg: #202020;
-            --text-main: #dbdbd7;
-            --text-secondary: #9b9b95;
-            --border-color: #2f2f2f;
-            --accent-color: #d9b859;
-            --accent-hover: #e5c46b;
+        :root[data-theme="dark"] {
+            --bg-color: rgba(28, 28, 30, 0.75);
+            --card-bg: rgba(44, 44, 46, 0.55);
+            --panel-bg: rgba(58, 58, 60, 0.45);
+            --text-main: #f5f5f7;
+            --text-secondary: #98989d;
+            --border-color: rgba(255, 255, 255, 0.12);
+            --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            --accent-color: #0a84ff;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+            transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
+        }
+
+        /* Sleek iOS-Style Custom Scrollbars */
+        ::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: rgba(150, 150, 150, 0.3);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(150, 150, 150, 0.5);
         }
 
         body {
@@ -48,18 +66,21 @@
 
         .widget-container {
             width: 100%;
-            max-width: 680px;
+            max-width: 620px;
             background: var(--card-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
-            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
-            padding: 12px;
+            box-shadow: var(--glass-shadow);
+            padding: 10px;
             display: flex;
             flex-direction: column;
-            gap: 10px;
+            gap: 8px;
+            position: relative;
         }
 
-        /* Header */
+        /* Micro Header */
         .header {
             display: flex;
             justify-content: space-between;
@@ -69,89 +90,148 @@
         }
 
         .header h1 {
-            font-size: 14px;
+            font-size: 13px;
             font-weight: 600;
             display: flex;
             align-items: center;
             gap: 5px;
+            letter-spacing: -0.2px;
+            outline: none;
+            border-bottom: 1px dashed transparent;
+            cursor: text;
+        }
+
+        .header h1:hover {
+            border-bottom-color: var(--text-secondary);
         }
 
         .header-controls {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             align-items: center;
         }
 
-        .stats-badge {
-            font-size: 10px;
-            color: var(--text-secondary);
-            background: var(--bg-color);
-            padding: 2px 6px;
-            border-radius: 4px;
+        /* Dynamic Island Floating Pill */
+        .dynamic-island {
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
             border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 3px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 9px;
+            color: var(--text-secondary);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            z-index: 50;
+            width: 110px;
+            height: 24px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.35s ease;
         }
 
-        /* iOS Jelly Buttons & Controls */
+        .dynamic-island:hover {
+            width: 295px;
+            height: 32px;
+            padding: 4px 10px;
+            border-color: var(--accent-color);
+            color: var(--text-main);
+        }
+
+        .island-expanded {
+            display: none;
+            opacity: 0;
+            gap: 5px;
+            align-items: center;
+            transition: opacity 0.2s ease;
+        }
+
+        .dynamic-island:hover .island-compact {
+            display: none;
+        }
+
+        .dynamic-island:hover .island-expanded {
+            display: flex;
+            opacity: 1;
+        }
+
+        /* iOS Glass Buttons & Controls */
         button, .ios-btn, select {
-            background: var(--bg-color);
+            background: var(--panel-bg);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 3px 8px;
+            padding: 3px 7px;
             border-radius: 6px;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 500;
             display: inline-flex;
             align-items: center;
             gap: 3px;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
         }
 
         button:hover, select:hover {
-            transform: scale(1.04);
+            transform: scale(1.03);
             border-color: var(--accent-color);
         }
 
         button:active {
-            transform: scale(0.93);
+            transform: scale(0.95);
         }
 
+        /* Accent-colored luminous glow hover feedback */
         button.primary {
             background: var(--accent-color);
             color: #fff;
             border: none;
+            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
         }
         button.primary:hover {
-            background: var(--accent-hover);
-            transform: scale(1.04);
+            box-shadow: 0 0 12px var(--accent-color), 0 4px 16px rgba(0,0,0,0.2);
+            transform: translateY(-1px) scale(1.03);
         }
 
-        /* Main Side-by-Side Grid Layout */
+        /* Side-by-Side Dashboard Layout */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 200px 1fr;
-            gap: 10px;
+            grid-template-columns: 175px 1fr;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        @media (max-width: 540px) {
+        @media (max-width: 520px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
             }
         }
 
         .panel {
-            background: var(--bg-color);
+            background: var(--panel-bg);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 8px;
+            border-radius: 8px;
+            padding: 7px;
             display: flex;
             flex-direction: column;
             gap: 6px;
+            position: relative;
         }
 
         .panel-title {
-            font-size: 10px;
+            font-size: 9px;
             font-weight: 600;
             color: var(--text-secondary);
             text-transform: uppercase;
@@ -159,39 +239,42 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: relative;
+            z-index: 2;
         }
 
-        /* Quick Access Links Squares Grid */
+        /* Quick Access Links Square Grid */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 5px;
-            max-height: 150px;
+            max-height: 130px;
             overflow-y: auto;
         }
 
         .link-card {
             background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
-            border-radius: 5px;
-            padding: 6px;
+            border-radius: 6px;
+            padding: 5px;
             text-decoration: none;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 52px;
+            height: 46px;
             position: relative;
-            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s;
+            transition: border-color 0.15s;
         }
 
         .link-card:hover {
             border-color: var(--accent-color);
-            transform: translateY(-1px);
         }
 
         .link-title {
-            font-size: 11px;
+            font-size: 10px;
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
@@ -199,40 +282,76 @@
         }
 
         .link-desc {
-            font-size: 9px;
+            font-size: 8px;
             color: var(--text-secondary);
         }
 
+        /* Flat Add button card without floating effect */
         .add-link-card {
             background: var(--card-bg);
             border: 1px dashed var(--border-color);
-            border-radius: 5px;
-            height: 52px;
+            border-radius: 6px;
+            height: 46px;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             cursor: pointer;
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-secondary);
-            transition: transform 0.15s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s;
         }
         .add-link-card:hover {
             border-color: var(--accent-color);
             color: var(--text-main);
-            transform: translateY(-1px);
         }
 
-        /* Scratchpad Area */
+        /* Jelly-like Spring Animation for Inline Form Uncollapsing */
+        .inline-add-form {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--accent-color);
+            border-radius: 6px;
+            padding: 6px;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            transform-origin: top;
+            animation: jellyOpen 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            z-index: 3;
+        }
+        @keyframes jellyOpen {
+            0% { opacity: 0; transform: scaleY(0.7) translateY(-8px); }
+            100% { opacity: 1; transform: scaleY(1) translateY(0); }
+        }
+
+        .inline-add-form input, .inline-add-form select {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            padding: 4px 6px;
+            border-radius: 4px;
+            font-size: 9px;
+            color: var(--text-main);
+            outline: none;
+        }
+        .inline-add-form input:focus, .inline-add-form select:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Adjustable Scratchpad Area */
         textarea {
             width: 100%;
-            height: 120px;
+            min-height: 95px;
+            max-height: 250px;
             background: var(--card-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
-            border-radius: 5px;
+            border-radius: 6px;
             padding: 6px;
             font-family: var(--font-family);
-            font-size: 11px;
+            font-size: 10px;
             color: var(--text-main);
             resize: vertical;
             outline: none;
@@ -246,125 +365,170 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-secondary);
         }
 
         .actions {
             display: flex;
-            gap: 4px;
+            gap: 3px;
         }
 
-        /* Instructions Accordion */
-        .instructions-box {
-            background: var(--bg-color);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 6px 8px;
-            font-size: 10px;
-            color: var(--text-secondary);
-            line-height: 1.3;
-        }
-        .instructions-box summary {
-            cursor: pointer;
-            font-weight: 600;
-            color: var(--text-main);
-        }
-        .instructions-box ul {
-            margin-top: 3px;
-            padding-left: 14px;
-        }
-
-        /* Modal */
+        /* Jelly-like Spring Modal Animation with Glass Blur */
         .modal {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.45);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
             justify-content: center;
             align-items: center;
             z-index: 100;
         }
         .modal-content {
             background: var(--card-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid var(--border-color);
             padding: 12px;
-            border-radius: 8px;
+            border-radius: 10px;
             width: 85%;
-            max-width: 280px;
+            max-width: 320px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
+            box-shadow: var(--glass-shadow);
+            animation: modalJelly 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
-        .modal-content input {
-            background: var(--bg-color);
+        @keyframes modalJelly {
+            0% { transform: scale(0.75); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Detailed Collapsible Accordions inside Guide */
+        .guide-accordion details {
+            background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            padding: 5px;
-            border-radius: 4px;
-            font-size: 11px;
+            border-radius: 6px;
+            padding: 5px 8px;
+            margin-bottom: 4px;
+            font-size: 9px;
+        }
+        .guide-accordion summary {
+            font-weight: 600;
+            cursor: pointer;
             color: var(--text-main);
             outline: none;
         }
+        .guide-accordion p {
+            margin-top: 4px;
+            color: var(--text-secondary);
+            line-height: 1.35;
+        }
+
+        .version-list {
+            max-height: 150px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+        .version-item {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 9px;
+        }
     </style>
 </head>
-<body data-theme="light">
+<body>
 
     <div class="widget-container">
-        <!-- Header -->
-        <div class="header">
-            <h1 id="uiTitle">📖 Anytype Novel Hub</h1>
-            <div class="header-controls">
-                <div class="stats-badge" id="wordCountBadge">0 words</div>
-                <select id="accentPicker" onchange="changeAccent(this.value)" title="Color Accent">
-                    <option value="#dfab33">🟡 Gold</option>
-                    <option value="#e06c75">🌹 Rose</option>
-                    <option value="#98c379">🌿 Sage</option>
-                    <option value="#61afef">🌊 Blue</option>
-                    <option value="#c678dd">🔮 Purple</option>
+        <!-- Interactive Dynamic Island -->
+        <div class="dynamic-island">
+            <span class="island-compact" id="islandCompact">✨ 0w | 0c</span>
+            <div class="island-expanded">
+                <span id="statsInfo" style="font-size:8px; white-space:nowrap;">0w | 0c</span>
+                <select id="exportFormat" style="padding:1px 3px; font-size:8px;" title="Export Format">
+                    <option value="txt">.txt</option>
+                    <option value="md">.md</option>
+                    <option value="html">.html</option>
+                    <option value="json">.json</option>
                 </select>
-                <button onclick="toggleLang()" id="langBtn" title="Toggle Language">中文</button>
-                <button onclick="toggleTheme()" title="Toggle Light/Dark">🌓</button>
+                <button onclick="exportFile()" id="exportBtn" style="padding:1px 4px; font-size:8px;">💾 Export</button>
+                <button onclick="triggerImport()" id="importBtn" style="padding:1px 4px; font-size:8px;">📂 Import</button>
+                <button onclick="openHistoryModal()" id="historyBtn" style="padding:1px 4px; font-size:8px;">🕒 History</button>
+                <input type="file" id="importFile" accept=".txt,.md,.html,.json" style="display:none" onchange="importBackup(event)">
             </div>
         </div>
 
-        <!-- Instructions Guide -->
-        <details class="instructions-box">
-            <summary id="instSummary">💡 Quick Guide & Data Safety</summary>
-            <ul>
-                <li id="inst1"><strong>Auto-Save:</strong> Scratchpad saves automatically to your browser storage as you type.</li>
-                <li id="inst2"><strong>Quick Access:</strong> Click '+ Add' to link your Anytype novel pages. Starts blank.</li>
-                <li id="inst3"><strong>Backups:</strong> Use Export/Import JSON buttons to keep local snapshot file backups safe.</li>
-            </ul>
-        </details>
+        <!-- Header -->
+        <div class="header">
+            <h1 id="uiTitle" contenteditable="true" spellcheck="false" oninput="saveCustomTitle(this.innerText)" title="Click to rename workspace">📖 Anytype Novel Hub</h1>
+            <div class="header-controls">
+                <button onclick="openGuideModal()" id="guideBtn" title="Guide & Safety">💡 Guide</button>
+                <select id="accentPicker" onchange="changeAccent(this.value)" title="Color Accent">
+                    <option value="#007aff">🔵 iOS Blue</option>
+                    <option value="#dfab33">🟡 Gold</option>
+                    <option value="#ff2d55">🌹 Rose</option>
+                    <option value="#34c759">🌿 Sage</option>
+                    <option value="#af52de">🔮 Purple</option>
+                </select>
+                <button onclick="toggleLang()" id="langBtn" title="Toggle Language">中文</button>
+                <button onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark">🌓</button>
+            </div>
+        </div>
 
         <!-- Side-by-Side Compact Dashboard Grid -->
         <div class="dashboard-grid">
-            <!-- Left Panel: Anytype Quick Access Squares -->
+            <!-- Left Panel: Anytype Pages -->
             <div class="panel">
                 <div class="panel-title">
-                    <span id="linksHeading">⚡ Anytype Pages</span>
-                    <button onclick="openAddModal()" style="padding: 1px 4px; font-size:9px;">+ Add</button>
+                    <span id="linksHeading">⚡ Pages</span>
+                    <button onclick="toggleInlineAdd()" id="addToggleBtn" style="padding: 1px 4px; font-size:8px;">+ Add</button>
                 </div>
+                
+                <!-- Inline Add Form -->
+                <div id="inlineAddForm" class="inline-add-form" style="display:none;">
+                    <div style="font-weight:600; font-size:9px;" id="formTitleText">Add Page</div>
+                    <div style="display: grid; grid-template-columns: 50px 1fr; gap: 4px; width: 100%;">
+                        <select id="linkIconSelect" style="width: 100%;" title="Choose Icon">
+                            <option value="📄">📄</option>
+                            <option value="📖">📖</option>
+                            <option value="✍️">✍️</option>
+                            <option value="🔮">🔮</option>
+                            <option value="🗺️">🗺️</option>
+                            <option value="⚔️">⚔️</option>
+                        </select>
+                        <input type="text" id="linkTitleInput" placeholder="Title (Ch. 1)" style="width: 100%;">
+                    </div>
+                    <input type="text" id="linkUrlInput" placeholder="URI (anytype://...)">
+                    <div style="display:flex; justify-content:flex-end; gap:3px;">
+                        <button onclick="toggleInlineAdd()" id="formCancelBtn" style="padding:1px 3px; font-size:8px;">Cancel</button>
+                        <button class="primary" onclick="saveNewLink()" id="formSaveBtn" style="padding:1px 3px; font-size:8px;">Save</button>
+                    </div>
+                </div>
+
                 <div class="links-grid" id="linksGrid">
-                    <!-- Populated dynamically / blank by default -->
+                    <!-- Populated dynamically -->
                 </div>
             </div>
 
-            <!-- Right Panel: Scratchpad & Backup Controls -->
+            <!-- Right Panel: Screen Scratchpad -->
             <div class="panel">
                 <div class="panel-title">
-                    <span id="scratchHeading">📝 Scene Scratchpad</span>
-                    <div style="display:flex; gap:3px;">
-                        <button onclick="exportBackup()" id="exportBtn" title="Download JSON Backup">💾 Export</button>
-                        <button onclick="triggerImport()" id="importBtn" title="Restore JSON Backup">📂 Import</button>
-                        <input type="file" id="importFile" style="display:none" onchange="importBackup(event)">
-                    </div>
+                    <span id="scratchHeading">📝 Scratchpad</span>
                 </div>
                 
                 <textarea id="scratchpad" placeholder="Type your novel scene or chapter notes here..."></textarea>
                 
                 <div class="toolbar">
-                    <span id="charCount">0 chars</span>
+                    <span style="font-size:8px; color:var(--text-secondary);" id="hintIslandText">💡 Hover top pill for stats</span>
                     <div class="actions">
                         <button onclick="clearPad()" id="clearBtn">Clear</button>
                         <button class="primary" onclick="copyText()" id="copyBtn">Copy</button>
@@ -374,107 +538,199 @@
         </div>
     </div>
 
-    <!-- Modal to Add Anytype Links -->
-    <div class="modal" id="linkModal">
-        <div class="modal-content">
-            <div style="font-weight:600; font-size:11px;" id="modalTitleText">Add Anytype Page Link</div>
-            <input type="text" id="linkTitleInput" placeholder="Page Title (e.g. Chapter 1)">
-            <input type="text" id="linkUrlInput" placeholder="Anytype URI (anytype://...)">
-            <div style="display:flex; justify-content:flex-end; gap:5px; margin-top:2px;">
-                <button onclick="closeAddModal()" id="modalCancelBtn">Cancel</button>
-                <button class="primary" onclick="saveNewLink()" id="modalAddBtn">Add</button>
+    <!-- Guide Modal -->
+    <div class="modal" id="guideModal">
+        <div class="modal-content" style="max-width: 320px;">
+            <div style="font-weight:600; font-size:10px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
+                <span id="guideTitleText">💡 Guide & Data Safety</span>
+                <span onclick="closeGuideModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div class="guide-accordion" id="guideAccordionContent">
+                <details open>
+                    <summary id="gAcc1Title">⚡ Quick Start & Pages</summary>
+                    <p id="gAcc1Desc">Click '+ Add' to link your Anytype novel pages. Double-click any saved link card to instantly edit its icon, title, or URI inline without cluttering the UI!</p>
+                </details>
+                <details>
+                    <summary id="gAcc2Title">📝 Renaming & Auto-Save</summary>
+                    <p id="gAcc2Desc">Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves and maintains history snapshots.</p>
+                </details>
+                <details>
+                    <summary id="gAcc3Title">💾 File Exports & Imports</summary>
+                    <p id="gAcc3Desc">Export your notes in your preferred format (.txt, .md, .html, or .json) via the dynamic island and import them back anytime.</p>
+                </details>
+                <details>
+                    <summary id="gAcc4Title">⌨️ Keyboard Shortcuts & Hotkeys</summary>
+                    <p id="gAcc4Desc">
+                        • <strong>Ctrl/Cmd + C:</strong> Copy Text<br>
+                        • <strong>Ctrl/Cmd + S:</strong> Export / Save File<br>
+                        • <strong>Ctrl/Cmd + I:</strong> Import File<br>
+                        • <strong>Ctrl/Cmd + N:</strong> Toggle Add Page Form<br>
+                        • <strong>Ctrl/Cmd + H:</strong> Version History<br>
+                        • <strong>Ctrl/Cmd + G:</strong> Guide Modal<br>
+                        • <strong>Ctrl/Cmd + L:</strong> Toggle Language<br>
+                        • <strong>Ctrl/Cmd + T:</strong> Toggle Theme<br>
+                        • <strong>Escape:</strong> Close Modals / Forms
+                    </p>
+                </details>
+            </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:2px;">
+                <button onclick="closeGuideModal()" id="guideCloseBtn">Got it</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for Version History -->
+    <div class="modal" id="historyModal">
+        <div class="modal-content" style="max-width: 310px;">
+            <div style="font-weight:600; font-size:10px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="historyTitleText">Automatic Version History</span>
+                <span onclick="closeHistoryModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div class="version-list" id="versionList">
+                <!-- Populated dynamically -->
+            </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:2px;">
+                <button onclick="closeHistoryModal()" id="historyCloseBtn">Close</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Language Dictionary (Separate English & Chinese UI)
         let currentLang = localStorage.getItem('novel_hub_lang') || 'en';
 
         const dict = {
             en: {
-                title: "📖 Anytype Novel Hub",
-                instSummary: "💡 Quick Guide & Data Safety",
-                inst1: "<strong>Auto-Save:</strong> Scratchpad saves automatically to your browser storage as you type.",
-                inst2: "<strong>Quick Access:</strong> Click '+ Add' to link your Anytype novel pages. Starts blank.",
-                inst3: "<strong>Backups:</strong> Use Export/Import JSON buttons to keep local snapshot file backups safe.",
-                linksHeading: "⚡ Anytype Pages",
-                scratchHeading: "📝 Scene Scratchpad",
+                defaultTitle: "📖 Anytype Novel Hub",
+                guideBtn: "💡 Guide",
+                guideTitle: "💡 Guide & Data Safety",
+                gAcc1Title: "⚡ Quick Start & Pages",
+                gAcc1Desc: "Click '+ Add' to link your Anytype novel pages. Double-click any saved link card to instantly edit its icon, title, or URI inline without cluttering the UI!",
+                gAcc2Title: "📝 Renaming & Auto-Save",
+                gAcc2Desc: "Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves and maintains history snapshots.",
+                gAcc3Title: "💾 File Exports & Imports",
+                gAcc3Desc: "Export your notes in your preferred format (.txt, .md, .html, or .json) via the dynamic island and import them back anytime.",
+                gAcc4Title: "⌨️ Keyboard Shortcuts & Hotkeys",
+                gAcc4Desc: "• <strong>Ctrl/Cmd + C:</strong> Copy Text<br>• <strong>Ctrl/Cmd + S:</strong> Export / Save File<br>• <strong>Ctrl/Cmd + I:</strong> Import File<br>• <strong>Ctrl/Cmd + N:</strong> Toggle Add Page Form<br>• <strong>Ctrl/Cmd + H:</strong> Version History<br>• <strong>Ctrl/Cmd + G:</strong> Guide Modal<br>• <strong>Ctrl/Cmd + L:</strong> Toggle Language<br>• <strong>Ctrl/Cmd + T:</strong> Toggle Theme<br>• <strong>Escape:</strong> Close Modals / Forms",
+                guideClose: "Got it",
+                linksHeading: "⚡ Pages",
+                scratchHeading: "📝 Scratchpad",
                 exportBtn: "💾 Export",
                 importBtn: "📂 Import",
+                historyBtn: "🕒 History",
                 clearBtn: "Clear",
                 copyBtn: "Copy",
+                hintIsland: "💡 Hover top pill for stats",
                 placeholder: "Type your novel scene or chapter notes here...",
-                modalTitle: "Add Anytype Page Link",
-                titlePlaceholder: "Page Title (e.g. Chapter 1)",
-                urlPlaceholder: "Anytype URI (anytype://...) or Web URL",
+                formTitle: "Add Page",
+                editFormTitle: "Edit Page",
+                titlePlaceholder: "Title (Ch. 1)",
+                urlPlaceholder: "URI (anytype://...)",
                 cancelBtn: "Cancel",
-                addBtn: "Add",
+                saveBtn: "Save",
+                addBtn: "+ Add",
+                historyTitle: "Automatic Version History",
+                restoreBtn: "Restore",
+                noHistory: "No saved versions yet.",
                 deleteConfirm: "Remove this link?",
                 clearConfirm: "Clear scratchpad text? Make sure your notes are exported or copied!",
-                copiedMsg: "✨ Copied!",
-                savedMsg: "📝 Saved",
-                typingMsg: "📝 Typing..."
+                copiedMsg: "✨ Copied!"
             },
             zh: {
-                title: "📖 Anytype 小说创作面板",
-                instSummary: "💡 使用指南与数据安全",
-                inst1: "<strong>自动保存:</strong> 输入时自动保存在浏览器本地存储中。",
-                inst2: "<strong>快速访问:</strong> 点击“+添加”链接您的 Anytype 小说页面（默认保持空白）。",
-                inst3: "<strong>数据备份:</strong> 使用导出/导入 JSON 按钮下载本地快照，防止任何数据丢失。",
-                linksHeading: "⚡ Anytype 页面",
-                scratchHeading: "📝 灵感与速记",
+                defaultTitle: "📖 Anytype 小说创作面板",
+                guideBtn: "💡 指南",
+                guideTitle: "💡 使用指南与数据安全",
+                gAcc1Title: "⚡ 快速开始与页面",
+                gAcc1Desc: "点击“+添加”链接您的 Anytype 小说页面。双击任意已有链接卡片即可直接在卡片内修改图标、标题或链接，保持界面完美整洁！",
+                gAcc2Title: "📝 标题自定义与自动保存",
+                gAcc2Desc: "直接点击顶部主标题文字即可随时修改工作区名称！内容实时自动保存并生成版本快照。",
+                gAcc3Title: "💾 文件导出与导入",
+                gAcc3Desc: "在动态岛中以您偏好的格式（.txt, .md, .html 或 .json）导出或导入文档，随时同步至速记或工作区。",
+                gAcc4Title: "⌨️ 快捷键指南",
+                gAcc4Desc: "• <strong>Ctrl/Cmd + C：</strong>复制文本<br>• <strong>Ctrl/Cmd + S：</strong>导出/保存文件<br>• <strong>Ctrl/Cmd + I：</strong>导入文件<br>• <strong>Ctrl/Cmd + N：</strong>切换添加页面表单<br>• <strong>Ctrl/Cmd + H：</strong>版本历史<br>• <strong>Ctrl/Cmd + G：</strong>使用指南<br>• <strong>Ctrl/Cmd + L：</strong>切换语言<br>• <strong>Ctrl/Cmd + T：</strong>切换主题<br>• <strong>Escape：</strong>关闭弹窗/表单",
+                guideClose: "知道了",
+                linksHeading: "⚡ 页面",
+                scratchHeading: "📝 速记",
                 exportBtn: "💾 导出",
                 importBtn: "📂 导入",
+                historyBtn: "🕒 历史",
                 clearBtn: "清空",
                 copyBtn: "复制",
+                hintIsland: "💡 悬停上方胶囊查看统计",
                 placeholder: "在此处输入小说场景、对话或章节大纲...",
-                modalTitle: "添加 Anytype 页面链接",
-                titlePlaceholder: "页面标题 (例如: 第一章)",
-                urlPlaceholder: "Anytype 链接 (anytype://...) 或网址",
+                formTitle: "添加页面",
+                editFormTitle: "编辑页面",
+                titlePlaceholder: "标题 (第一章)",
+                urlPlaceholder: "链接 (anytype://...)",
                 cancelBtn: "取消",
-                addBtn: "添加",
+                saveBtn: "保存",
+                addBtn: "+ 添加",
+                historyTitle: "自动版本历史",
+                restoreBtn: "恢复",
+                noHistory: "暂无历史版本记录。",
                 deleteConfirm: "确认删除此链接？",
                 clearConfirm: "确认清空速记？请确保已备份或复制内容！",
-                copiedMsg: "✨ 已复制！",
-                savedMsg: "📝 已自动保存",
-                typingMsg: "📝 正在输入..."
+                copiedMsg: "✨ 已复制！"
             }
         };
 
         function updateLanguage() {
             const d = dict[currentLang];
-            document.getElementById('uiTitle').innerHTML = d.title;
-            document.getElementById('instSummary').innerHTML = d.instSummary;
-            document.getElementById('inst1').innerHTML = d.inst1;
-            document.getElementById('inst2').innerHTML = d.inst2;
-            document.getElementById('inst3').innerHTML = d.inst3;
+            const savedCustomTitle = localStorage.getItem('novel_hub_custom_title');
+            document.getElementById('uiTitle').innerText = savedCustomTitle || d.defaultTitle;
+            document.getElementById('guideBtn').textContent = d.guideBtn;
+            document.getElementById('guideTitleText').textContent = d.guideTitle;
+            document.getElementById('gAcc1Title').textContent = d.gAcc1Title;
+            document.getElementById('gAcc1Desc').textContent = d.gAcc1Desc;
+            document.getElementById('gAcc2Title').textContent = d.gAcc2Title;
+            document.getElementById('gAcc2Desc').textContent = d.gAcc2Desc;
+            document.getElementById('gAcc3Title').textContent = d.gAcc3Title;
+            document.getElementById('gAcc3Desc').textContent = d.gAcc3Desc;
+            document.getElementById('gAcc4Title').textContent = d.gAcc4Title;
+            document.getElementById('gAcc4Desc').innerHTML = d.gAcc4Desc;
+            document.getElementById('guideCloseBtn').textContent = d.guideClose;
             document.getElementById('linksHeading').textContent = d.linksHeading;
             document.getElementById('scratchHeading').textContent = d.scratchHeading;
+            document.getElementById('historyBtn').textContent = d.historyBtn;
             document.getElementById('exportBtn').textContent = d.exportBtn;
             document.getElementById('importBtn').textContent = d.importBtn;
             document.getElementById('clearBtn').textContent = d.clearBtn;
             document.getElementById('copyBtn').textContent = d.copyBtn;
+            document.getElementById('hintIslandText').textContent = d.hintIsland;
             document.getElementById('scratchpad').placeholder = d.placeholder;
-            document.getElementById('modalTitleText').textContent = d.modalTitle;
+            document.getElementById('formTitleText').textContent = editingIndex !== null ? d.editFormTitle : d.formTitle;
             document.getElementById('linkTitleInput').placeholder = d.titlePlaceholder;
             document.getElementById('linkUrlInput').placeholder = d.urlPlaceholder;
-            document.getElementById('modalCancelBtn').textContent = d.cancelBtn;
-            document.getElementById('modalAddBtn').textContent = d.addBtn;
+            document.getElementById('formCancelBtn').textContent = d.cancelBtn;
+            document.getElementById('formSaveBtn').textContent = d.saveBtn;
+            document.getElementById('historyTitleText').textContent = d.historyTitle;
             document.getElementById('langBtn').textContent = currentLang === 'en' ? '中文' : 'EN';
+            document.getElementById('themeBtn').textContent = '🌓';
+            document.getElementById('addToggleBtn').textContent = d.addBtn;
+        }
+
+        function saveCustomTitle(titleText) {
+            localStorage.setItem('novel_hub_custom_title', titleText);
         }
 
         function toggleLang() {
             currentLang = currentLang === 'en' ? 'zh' : 'en';
             localStorage.setItem('novel_hub_lang', currentLang);
             updateLanguage();
+            renderLinks();
         }
 
-        // Theme & Accent Customizer
+        function openGuideModal() {
+            document.getElementById('guideModal').style.display = 'flex';
+        }
+        function closeGuideModal() {
+            document.getElementById('guideModal').style.display = 'none';
+        }
+
         function toggleTheme() {
-            const body = document.body;
-            const newTheme = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
+            const root = document.documentElement;
+            const currentTheme = root.getAttribute('data-theme') || 'light';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', newTheme);
             localStorage.setItem('novel_hub_theme', newTheme);
         }
 
@@ -484,8 +740,9 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            const savedTheme = localStorage.getItem('novel_hub_theme');
-            if (savedTheme) document.body.setAttribute('data-theme', savedTheme);
+            const savedTheme = localStorage.getItem('novel_hub_theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+
             const savedAccent = localStorage.getItem('novel_hub_accent');
             if (savedAccent) {
                 document.documentElement.style.setProperty('--accent-color', savedAccent);
@@ -496,10 +753,45 @@
             renderLinks();
         });
 
-        // Scratchpad Logic & Auto-Save
+        window.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                const key = e.key.toLowerCase();
+                if (key === 'c') {
+                    e.preventDefault();
+                    copyText();
+                } else if (key === 's') {
+                    e.preventDefault();
+                    exportFile();
+                } else if (key === 'i') {
+                    e.preventDefault();
+                    triggerImport();
+                } else if (key === 'n') {
+                    e.preventDefault();
+                    toggleInlineAdd();
+                } else if (key === 'h') {
+                    e.preventDefault();
+                    openHistoryModal();
+                } else if (key === 'g') {
+                    e.preventDefault();
+                    openGuideModal();
+                } else if (key === 'l') {
+                    e.preventDefault();
+                    toggleLang();
+                } else if (key === 't') {
+                    e.preventDefault();
+                    toggleTheme();
+                }
+            } else if (e.key === 'Escape') {
+                closeGuideModal();
+                closeHistoryModal();
+                document.getElementById('inlineAddForm').style.display = 'none';
+                editingIndex = null;
+            }
+        });
+
         const scratchpad = document.getElementById('scratchpad');
-        const wordCountBadge = document.getElementById('wordCountBadge');
-        const charCount = document.getElementById('charCount');
+        const statsInfo = document.getElementById('statsInfo');
+        const islandCompact = document.getElementById('islandCompact');
 
         function loadScratchpad() {
             const savedText = localStorage.getItem('anytype_novel_scratchpad');
@@ -509,21 +801,84 @@
             }
         }
 
-        let timeout = null;
+        let snapshotTimeout = null;
         scratchpad.addEventListener('input', () => {
             const text = scratchpad.value;
             localStorage.setItem('anytype_novel_scratchpad', text);
             updateStats(text);
             
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {}, 600);
+            clearTimeout(snapshotTimeout);
+            snapshotTimeout = setTimeout(() => {
+                saveVersionSnapshot(text);
+            }, 3000);
         });
 
         function updateStats(text) {
             const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
             const chars = text.length;
-            wordCountBadge.textContent = `${words} words`;
-            charCount.textContent = `${chars} chars`;
+            statsInfo.textContent = `${words}w | ${chars}c`;
+            islandCompact.textContent = `✨ ${words}w | ${chars}c`;
+        }
+
+        function saveVersionSnapshot(text) {
+            if (!text.trim()) return;
+            let history = JSON.parse(localStorage.getItem('novel_hub_versions') || '[]');
+            const timestamp = new Date().toLocaleString();
+            
+            if (history.length > 0 && history[0].text === text) return;
+
+            history.unshift({ timestamp, text });
+            if (history.length > 15) history.pop();
+            localStorage.setItem('novel_hub_versions', JSON.stringify(history));
+        }
+
+        function openHistoryModal() {
+            if (scratchpad.value.trim()) {
+                saveVersionSnapshot(scratchpad.value);
+            }
+            renderVersionList();
+            document.getElementById('historyModal').style.display = 'flex';
+        }
+
+        function closeHistoryModal() {
+            document.getElementById('historyModal').style.display = 'none';
+        }
+
+        function renderVersionList() {
+            const list = document.getElementById('versionList');
+            list.innerHTML = '';
+            let history = JSON.parse(localStorage.getItem('novel_hub_versions') || '[]');
+            const d = dict[currentLang];
+
+            if (history.length === 0) {
+                list.innerHTML = `<div style="font-size:9px; color:var(--text-secondary); text-align:center; padding:10px;">${d.noHistory}</div>`;
+                return;
+            }
+
+            history.forEach((ver, idx) => {
+                const item = document.createElement('div');
+                item.className = 'version-item';
+                item.innerHTML = `
+                    <div>
+                        <div style="font-weight:600;">🕒 ${ver.timestamp}</div>
+                        <div style="color:var(--text-secondary); font-size:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px;">${escapeHtml(ver.text)}</div>
+                    </div>
+                    <button class="primary" onclick="restoreVersion(${idx})" style="padding:1px 5px; font-size:8px;">${d.restoreBtn}</button>
+                `;
+                list.appendChild(item);
+            });
+        }
+
+        function restoreVersion(index) {
+            let history = JSON.parse(localStorage.getItem('novel_hub_versions') || '[]');
+            if (history[index]) {
+                if (confirm(currentLang === 'zh' ? '确定要恢复到此版本吗？当前未保存的内容将被覆盖。' : 'Restore this version? Current text will be replaced.')) {
+                    scratchpad.value = history[index].text;
+                    localStorage.setItem('anytype_novel_scratchpad', history[index].text);
+                    updateStats(history[index].text);
+                    closeHistoryModal();
+                }
+            }
         }
 
         function clearPad() {
@@ -539,26 +894,69 @@
             const d = dict[currentLang];
             scratchpad.select();
             navigator.clipboard.writeText(scratchpad.value).then(() => {
-                const originalText = copyTextBtnText = document.getElementById('copyBtn').textContent;
-                document.getElementById('copyBtn').textContent = d.copiedMsg;
+                const btn = document.getElementById('copyBtn');
+                const orig = btn.textContent;
+                btn.textContent = d.copiedMsg;
                 setTimeout(() => {
-                    document.getElementById('copyBtn').textContent = d.copyBtn;
+                    btn.textContent = orig;
                 }, 1500);
             });
         }
 
-        // Backup & Restore JSON Snapshot
-        function exportBackup() {
-            const data = {
-                scratchpad: localStorage.getItem('anytype_novel_scratchpad') || '',
-                links: JSON.parse(localStorage.getItem('anytype_novel_links') || '[]'),
-                date: new Date().toISOString()
-            };
-            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'json' });
+        function exportFile() {
+            const format = document.getElementById('exportFormat').value;
+            const text = scratchpad.value;
+            const dateStr = new Date().toISOString().slice(0,10);
+
+            if (format === 'json') {
+                const data = {
+                    scratchpad: text,
+                    links: JSON.parse(localStorage.getItem('anytype_novel_links') || '[]'),
+                    versions: JSON.parse(localStorage.getItem('novel_hub_versions') || '[]'),
+                    date: new Date().toISOString()
+                };
+                downloadBlob(JSON.stringify(data, null, 2), `anytype-novel-backup-${dateStr}.json`, 'application/json');
+                return;
+            }
+
+            let mime = 'text/plain';
+            let ext = 'txt';
+            let content = text;
+
+            if (format === 'md') {
+                mime = 'text/markdown';
+                ext = 'md';
+            } else if (format === 'html') {
+                mime = 'text/html';
+                ext = 'html';
+                content = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Novel Scratchpad - ${dateStr}</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; line-height: 1.6; max-width: 800px; margin: 40px auto; padding: 0 20px; color: #1d1d1f; }
+        pre { white-space: pre-wrap; word-wrap: break-word; font-family: inherit; }
+    </style>
+</head>
+<body>
+    <h1>Novel Scratchpad Notes</h1>
+    <p><em>Exported on ${new Date().toLocaleString()}</em></p>
+    <hr>
+    <pre>${escapeHtml(text)}</pre>
+</body>
+</html>`;
+            }
+
+            downloadBlob(content, `anytype-novel-notes-${dateStr}.${ext}`, mime);
+        }
+
+        function downloadBlob(content, filename, mimeType) {
+            const blob = new Blob([content], { type: mimeType });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
-            a.download = `anytype-novel-backup-${new Date().toISOString().slice(0,10)}.json`;
+            a.download = filename;
             a.click();
             URL.revokeObjectURL(url);
         }
@@ -573,26 +971,72 @@
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    if (data.scratchpad !== undefined) {
-                        localStorage.setItem('anytype_novel_scratchpad', data.scratchpad);
-                        scratchpad.value = data.scratchpad;
-                        updateStats(data.scratchpad);
+                    const content = e.target.result;
+                    if (file.name.endsWith('.json')) {
+                        const data = JSON.parse(content);
+                        if (data.scratchpad !== undefined) {
+                            localStorage.setItem('anytype_novel_scratchpad', data.scratchpad);
+                            scratchpad.value = data.scratchpad;
+                            updateStats(data.scratchpad);
+                        }
+                        if (data.links) {
+                            localStorage.setItem('anytype_novel_links', JSON.stringify(data.links));
+                            renderLinks();
+                        }
+                        if (data.versions) {
+                            localStorage.setItem('novel_hub_versions', JSON.stringify(data.versions));
+                        }
+                        alert(currentLang === 'zh' ? '备份恢复成功！' : 'Backup restored successfully!');
+                    } else if (file.name.endsWith('.html')) {
+                        const tempDiv = document.createElement('div');
+                        tempDiv.innerHTML = content;
+                        const textContent = tempDiv.textContent || tempDiv.innerText || content;
+                        scratchpad.value = textContent.trim();
+                        localStorage.setItem('anytype_novel_scratchpad', scratchpad.value);
+                        updateStats(scratchpad.value);
+                        alert(currentLang === 'zh' ? '网页文件导入成功！' : 'HTML document imported successfully!');
+                    } else {
+                        scratchpad.value = content;
+                        localStorage.setItem('anytype_novel_scratchpad', content);
+                        updateStats(content);
+                        alert(currentLang === 'zh' ? '文档导入成功！' : 'Document imported successfully!');
                     }
-                    if (data.links) {
-                        localStorage.setItem('anytype_novel_links', JSON.stringify(data.links));
-                        renderLinks();
-                    }
-                    alert(currentLang === 'zh' ? '备份恢复成功！' : 'Backup restored successfully!');
                 } catch (err) {
-                    alert(currentLang === 'zh' ? '文件格式无效。' : 'Invalid backup file format.');
+                    alert(currentLang === 'zh' ? '文件格式无效。' : 'Invalid file format.');
                 }
             };
             reader.readAsText(file);
         }
 
-        // Quick Access Links (Blank by default)
+        // Quick Access Links & Double-Click Inline Editing Logic
         let customLinks = JSON.parse(localStorage.getItem('anytype_novel_links') || '[]');
+        let editingIndex = null;
+
+        function toggleInlineAdd(index = null) {
+            const form = document.getElementById('inlineAddForm');
+            const formTitle = document.getElementById('formTitleText');
+            const d = dict[currentLang];
+            if (form.style.display === 'none') {
+                form.style.display = 'flex';
+                if (index !== null) {
+                    editingIndex = index;
+                    formTitle.textContent = d.editFormTitle;
+                    document.getElementById('linkTitleInput').value = customLinks[index].title;
+                    document.getElementById('linkUrlInput').value = customLinks[index].url;
+                    document.getElementById('linkIconSelect').value = customLinks[index].icon || '📄';
+                } else {
+                    editingIndex = null;
+                    formTitle.textContent = d.formTitle;
+                    document.getElementById('linkTitleInput').value = '';
+                    document.getElementById('linkUrlInput').value = '';
+                    document.getElementById('linkIconSelect').value = '📄';
+                }
+                document.getElementById('linkTitleInput').focus();
+            } else {
+                form.style.display = 'none';
+                editingIndex = null;
+            }
+        }
 
         function renderLinks() {
             const grid = document.getElementById('linksGrid');
@@ -603,10 +1047,19 @@
                 card.href = link.url;
                 card.className = 'link-card';
                 card.target = '_blank';
+                card.title = "Double-click to edit card";
+                
+                // Double-click to edit seamlessly without clunky buttons
+                card.ondblclick = (e) => {
+                    e.preventDefault();
+                    toggleInlineAdd(index);
+                };
+
+                const icon = link.icon || '📄';
                 card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <span class="link-title">📄 ${escapeHtml(link.title)}</span>
-                        <span onclick="event.preventDefault(); deleteLink(${index})" style="font-size:9px; color:var(--danger-color); cursor:pointer;" title="Delete">✕</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:4px;">
+                        <span class="link-title" style="flex:1; min-width:0;">${icon} ${escapeHtml(link.title)}</span>
+                        <span onclick="event.preventDefault(); deleteLink(${index})" style="font-size:9px; color:var(--danger-color); cursor:pointer; padding:1px 3px; flex-shrink:0;" title="Delete">✕</span>
                     </div>
                     <span class="link-desc">Anytype Page</span>
                 `;
@@ -615,32 +1068,30 @@
 
             const addCard = document.createElement('div');
             addCard.className = 'add-link-card';
-            addCard.onclick = openAddModal;
-            addCard.innerHTML = `<span>+ Add</span>`;
+            addCard.onclick = () => toggleInlineAdd();
+            const d = dict[currentLang];
+            addCard.innerHTML = `<span>${d.addBtn}</span>`;
             grid.appendChild(addCard);
-        }
-
-        function openAddModal() {
-            document.getElementById('linkTitleInput').value = '';
-            document.getElementById('linkUrlInput').value = '';
-            document.getElementById('linkModal').style.display = 'flex';
-        }
-
-        function closeAddModal() {
-            document.getElementById('linkModal').style.display = 'none';
         }
 
         function saveNewLink() {
             const title = document.getElementById('linkTitleInput').value.trim();
             const url = document.getElementById('linkUrlInput').value.trim();
+            const icon = document.getElementById('linkIconSelect').value;
+            const d = dict[currentLang];
             if (!title || !url) {
                 alert(currentLang === 'zh' ? '请填写标题和链接！' : 'Please fill in both title and link!');
                 return;
             }
-            customLinks.push({ title, url });
+            if (editingIndex !== null) {
+                customLinks[editingIndex] = { title, url, icon };
+                editingIndex = null;
+            } else {
+                customLinks.push({ title, url, icon });
+            }
             localStorage.setItem('anytype_novel_links', JSON.stringify(customLinks));
+            document.getElementById('inlineAddForm').style.display = 'none';
             renderLinks();
-            closeAddModal();
         }
 
         function deleteLink(index) {
