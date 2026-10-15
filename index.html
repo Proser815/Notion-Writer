@@ -39,8 +39,8 @@
 
         /* Sleek iOS-Style Custom Scrollbars */
         ::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
+            width: 4px;
+            height: 4px;
         }
         ::-webkit-scrollbar-track {
             background: transparent;
@@ -57,7 +57,7 @@
             font-family: var(--font-family);
             background-color: var(--bg-color);
             color: var(--text-main);
-            padding: 8px;
+            padding: 6px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -73,10 +73,10 @@
             border: 1px solid var(--border-color);
             border-radius: var(--radius);
             box-shadow: var(--glass-shadow);
-            padding: 10px;
+            padding: 8px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             position: relative;
         }
 
@@ -86,15 +86,15 @@
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
-            padding-bottom: 6px;
+            padding-bottom: 5px;
         }
 
         .header h1 {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             letter-spacing: -0.2px;
             outline: none;
             border-bottom: 1px dashed transparent;
@@ -105,84 +105,36 @@
             border-bottom-color: var(--text-secondary);
         }
 
+        /* Header Controls & Universal Rounded Button Styling */
         .header-controls {
             display: flex;
-            gap: 4px;
+            gap: 3px;
             align-items: center;
+            position: relative;
         }
 
-        /* Dynamic Island Floating Pill */
-        .dynamic-island {
-            position: absolute;
-            top: 8px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: var(--panel-bg);
-            backdrop-filter: blur(16px) saturate(180%);
-            -webkit-backdrop-filter: blur(16px) saturate(180%);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            padding: 3px 10px;
-            display: flex;
+        button, .ios-dropdown-btn {
+            height: 19px;
+            padding: 0 5px;
+            border-radius: 5px;
+            font-size: 8px;
+            font-weight: 500;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
-            font-size: 9px;
-            color: var(--text-secondary);
-            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
-            z-index: 50;
-            width: 110px;
-            height: 24px;
-            overflow: hidden;
-            white-space: nowrap;
-            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.35s ease;
-        }
-
-        .dynamic-island:hover {
-            width: 295px;
-            height: 32px;
-            padding: 4px 10px;
-            border-color: var(--accent-color);
-            color: var(--text-main);
-        }
-
-        .island-expanded {
-            display: none;
-            opacity: 0;
-            gap: 5px;
-            align-items: center;
-            transition: opacity 0.2s ease;
-        }
-
-        .dynamic-island:hover .island-compact {
-            display: none;
-        }
-
-        .dynamic-island:hover .island-expanded {
-            display: flex;
-            opacity: 1;
-        }
-
-        /* iOS Glass Buttons & Controls */
-        button, .ios-btn, select {
+            gap: 2px;
             background: var(--panel-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid var(--border-color);
             color: var(--text-main);
-            padding: 3px 7px;
-            border-radius: 6px;
             cursor: pointer;
-            font-size: 9px;
-            font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            gap: 3px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            box-sizing: border-box;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
             transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
         }
 
-        button:hover, select:hover {
+        button:hover, .ios-dropdown-btn:hover {
             transform: scale(1.03);
             border-color: var(--accent-color);
         }
@@ -191,24 +143,144 @@
             transform: scale(0.95);
         }
 
-        /* Accent-colored luminous glow hover feedback */
         button.primary {
             background: var(--accent-color);
             color: #fff;
             border: none;
-            box-shadow: 0 4px 12px rgba(0, 122, 255, 0.25);
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+            height: 19px;
+            padding: 0 6px;
         }
         button.primary:hover {
-            box-shadow: 0 0 12px var(--accent-color), 0 4px 16px rgba(0,0,0,0.2);
+            box-shadow: 0 0 10px var(--accent-color), 0 2px 10px rgba(0,0,0,0.2);
             transform: translateY(-1px) scale(1.03);
+        }
+
+        /* Dynamic Island Floating Pill */
+        .dynamic-island {
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--panel-bg);
+            backdrop-filter: blur(16px) saturate(180%);
+            -webkit-backdrop-filter: blur(16px) saturate(180%);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2px 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            font-size: 8px;
+            color: var(--text-secondary);
+            box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+            z-index: 50;
+            width: 90px;
+            height: 20px;
+            overflow: hidden;
+            white-space: nowrap;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.35s ease;
+        }
+
+        .dynamic-island:hover {
+            width: 215px;
+            height: 25px;
+            padding: 2px 5px;
+            border-color: var(--accent-color);
+            color: var(--text-main);
+            overflow: visible;
+        }
+
+        .island-compact {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+        .island-expanded {
+            display: none;
+            opacity: 0;
+            gap: 3px;
+            align-items: center;
+            transition: opacity 0.2s ease;
+        }
+
+        .dynamic-island:hover .island-compact {
+            display: none !important;
+        }
+
+        .dynamic-island:hover .island-expanded {
+            display: flex !important;
+            opacity: 1;
+        }
+
+        .dynamic-island button, 
+        .dynamic-island .ios-dropdown-btn {
+            height: 17px;
+            padding: 0 3px;
+            border-radius: 4px;
+            font-size: 7.5px;
+        }
+
+        /* iOS Custom Dropdown Components with Proper Alignment Fix */
+        .ios-dropdown {
+            position: relative;
+            display: inline-block;
+            box-sizing: border-box;
+        }
+
+        .ios-dropdown-menu {
+            display: none;
+            position: absolute;
+            top: calc(100% + 4px);
+            left: 0;
+            background: var(--card-bg);
+            backdrop-filter: blur(24px) saturate(180%);
+            -webkit-backdrop-filter: blur(24px) saturate(180%);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            box-shadow: var(--glass-shadow);
+            padding: 3px;
+            z-index: 300;
+            min-width: 75px;
+            flex-direction: column;
+            gap: 2px;
+            transform-origin: top left;
+            animation: jellyOpen 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .ios-dropdown-menu.show {
+            display: flex;
+        }
+
+        .ios-dropdown-item {
+            padding: 3px 6px;
+            font-size: 7.5px;
+            color: var(--text-main);
+            border-radius: 4px;
+            cursor: pointer;
+            text-align: left;
+            background: transparent;
+            border: none;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            height: 18px;
+        }
+
+        .ios-dropdown-item:hover {
+            background: var(--accent-color);
+            color: #fff;
         }
 
         /* Side-by-Side Dashboard Layout */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 175px 1fr;
-            gap: 8px;
-            margin-top: 10px;
+            grid-template-columns: 165px 1fr;
+            gap: 6px;
+            margin-top: 8px;
         }
 
         @media (max-width: 520px) {
@@ -222,16 +294,16 @@
             backdrop-filter: blur(14px);
             -webkit-backdrop-filter: blur(14px);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 7px;
+            border-radius: 7px;
+            padding: 6px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 5px;
             position: relative;
         }
 
         .panel-title {
-            font-size: 9px;
+            font-size: 8px;
             font-weight: 600;
             color: var(--text-secondary);
             text-transform: uppercase;
@@ -243,13 +315,18 @@
             z-index: 2;
         }
 
-        /* Quick Access Links Square Grid */
+        /* Quick Access Links Square Grid with Scrollbar Hidden */
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 5px;
-            max-height: 130px;
+            gap: 4px;
+            max-height: 120px;
             overflow-y: auto;
+            overflow-x: hidden;
+            scrollbar-width: none;
+        }
+        .links-grid::-webkit-scrollbar {
+            display: none;
         }
 
         .link-card {
@@ -257,52 +334,38 @@
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 5px;
+            border-radius: 5px;
+            padding: 4px;
             text-decoration: none;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 46px;
+            height: 40px;
             position: relative;
-            transition: border-color 0.15s;
+            transition: border-color 0.15s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
         .link-card:hover {
             border-color: var(--accent-color);
+            transform: scale(1.02);
+            z-index: 5;
         }
 
         .link-title {
-            font-size: 10px;
+            font-size: 8.5px;
             font-weight: 500;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 3px;
         }
 
         .link-desc {
-            font-size: 8px;
+            font-size: 7px;
             color: var(--text-secondary);
-        }
-
-        /* Flat Add button card without floating effect */
-        .add-link-card {
-            background: var(--card-bg);
-            border: 1px dashed var(--border-color);
-            border-radius: 6px;
-            height: 46px;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            font-size: 9px;
-            color: var(--text-secondary);
-        }
-        .add-link-card:hover {
-            border-color: var(--accent-color);
-            color: var(--text-main);
         }
 
         /* Jelly-like Spring Animation for Inline Form Uncollapsing */
@@ -312,48 +375,56 @@
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--accent-color);
             border-radius: 6px;
-            padding: 6px;
+            padding: 5px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
             transform-origin: top;
             animation: jellyOpen 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
             z-index: 3;
         }
         @keyframes jellyOpen {
-            0% { opacity: 0; transform: scaleY(0.7) translateY(-8px); }
+            0% { opacity: 0; transform: scaleY(0.7) translateY(-6px); }
             100% { opacity: 1; transform: scaleY(1) translateY(0); }
         }
 
-        .inline-add-form input, .inline-add-form select {
+        .inline-add-form input, .inline-add-form select, .modal-content input, .modal-content select {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            padding: 4px 6px;
+            padding: 3px 5px;
             border-radius: 4px;
-            font-size: 9px;
+            font-size: 8px;
             color: var(--text-main);
             outline: none;
+            width: 100%;
         }
-        .inline-add-form input:focus, .inline-add-form select:focus {
+        .inline-add-form input:focus, .inline-add-form select:focus, .modal-content input:focus, .modal-content select:focus {
             border-color: var(--accent-color);
         }
 
-        /* Adjustable Scratchpad Area */
+        /* Scratchpad Container & Vertical-Only Resize */
+        .scratchpad-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
         textarea {
             width: 100%;
             min-height: 95px;
-            max-height: 250px;
+            max-height: 300px;
             background: var(--card-bg);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            padding: 6px;
+            padding: 6px 6px 32px 6px;
             font-family: var(--font-family);
-            font-size: 10px;
+            font-size: 9px;
             color: var(--text-main);
             resize: vertical;
+            overflow: auto;
             outline: none;
         }
 
@@ -361,17 +432,47 @@
             border-color: var(--accent-color);
         }
 
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-size: 9px;
-            color: var(--text-secondary);
-        }
-
-        .actions {
+        .scratchpad-floating-actions {
+            position: absolute;
+            bottom: 14px;
+            right: 18px;
             display: flex;
             gap: 3px;
+            z-index: 5;
+            pointer-events: auto;
+        }
+
+        .scratchpad-floating-actions button {
+            height: 18px;
+            width: 18px;
+            padding: 0;
+            border-radius: 5px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--panel-bg);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background-color 0.15s;
+        }
+
+        .scratchpad-floating-actions button:hover {
+            transform: scale(1.05);
+            border-color: var(--accent-color);
+        }
+
+        .scratchpad-floating-actions button.primary {
+            background: var(--accent-color);
+            color: #fff;
+            border: none;
+            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
+        }
+        .scratchpad-floating-actions button.primary:hover {
+            box-shadow: 0 0 8px var(--accent-color), 0 2px 10px rgba(0,0,0,0.2);
         }
 
         /* Jelly-like Spring Modal Animation with Glass Blur */
@@ -391,13 +492,13 @@
             backdrop-filter: blur(24px) saturate(180%);
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 10px;
+            padding: 10px;
+            border-radius: 9px;
             width: 85%;
-            max-width: 320px;
+            max-width: 290px;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 6px;
             box-shadow: var(--glass-shadow);
             animation: modalJelly 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -410,10 +511,10 @@
         .guide-accordion details {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 5px 8px;
-            margin-bottom: 4px;
-            font-size: 9px;
+            border-radius: 5px;
+            padding: 4px 6px;
+            margin-bottom: 3px;
+            font-size: 8px;
         }
         .guide-accordion summary {
             font-weight: 600;
@@ -422,27 +523,27 @@
             outline: none;
         }
         .guide-accordion p {
-            margin-top: 4px;
+            margin-top: 3px;
             color: var(--text-secondary);
-            line-height: 1.35;
+            line-height: 1.3;
         }
 
         .version-list {
-            max-height: 150px;
+            max-height: 130px;
             overflow-y: auto;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            gap: 4px;
         }
         .version-item {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
-            padding: 6px;
+            border-radius: 5px;
+            padding: 4px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 9px;
+            font-size: 8px;
         }
     </style>
 </head>
@@ -451,36 +552,94 @@
     <div class="widget-container">
         <!-- Interactive Dynamic Island -->
         <div class="dynamic-island">
-            <span class="island-compact" id="islandCompact">✨ 0w | 0c</span>
+            <span class="island-compact" id="islandCompact">
+                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                <span id="compactCountText">0w | 0c</span>
+            </span>
             <div class="island-expanded">
-                <span id="statsInfo" style="font-size:8px; white-space:nowrap;">0w | 0c</span>
-                <select id="exportFormat" style="padding:1px 3px; font-size:8px;" title="Export Format">
-                    <option value="txt">.txt</option>
-                    <option value="md">.md</option>
-                    <option value="html">.html</option>
-                    <option value="json">.json</option>
-                </select>
-                <button onclick="exportFile()" id="exportBtn" style="padding:1px 4px; font-size:8px;">💾 Export</button>
-                <button onclick="triggerImport()" id="importBtn" style="padding:1px 4px; font-size:8px;">📂 Import</button>
-                <button onclick="openHistoryModal()" id="historyBtn" style="padding:1px 4px; font-size:8px;">🕒 History</button>
+                <span id="statsInfo" style="font-size:7px; white-space:nowrap; display:flex; align-items:center; gap:2px;">
+                    <span id="expandedCountText">0w | 0c</span>
+                </span>
+                
+                <!-- AI Control Buttons: Pause & Terminate -->
+                <button onclick="toggleAIPause()" id="aiPauseBtn" title="Pause / Resume AI" style="display:none;">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                </button>
+                <button onclick="terminateAI()" id="aiStopBtn" title="Stop AI" style="display:none; color:var(--danger-color);">
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                </button>
+
+                <!-- iOS Custom Format Dropdown -->
+                <div class="ios-dropdown" id="formatDropdown">
+                    <button class="ios-dropdown-btn" onclick="toggleFormatMenu(event)">
+                        <span id="selectedFormatLabel">.txt</span>
+                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="ios-dropdown-menu" id="formatMenu">
+                        <button class="ios-dropdown-item" onclick="selectFormat('txt', '.txt')">.txt</button>
+                        <button class="ios-dropdown-item" onclick="selectFormat('md', '.md')">.md</button>
+                        <button class="ios-dropdown-item" onclick="selectFormat('html', '.html')">.html</button>
+                        <button class="ios-dropdown-item" onclick="selectFormat('json', '.json')">.json</button>
+                    </div>
+                </div>
+
+                <!-- Export Icon Button -->
+                <button onclick="exportFile()" id="exportBtn" title="Export File">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                </button>
+                <!-- Import Icon Button -->
+                <button onclick="triggerImport()" id="importBtn" title="Import File">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                </button>
+                <!-- History Icon Button -->
+                <button onclick="openHistoryModal()" id="historyBtn" title="Version History">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </button>
                 <input type="file" id="importFile" accept=".txt,.md,.html,.json" style="display:none" onchange="importBackup(event)">
             </div>
         </div>
 
-        <!-- Header -->
+        <!-- Header with Minimalist Vector Logos & Controls -->
         <div class="header">
-            <h1 id="uiTitle" contenteditable="true" spellcheck="false" oninput="saveCustomTitle(this.innerText)" title="Click to rename workspace">📖 Anytype Novel Hub</h1>
+            <h1 id="uiTitle" contenteditable="true" spellcheck="false" oninput="saveCustomTitle(this.innerText)" title="Click to rename workspace" style="display:flex; align-items:center; gap:4px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <span>Anytype Novel Hub</span>
+            </h1>
             <div class="header-controls">
-                <button onclick="openGuideModal()" id="guideBtn" title="Guide & Safety">💡 Guide</button>
-                <select id="accentPicker" onchange="changeAccent(this.value)" title="Color Accent">
-                    <option value="#007aff">🔵 iOS Blue</option>
-                    <option value="#dfab33">🟡 Gold</option>
-                    <option value="#ff2d55">🌹 Rose</option>
-                    <option value="#34c759">🌿 Sage</option>
-                    <option value="#af52de">🔮 Purple</option>
-                </select>
-                <button onclick="toggleLang()" id="langBtn" title="Toggle Language">中文</button>
-                <button onclick="toggleTheme()" id="themeBtn" title="Toggle Light/Dark">🌓</button>
+                <!-- AI Config Button -->
+                <button onclick="openAIModal()" id="aiSettingsBtn" title="AI Co-Writer Settings">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg>
+                </button>
+
+                <!-- Guide Logo Button -->
+                <button onclick="openGuideModal()" id="guideBtn" title="Guide & Safety">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </button>
+                
+                <!-- iOS Custom Color Accent Dropdown -->
+                <div class="ios-dropdown" id="colorDropdown">
+                    <button class="ios-dropdown-btn" onclick="toggleColorMenu(event)" title="Color Accent">
+                        <span id="selectedColorIcon"><svg width="8" height="8" viewBox="0 0 24 24" fill="#007aff" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg></span>
+                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="ios-dropdown-menu" id="colorMenu">
+                        <button class="ios-dropdown-item" onclick="selectColor('#007aff', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#007aff&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#007aff" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Blue</button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#dfab33', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#dfab33&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#dfab33" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Gold</button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#ff2d55', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#ff2d55&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#ff2d55" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Rose</button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#34c759', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#34c759&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#34c759" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Sage</button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#af52de', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#af52de&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#af52de" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Purple</button>
+                    </div>
+                </div>
+
+                <!-- Language Globe Logo Button -->
+                <button onclick="toggleLang()" id="langBtn" title="Toggle Language (EN / 中文)">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </button>
+
+                <!-- Theme Moon Logo Button -->
+                <button onclick="toggleTheme()" id="themeBtn" title="Toggle Light / Dark Theme">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                </button>
             </div>
         </div>
 
@@ -489,28 +648,30 @@
             <!-- Left Panel: Anytype Pages -->
             <div class="panel">
                 <div class="panel-title">
-                    <span id="linksHeading">⚡ Pages</span>
-                    <button onclick="toggleInlineAdd()" id="addToggleBtn" style="padding: 1px 4px; font-size:8px;">+ Add</button>
+                    <span id="linksHeading">Pages</span>
+                    <button onclick="toggleInlineAdd()" id="addToggleBtn" title="Add Page" style="height:19px; width:19px; padding:0; border-radius:5px;">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                    </button>
                 </div>
                 
                 <!-- Inline Add Form -->
                 <div id="inlineAddForm" class="inline-add-form" style="display:none;">
-                    <div style="font-weight:600; font-size:9px;" id="formTitleText">Add Page</div>
-                    <div style="display: grid; grid-template-columns: 50px 1fr; gap: 4px; width: 100%;">
+                    <div style="font-weight:600; font-size:8px;" id="formTitleText">Add Page</div>
+                    <div style="display: grid; grid-template-columns: 45px 1fr; gap: 3px; width: 100%;">
                         <select id="linkIconSelect" style="width: 100%;" title="Choose Icon">
-                            <option value="📄">📄</option>
-                            <option value="📖">📖</option>
-                            <option value="✍️">✍️</option>
-                            <option value="🔮">🔮</option>
-                            <option value="🗺️">🗺️</option>
-                            <option value="⚔️">⚔️</option>
+                            <option value="file">File</option>
+                            <option value="book">Book</option>
+                            <option value="pen">Pen</option>
+                            <option value="crystal">Crystal</option>
+                            <option value="map">Map</option>
+                            <option value="swords">Swords</option>
                         </select>
                         <input type="text" id="linkTitleInput" placeholder="Title (Ch. 1)" style="width: 100%;">
                     </div>
                     <input type="text" id="linkUrlInput" placeholder="URI (anytype://...)">
-                    <div style="display:flex; justify-content:flex-end; gap:3px;">
-                        <button onclick="toggleInlineAdd()" id="formCancelBtn" style="padding:1px 3px; font-size:8px;">Cancel</button>
-                        <button class="primary" onclick="saveNewLink()" id="formSaveBtn" style="padding:1px 3px; font-size:8px;">Save</button>
+                    <div style="display:flex; justify-content:flex-end; gap:2px;">
+                        <button onclick="toggleInlineAdd()" id="formCancelBtn">Cancel</button>
+                        <button class="primary" onclick="saveNewLink()" id="formSaveBtn">Save</button>
                     </div>
                 </div>
 
@@ -522,55 +683,82 @@
             <!-- Right Panel: Screen Scratchpad -->
             <div class="panel">
                 <div class="panel-title">
-                    <span id="scratchHeading">📝 Scratchpad</span>
+                    <span id="scratchHeading">Scratchpad</span>
                 </div>
                 
-                <textarea id="scratchpad" placeholder="Type your novel scene or chapter notes here..."></textarea>
-                
-                <div class="toolbar">
-                    <span style="font-size:8px; color:var(--text-secondary);" id="hintIslandText">💡 Hover top pill for stats</span>
-                    <div class="actions">
-                        <button onclick="clearPad()" id="clearBtn">Clear</button>
-                        <button class="primary" onclick="copyText()" id="copyBtn">Copy</button>
+                <div class="scratchpad-container">
+                    <textarea id="scratchpad" placeholder="Type your novel scene or chapter notes here..."></textarea>
+                    <div class="scratchpad-floating-actions">
+                        <!-- AI Co-Writer Sparkle Button -->
+                        <button onclick="runAICowriter()" id="aiSparkBtn" title="AI Co-Writer Continue">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
+                        </button>
+                        <!-- Clear Icon Button -->
+                        <button onclick="clearPad()" id="clearBtn" title="Clear">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                        </button>
+                        <!-- Copy Icon Button -->
+                        <button class="primary" onclick="copyText()" id="copyBtn" title="Copy">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Guide Modal -->
+    <!-- AI Settings Modal -->
+    <div class="modal" id="aiModal">
+        <div class="modal-content" style="max-width: 280px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
+                <span style="display:flex; align-items:center; gap:3px;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg>
+                    AI Co-Writer Settings
+                </span>
+                <span onclick="closeAIModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:5px; font-size:8px;">
+                <label style="color:var(--text-secondary);">Provider:</label>
+                <select id="aiProviderSelect" onchange="toggleProviderSettings()">
+                    <option value="pollinations">Free Public AI (No Key Needed)</option>
+                    <option value="gemini">Google Gemini (Flash)</option>
+                </select>
+
+                <div id="apiKeyFieldContainer" style="display:none; flex-direction:column; gap:3px;">
+                    <label style="color:var(--text-secondary);">API Key:</label>
+                    <input type="password" id="aiKeyInput" placeholder="Paste your API key here...">
+                </div>
+                <p id="freeAiNotice" style="font-size:7px; color:var(--text-secondary); line-height:1.2;">Free Public AI requires zero configuration or API keys and works instantly right inside your browser!</p>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:3px; margin-top:2px;">
+                <button onclick="closeAIModal()">Cancel</button>
+                <button class="primary" onclick="saveAISettings()">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Guide Modal with Detailed Human-Centric Instructions -->
     <div class="modal" id="guideModal">
-        <div class="modal-content" style="max-width: 320px;">
-            <div style="font-weight:600; font-size:10px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
-                <span id="guideTitleText">💡 Guide & Data Safety</span>
+        <div class="modal-content" style="max-width: 280px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
+                <span id="guideTitleText" style="display:flex; align-items:center; gap:3px;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                    Guide & How to Use AI
+                </span>
                 <span onclick="closeGuideModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
             </div>
             <div class="guide-accordion" id="guideAccordionContent">
                 <details open>
-                    <summary id="gAcc1Title">⚡ Quick Start & Pages</summary>
-                    <p id="gAcc1Desc">Click '+ Add' to link your Anytype novel pages. Double-click any saved link card to instantly edit its icon, title, or URI inline without cluttering the UI!</p>
+                    <summary id="gAcc1Title">How to Use the AI Co-Writer</summary>
+                    <p id="gAcc1Desc">1. Type a sentence, character dialogue, or plot prompt into the Scratchpad.<br>2. Click the Sparkle button at the bottom right of the scratchpad.<br>3. Watch the placeholder say <i>"AI is thinking..."</i> and then see the AI naturally type out your continuation live!<br>4. Hover over the top Dynamic Island pill to pause, resume, or terminate AI input anytime.</p>
                 </details>
                 <details>
-                    <summary id="gAcc2Title">📝 Renaming & Auto-Save</summary>
-                    <p id="gAcc2Desc">Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves and maintains history snapshots.</p>
+                    <summary id="gAcc2Title">Renaming & Auto-Save</summary>
+                    <p id="gAcc2Desc">Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves locally and maintains version snapshots.</p>
                 </details>
                 <details>
-                    <summary id="gAcc3Title">💾 File Exports & Imports</summary>
-                    <p id="gAcc3Desc">Export your notes in your preferred format (.txt, .md, .html, or .json) via the dynamic island and import them back anytime.</p>
-                </details>
-                <details>
-                    <summary id="gAcc4Title">⌨️ Keyboard Shortcuts & Hotkeys</summary>
-                    <p id="gAcc4Desc">
-                        • <strong>Ctrl/Cmd + C:</strong> Copy Text<br>
-                        • <strong>Ctrl/Cmd + S:</strong> Export / Save File<br>
-                        • <strong>Ctrl/Cmd + I:</strong> Import File<br>
-                        • <strong>Ctrl/Cmd + N:</strong> Toggle Add Page Form<br>
-                        • <strong>Ctrl/Cmd + H:</strong> Version History<br>
-                        • <strong>Ctrl/Cmd + G:</strong> Guide Modal<br>
-                        • <strong>Ctrl/Cmd + L:</strong> Toggle Language<br>
-                        • <strong>Ctrl/Cmd + T:</strong> Toggle Theme<br>
-                        • <strong>Escape:</strong> Close Modals / Forms
-                    </p>
+                    <summary id="gAcc3Title">File Exports & Imports</summary>
+                    <p id="gAcc3Desc">Hover over the top dynamic island pill to reveal format choices (.txt, .md, .html, .json) and easily export or import your notes anytime.</p>
                 </details>
             </div>
             <div style="display:flex; justify-content:flex-end; margin-top:2px;">
@@ -581,9 +769,12 @@
 
     <!-- Modal for Version History -->
     <div class="modal" id="historyModal">
-        <div class="modal-content" style="max-width: 310px;">
-            <div style="font-weight:600; font-size:10px; display:flex; justify-content:space-between; align-items:center;">
-                <span id="historyTitleText">Automatic Version History</span>
+        <div class="modal-content" style="max-width: 280px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="historyTitleText" style="display:flex; align-items:center; gap:3px;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                    Automatic Version History
+                </span>
                 <span onclick="closeHistoryModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
             </div>
             <div class="version-list" id="versionList">
@@ -597,119 +788,142 @@
 
     <script>
         let currentLang = localStorage.getItem('novel_hub_lang') || 'en';
+        let currentExportFormat = 'txt';
+        let aiActiveTask = null;
+        let isAIPaused = false;
 
         const dict = {
             en: {
-                defaultTitle: "📖 Anytype Novel Hub",
-                guideBtn: "💡 Guide",
-                guideTitle: "💡 Guide & Data Safety",
-                gAcc1Title: "⚡ Quick Start & Pages",
-                gAcc1Desc: "Click '+ Add' to link your Anytype novel pages. Double-click any saved link card to instantly edit its icon, title, or URI inline without cluttering the UI!",
-                gAcc2Title: "📝 Renaming & Auto-Save",
-                gAcc2Desc: "Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves and maintains history snapshots.",
-                gAcc3Title: "💾 File Exports & Imports",
-                gAcc3Desc: "Export your notes in your preferred format (.txt, .md, .html, or .json) via the dynamic island and import them back anytime.",
-                gAcc4Title: "⌨️ Keyboard Shortcuts & Hotkeys",
-                gAcc4Desc: "• <strong>Ctrl/Cmd + C:</strong> Copy Text<br>• <strong>Ctrl/Cmd + S:</strong> Export / Save File<br>• <strong>Ctrl/Cmd + I:</strong> Import File<br>• <strong>Ctrl/Cmd + N:</strong> Toggle Add Page Form<br>• <strong>Ctrl/Cmd + H:</strong> Version History<br>• <strong>Ctrl/Cmd + G:</strong> Guide Modal<br>• <strong>Ctrl/Cmd + L:</strong> Toggle Language<br>• <strong>Ctrl/Cmd + T:</strong> Toggle Theme<br>• <strong>Escape:</strong> Close Modals / Forms",
+                defaultTitle: "Anytype Novel Hub",
+                guideTitle: "Guide & How to Use AI",
+                gAcc1Title: "How to Use the AI Co-Writer",
+                gAcc1Desc: "1. Type a sentence, character dialogue, or plot prompt into the Scratchpad.<br>2. Click the Sparkle button at the bottom right of the scratchpad.<br>3. Watch the placeholder say <i>\"AI is thinking...\"</i> and then see the AI naturally type out your continuation live!<br>4. Hover over the top Dynamic Island pill to pause, resume, or terminate AI input anytime.",
+                gAcc2Title: "Renaming & Auto-Save",
+                gAcc2Desc: "Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves locally and maintains version snapshots.",
+                gAcc3Title: "File Exports & Imports",
+                gAcc3Desc: "Hover over the top dynamic island pill to reveal format choices (.txt, .md, .html, .json) and easily export or import your notes anytime.",
                 guideClose: "Got it",
-                linksHeading: "⚡ Pages",
-                scratchHeading: "📝 Scratchpad",
-                exportBtn: "💾 Export",
-                importBtn: "📂 Import",
-                historyBtn: "🕒 History",
-                clearBtn: "Clear",
-                copyBtn: "Copy",
-                hintIsland: "💡 Hover top pill for stats",
-                placeholder: "Type your novel scene or chapter notes here...",
+                linksHeading: "Pages",
+                scratchHeading: "Scratchpad",
                 formTitle: "Add Page",
                 editFormTitle: "Edit Page",
                 titlePlaceholder: "Title (Ch. 1)",
                 urlPlaceholder: "URI (anytype://...)",
                 cancelBtn: "Cancel",
                 saveBtn: "Save",
-                addBtn: "+ Add",
                 historyTitle: "Automatic Version History",
                 restoreBtn: "Restore",
                 noHistory: "No saved versions yet.",
                 deleteConfirm: "Remove this link?",
                 clearConfirm: "Clear scratchpad text? Make sure your notes are exported or copied!",
-                copiedMsg: "✨ Copied!"
+                copiedMsg: "Copied!"
             },
             zh: {
-                defaultTitle: "📖 Anytype 小说创作面板",
-                guideBtn: "💡 指南",
-                guideTitle: "💡 使用指南与数据安全",
-                gAcc1Title: "⚡ 快速开始与页面",
-                gAcc1Desc: "点击“+添加”链接您的 Anytype 小说页面。双击任意已有链接卡片即可直接在卡片内修改图标、标题或链接，保持界面完美整洁！",
-                gAcc2Title: "📝 标题自定义与自动保存",
+                defaultTitle: "Anytype 小说创作面板",
+                guideTitle: "使用指南与 AI 操作说明",
+                gAcc1Title: "如何使用 AI 写作助手",
+                gAcc1Desc: "1. 在速记框中输入一句开头、角色对话或情节大纲。<br>2. 点击速记框右下角的星形按钮。<br>3. 观察提示文字变为<i>“AI 正在构思中...”</i>，随后 AI 会以自然的打字机特效为您现场续写内容！<br>4. 悬停在顶部动态岛药丸上随时可以暂停、恢复或终止 AI 输入。",
+                gAcc2Title: "标题修改与自动保存",
                 gAcc2Desc: "直接点击顶部主标题文字即可随时修改工作区名称！内容实时自动保存并生成版本快照。",
-                gAcc3Title: "💾 文件导出与导入",
-                gAcc3Desc: "在动态岛中以您偏好的格式（.txt, .md, .html 或 .json）导出或导入文档，随时同步至速记或工作区。",
-                gAcc4Title: "⌨️ 快捷键指南",
-                gAcc4Desc: "• <strong>Ctrl/Cmd + C：</strong>复制文本<br>• <strong>Ctrl/Cmd + S：</strong>导出/保存文件<br>• <strong>Ctrl/Cmd + I：</strong>导入文件<br>• <strong>Ctrl/Cmd + N：</strong>切换添加页面表单<br>• <strong>Ctrl/Cmd + H：</strong>版本历史<br>• <strong>Ctrl/Cmd + G：</strong>使用指南<br>• <strong>Ctrl/Cmd + L：</strong>切换语言<br>• <strong>Ctrl/Cmd + T：</strong>切换主题<br>• <strong>Escape：</strong>关闭弹窗/表单",
+                gAcc3Title: "文件导出与导入",
+                gAcc3Desc: "悬停在顶部的动态岛药丸上可展开格式选择（.txt, .md, .html, .json），随时进行文档的备份或导入。",
                 guideClose: "知道了",
-                linksHeading: "⚡ 页面",
-                scratchHeading: "📝 速记",
-                exportBtn: "💾 导出",
-                importBtn: "📂 导入",
-                historyBtn: "🕒 历史",
-                clearBtn: "清空",
-                copyBtn: "复制",
-                hintIsland: "💡 悬停上方胶囊查看统计",
-                placeholder: "在此处输入小说场景、对话或章节大纲...",
+                linksHeading: "页面",
+                scratchHeading: "速记",
                 formTitle: "添加页面",
                 editFormTitle: "编辑页面",
                 titlePlaceholder: "标题 (第一章)",
                 urlPlaceholder: "链接 (anytype://...)",
                 cancelBtn: "取消",
                 saveBtn: "保存",
-                addBtn: "+ 添加",
                 historyTitle: "自动版本历史",
                 restoreBtn: "恢复",
                 noHistory: "暂无历史版本记录。",
                 deleteConfirm: "确认删除此链接？",
                 clearConfirm: "确认清空速记？请确保已备份或复制内容！",
-                copiedMsg: "✨ 已复制！"
+                copiedMsg: "已复制！"
             }
         };
+
+        const svgIcons = {
+            file: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>',
+            book: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>',
+            pen: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>',
+            crystal: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>',
+            map: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"></polygon><line x1="8" y1="2" x2="8" y2="18"></line><line x1="16" y1="6" x2="16" y2="22"></line></svg>',
+            swords: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline><line x1="13" y1="19" x2="19" y2="13"></line><line x1="16" y1="16" x2="20" y2="20"></line><line x1="19" y1="21" x2="21" y2="19"></line></svg>'
+        };
+
+        function getIconSvg(name) {
+            return svgIcons[name] || svgIcons.file;
+        }
+
+        function toggleFormatMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('formatMenu');
+            const isOpen = menu.classList.contains('show');
+            closeAllDropdowns();
+            if (!isOpen) menu.classList.add('show');
+        }
+
+        function toggleColorMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('colorMenu');
+            const isOpen = menu.classList.contains('show');
+            closeAllDropdowns();
+            if (!isOpen) menu.classList.add('show');
+        }
+
+        function closeAllDropdowns() {
+            document.getElementById('formatMenu').classList.remove('show');
+            document.getElementById('colorMenu').classList.remove('show');
+        }
+
+        document.addEventListener('click', () => {
+            closeAllDropdowns();
+        });
+
+        function selectFormat(val, label) {
+            currentExportFormat = val;
+            document.getElementById('selectedFormatLabel').textContent = label;
+            closeAllDropdowns();
+        }
+
+        function selectColor(colorHex, svgIconHtml) {
+            changeAccent(colorHex);
+            document.getElementById('selectedColorIcon').innerHTML = svgIconHtml;
+            closeAllDropdowns();
+        }
 
         function updateLanguage() {
             const d = dict[currentLang];
             const savedCustomTitle = localStorage.getItem('novel_hub_custom_title');
-            document.getElementById('uiTitle').innerText = savedCustomTitle || d.defaultTitle;
-            document.getElementById('guideBtn').textContent = d.guideBtn;
-            document.getElementById('guideTitleText').textContent = d.guideTitle;
+            const titleText = savedCustomTitle || d.defaultTitle;
+            
+            document.getElementById('uiTitle').innerHTML = `
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+                <span>${titleText}</span>
+            `;
+            
             document.getElementById('gAcc1Title').textContent = d.gAcc1Title;
-            document.getElementById('gAcc1Desc').textContent = d.gAcc1Desc;
+            document.getElementById('gAcc1Desc').innerHTML = d.gAcc1Desc;
             document.getElementById('gAcc2Title').textContent = d.gAcc2Title;
             document.getElementById('gAcc2Desc').textContent = d.gAcc2Desc;
             document.getElementById('gAcc3Title').textContent = d.gAcc3Title;
             document.getElementById('gAcc3Desc').textContent = d.gAcc3Desc;
-            document.getElementById('gAcc4Title').textContent = d.gAcc4Title;
-            document.getElementById('gAcc4Desc').innerHTML = d.gAcc4Desc;
             document.getElementById('guideCloseBtn').textContent = d.guideClose;
             document.getElementById('linksHeading').textContent = d.linksHeading;
             document.getElementById('scratchHeading').textContent = d.scratchHeading;
-            document.getElementById('historyBtn').textContent = d.historyBtn;
-            document.getElementById('exportBtn').textContent = d.exportBtn;
-            document.getElementById('importBtn').textContent = d.importBtn;
-            document.getElementById('clearBtn').textContent = d.clearBtn;
-            document.getElementById('copyBtn').textContent = d.copyBtn;
-            document.getElementById('hintIslandText').textContent = d.hintIsland;
-            document.getElementById('scratchpad').placeholder = d.placeholder;
+            document.getElementById('scratchpad').placeholder = currentLang === 'zh' ? "在此处输入小说场景、对话或章节大纲..." : "Type your novel scene or chapter notes here...";
             document.getElementById('formTitleText').textContent = editingIndex !== null ? d.editFormTitle : d.formTitle;
             document.getElementById('linkTitleInput').placeholder = d.titlePlaceholder;
             document.getElementById('linkUrlInput').placeholder = d.urlPlaceholder;
             document.getElementById('formCancelBtn').textContent = d.cancelBtn;
             document.getElementById('formSaveBtn').textContent = d.saveBtn;
-            document.getElementById('historyTitleText').textContent = d.historyTitle;
-            document.getElementById('langBtn').textContent = currentLang === 'en' ? '中文' : 'EN';
-            document.getElementById('themeBtn').textContent = '🌓';
-            document.getElementById('addToggleBtn').textContent = d.addBtn;
         }
 
         function saveCustomTitle(titleText) {
-            localStorage.setItem('novel_hub_custom_title', titleText);
+            localStorage.setItem('novel_hub_custom_title', titleText.trim());
         }
 
         function toggleLang() {
@@ -724,6 +938,173 @@
         }
         function closeGuideModal() {
             document.getElementById('guideModal').style.display = 'none';
+        }
+
+        function toggleProviderSettings() {
+            const provider = document.getElementById('aiProviderSelect').value;
+            const keyContainer = document.getElementById('apiKeyFieldContainer');
+            const notice = document.getElementById('freeAiNotice');
+            if (provider === 'pollinations') {
+                keyContainer.style.display = 'none';
+                notice.style.display = 'block';
+            } else {
+                keyContainer.style.display = 'flex';
+                notice.style.display = 'none';
+            }
+        }
+
+        function openAIModal() {
+            document.getElementById('aiKeyInput').value = localStorage.getItem('novel_hub_api_key') || '';
+            const provider = localStorage.getItem('novel_hub_api_provider') || 'pollinations';
+            document.getElementById('aiProviderSelect').value = provider;
+            toggleProviderSettings();
+            document.getElementById('aiModal').style.display = 'flex';
+        }
+
+        function closeAIModal() {
+            document.getElementById('aiModal').style.display = 'none';
+        }
+
+        function saveAISettings() {
+            const key = document.getElementById('aiKeyInput').value.trim();
+            const provider = document.getElementById('aiProviderSelect').value;
+            localStorage.setItem('novel_hub_api_key', key);
+            localStorage.setItem('novel_hub_api_provider', provider);
+            closeAIModal();
+            alert(currentLang === 'zh' ? 'AI 设置保存成功！' : 'AI settings saved successfully!');
+        }
+
+        // AI Control & Streaming Logic
+        function toggleAIPause() {
+            isAIPaused = !isAIPaused;
+            const pauseBtn = document.getElementById('aiPauseBtn');
+            if (isAIPaused) {
+                pauseBtn.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+            } else {
+                pauseBtn.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+            }
+        }
+
+        function terminateAI() {
+            if (aiActiveTask) {
+                aiActiveTask.terminated = true;
+                aiActiveTask = null;
+            }
+            isAIPaused = false;
+            document.getElementById('aiPauseBtn').style.display = 'none';
+            document.getElementById('aiStopBtn').style.display = 'none';
+            const btn = document.getElementById('aiSparkBtn');
+            btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>`;
+            scratchpad.placeholder = currentLang === 'zh' ? "在此处输入小说场景、对话或章节大纲..." : "Type your novel scene or chapter notes here...";
+        }
+
+        async function runAICowriter() {
+            const provider = localStorage.getItem('novel_hub_api_provider') || 'pollinations';
+            const apiKey = localStorage.getItem('novel_hub_api_key');
+
+            if (provider === 'gemini' && !apiKey) {
+                openAIModal();
+                return;
+            }
+
+            const scratchpad = document.getElementById('scratchpad');
+            const currentText = scratchpad.value;
+            const btn = document.getElementById('aiSparkBtn');
+            const origHtml = btn.innerHTML;
+            
+            btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>`;
+            document.getElementById('aiPauseBtn').style.display = 'inline-flex';
+            document.getElementById('aiStopBtn').style.display = 'inline-flex';
+            scratchpad.placeholder = currentLang === 'zh' ? "AI 正在构思中..." : "AI is thinking...";
+
+            aiActiveTask = { terminated: false };
+
+            try {
+                let generatedText = "";
+                if (provider === 'pollinations') {
+                    const prompt = "Continue the following novel scene naturally in the same style:\n\n" + (currentText.trim() || "Once upon a time,");
+                    
+                    const controller = new AbortController();
+                    const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`, {
+                        signal: controller.signal
+                    });
+                    clearTimeout(timeoutId);
+
+                    if (!res.ok) throw new Error("Free AI service response failed.");
+                    generatedText = await res.text();
+                } else if (provider === 'gemini') {
+                    const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+                    const proxyUrl = `https://corsproxy.io/?` + encodeURIComponent(targetUrl);
+                    
+                    const res = await fetch(proxyUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            contents: [{ parts: [{ text: "Continue the following novel scene naturally in the same style:\n\n" + currentText }] }]
+                        })
+                    });
+
+                    if (!res.ok) {
+                        const errJson = await res.json().catch(() => ({}));
+                        throw new Error(errJson.error?.message || `Gemini API error (Status ${res.status})`);
+                    }
+
+                    const data = await res.json();
+                    generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                }
+
+                if (aiActiveTask && aiActiveTask.terminated) return;
+
+                if (generatedText) {
+                    scratchpad.placeholder = currentLang === 'zh' ? "AI 正在书写..." : "AI is writing...";
+                    const textToAdd = (currentText.endsWith(' ') || currentText.endsWith('\n') ? '' : ' ') + generatedText.trim();
+                    const baseText = currentText;
+                    let i = 0;
+
+                    await new Promise((resolve) => {
+                        const timer = setInterval(() => {
+                            if (!aiActiveTask || aiActiveTask.terminated) {
+                                clearInterval(timer);
+                                resolve();
+                                return;
+                            }
+                            if (!isAIPaused) {
+                                if (i < textToAdd.length) {
+                                    i += 1; 
+                                    scratchpad.value = baseText + textToAdd.slice(0, i);
+                                    localStorage.setItem('anytype_novel_scratchpad', scratchpad.value);
+                                    updateStats(scratchpad.value);
+                                    scratchpad.scrollTop = scratchpad.scrollHeight;
+                                } else {
+                                    scratchpad.value = baseText + textToAdd;
+                                    localStorage.setItem('anytype_novel_scratchpad', scratchpad.value);
+                                    updateStats(scratchpad.value);
+                                    clearInterval(timer);
+                                    resolve();
+                                }
+                            }
+                        }, 28);
+                    });
+                } else {
+                    alert("AI returned an empty response. Please try again.");
+                }
+            } catch (err) {
+                console.error("AI Error:", err);
+                if (err.name === 'AbortError') {
+                    alert(currentLang === 'zh' ? '请求超时，免费服务器可能正忙，请重试。' : 'Request timed out. The free AI server may be busy, please try again.');
+                } else if (!aiActiveTask?.terminated) {
+                    alert(`AI Request Failed: ${err.message}`);
+                }
+            } finally {
+                aiActiveTask = null;
+                isAIPaused = false;
+                document.getElementById('aiPauseBtn').style.display = 'none';
+                document.getElementById('aiStopBtn').style.display = 'none';
+                btn.innerHTML = origHtml;
+                scratchpad.placeholder = currentLang === 'zh' ? "在此处输入小说场景、对话或章节大纲..." : "Type your novel scene or chapter notes here...";
+            }
         }
 
         function toggleTheme() {
@@ -746,7 +1127,6 @@
             const savedAccent = localStorage.getItem('novel_hub_accent');
             if (savedAccent) {
                 document.documentElement.style.setProperty('--accent-color', savedAccent);
-                document.getElementById('accentPicker').value = savedAccent;
             }
             updateLanguage();
             loadScratchpad();
@@ -784,20 +1164,25 @@
             } else if (e.key === 'Escape') {
                 closeGuideModal();
                 closeHistoryModal();
+                closeAIModal();
                 document.getElementById('inlineAddForm').style.display = 'none';
+                closeAllDropdowns();
                 editingIndex = null;
             }
         });
 
         const scratchpad = document.getElementById('scratchpad');
-        const statsInfo = document.getElementById('statsInfo');
-        const islandCompact = document.getElementById('islandCompact');
+        const compactCountText = document.getElementById('compactCountText');
+        const expandedCountText = document.getElementById('expandedCountText');
 
         function loadScratchpad() {
             const savedText = localStorage.getItem('anytype_novel_scratchpad');
-            if (savedText) {
+            if (savedText && savedText !== 'undefined') {
                 scratchpad.value = savedText;
                 updateStats(savedText);
+            } else {
+                scratchpad.value = '';
+                updateStats('');
             }
         }
 
@@ -816,8 +1201,9 @@
         function updateStats(text) {
             const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
             const chars = text.length;
-            statsInfo.textContent = `${words}w | ${chars}c`;
-            islandCompact.textContent = `✨ ${words}w | ${chars}c`;
+            const countStr = `${words}w | ${chars}c`;
+            compactCountText.textContent = countStr;
+            expandedCountText.textContent = countStr;
         }
 
         function saveVersionSnapshot(text) {
@@ -851,7 +1237,7 @@
             const d = dict[currentLang];
 
             if (history.length === 0) {
-                list.innerHTML = `<div style="font-size:9px; color:var(--text-secondary); text-align:center; padding:10px;">${d.noHistory}</div>`;
+                list.innerHTML = `<div style="font-size:7.5px; color:var(--text-secondary); text-align:center; padding:6px;">${d.noHistory}</div>`;
                 return;
             }
 
@@ -860,10 +1246,10 @@
                 item.className = 'version-item';
                 item.innerHTML = `
                     <div>
-                        <div style="font-weight:600;">🕒 ${ver.timestamp}</div>
-                        <div style="color:var(--text-secondary); font-size:8px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:140px;">${escapeHtml(ver.text)}</div>
+                        <div style="font-weight:600;">${ver.timestamp}</div>
+                        <div style="color:var(--text-secondary); font-size:7px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:120px;">${escapeHtml(ver.text)}</div>
                     </div>
-                    <button class="primary" onclick="restoreVersion(${idx})" style="padding:1px 5px; font-size:8px;">${d.restoreBtn}</button>
+                    <button class="primary" onclick="restoreVersion(${idx})">${d.restoreBtn}</button>
                 `;
                 list.appendChild(item);
             });
@@ -895,16 +1281,16 @@
             scratchpad.select();
             navigator.clipboard.writeText(scratchpad.value).then(() => {
                 const btn = document.getElementById('copyBtn');
-                const orig = btn.textContent;
-                btn.textContent = d.copiedMsg;
+                const origHtml = btn.innerHTML;
+                btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
                 setTimeout(() => {
-                    btn.textContent = orig;
+                    btn.innerHTML = origHtml;
                 }, 1500);
             });
         }
 
         function exportFile() {
-            const format = document.getElementById('exportFormat').value;
+            const format = currentExportFormat;
             const text = scratchpad.value;
             const dateStr = new Date().toISOString().slice(0,10);
 
@@ -1023,13 +1409,13 @@
                     formTitle.textContent = d.editFormTitle;
                     document.getElementById('linkTitleInput').value = customLinks[index].title;
                     document.getElementById('linkUrlInput').value = customLinks[index].url;
-                    document.getElementById('linkIconSelect').value = customLinks[index].icon || '📄';
+                    document.getElementById('linkIconSelect').value = customLinks[index].icon || 'file';
                 } else {
                     editingIndex = null;
                     formTitle.textContent = d.formTitle;
                     document.getElementById('linkTitleInput').value = '';
                     document.getElementById('linkUrlInput').value = '';
-                    document.getElementById('linkIconSelect').value = '📄';
+                    document.getElementById('linkIconSelect').value = 'file';
                 }
                 document.getElementById('linkTitleInput').focus();
             } else {
@@ -1049,29 +1435,23 @@
                 card.target = '_blank';
                 card.title = "Double-click to edit card";
                 
-                // Double-click to edit seamlessly without clunky buttons
                 card.ondblclick = (e) => {
                     e.preventDefault();
                     toggleInlineAdd(index);
                 };
 
-                const icon = link.icon || '📄';
+                const iconKey = link.icon || 'file';
+                const svgIconMarkup = getIconSvg(iconKey);
+
                 card.innerHTML = `
-                    <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:4px;">
-                        <span class="link-title" style="flex:1; min-width:0;">${icon} ${escapeHtml(link.title)}</span>
-                        <span onclick="event.preventDefault(); deleteLink(${index})" style="font-size:9px; color:var(--danger-color); cursor:pointer; padding:1px 3px; flex-shrink:0;" title="Delete">✕</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; width:100%; gap:3px;">
+                        <span class="link-title" style="flex:1; min-width:0;">${svgIconMarkup} ${escapeHtml(link.title)}</span>
+                        <span onclick="event.preventDefault(); deleteLink(${index})" style="font-size:7.5px; color:var(--danger-color); cursor:pointer; padding:1px 2px; flex-shrink:0;" title="Delete">✕</span>
                     </div>
                     <span class="link-desc">Anytype Page</span>
                 `;
                 grid.appendChild(card);
             });
-
-            const addCard = document.createElement('div');
-            addCard.className = 'add-link-card';
-            addCard.onclick = () => toggleInlineAdd();
-            const d = dict[currentLang];
-            addCard.innerHTML = `<span>${d.addBtn}</span>`;
-            grid.appendChild(addCard);
         }
 
         function saveNewLink() {
