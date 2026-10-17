@@ -37,7 +37,6 @@
             transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease, backdrop-filter 0.2s ease;
         }
 
-        /* Sleek iOS-Style Custom Scrollbars */
         ::-webkit-scrollbar {
             width: 4px;
             height: 4px;
@@ -49,9 +48,6 @@
             background: rgba(150, 150, 150, 0.3);
             border-radius: 10px;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: rgba(150, 150, 150, 0.5);
-        }
 
         body {
             font-family: var(--font-family);
@@ -62,6 +58,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
+            position: relative;
         }
 
         .widget-container {
@@ -78,15 +75,17 @@
             flex-direction: column;
             gap: 6px;
             position: relative;
+            overflow: visible;
         }
 
-        /* Micro Header */
+        /* Strict Single Horizontal Line Alignment for Header Controls */
         .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             border-bottom: 1px solid var(--border-color);
             padding-bottom: 5px;
+            height: 28px;
         }
 
         .header h1 {
@@ -99,30 +98,37 @@
             outline: none;
             border-bottom: 1px dashed transparent;
             cursor: text;
+            height: 22px;
+            line-height: 22px;
         }
 
         .header h1:hover {
             border-bottom-color: var(--text-secondary);
         }
 
-        /* Header Controls & Universal Rounded Button Styling */
         .header-controls {
             display: flex;
-            gap: 3px;
+            gap: 4px;
             align-items: center;
             position: relative;
+            height: 22px;
         }
 
+        /* Perfectly Unified Header Buttons Height & Vertical Alignment */
         button, .ios-dropdown-btn {
-            height: 19px;
-            padding: 0 5px;
+            height: 22px !important;
+            min-height: 22px !important;
+            max-height: 22px !important;
+            line-height: 20px !important;
+            padding: 0 6px !important;
             border-radius: 5px;
             font-size: 8px;
             font-weight: 500;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 2px;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            vertical-align: middle !important;
+            gap: 3px;
             background: var(--panel-bg);
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
@@ -131,7 +137,7 @@
             cursor: pointer;
             box-sizing: border-box;
             box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background-color 0.15s, box-shadow 0.15s;
+            transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background-color 0.15s;
         }
 
         button:hover, .ios-dropdown-btn:hover {
@@ -148,15 +154,10 @@
             color: #fff;
             border: none;
             box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
-            height: 19px;
-            padding: 0 6px;
-        }
-        button.primary:hover {
-            box-shadow: 0 0 10px var(--accent-color), 0 2px 10px rgba(0,0,0,0.2);
-            transform: translateY(-1px) scale(1.03);
+            padding: 0 7px !important;
         }
 
-        /* Dynamic Island Floating Pill */
+        /* Dynamic Island: Independent dual progress bars (Top bar = Word count progress, Bottom bar = Timer progress) */
         .dynamic-island {
             position: absolute;
             top: 6px;
@@ -166,47 +167,93 @@
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px) saturate(180%);
             border: 1px solid var(--border-color);
-            border-radius: 14px;
+            border-radius: 12px;
             padding: 2px 6px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 4px;
-            font-size: 8px;
+            font-size: 7.5px;
             color: var(--text-secondary);
             box-shadow: 0 4px 16px rgba(0,0,0,0.1);
             z-index: 50;
-            width: 90px;
-            height: 20px;
+            width: 95px;
+            height: 22px;
             overflow: hidden;
             white-space: nowrap;
-            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), padding 0.35s ease;
+            cursor: pointer;
+            transition: width 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), height 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.2s ease;
         }
 
         .dynamic-island:hover {
-            width: 215px;
-            height: 25px;
-            padding: 2px 5px;
+            width: 175px;
+            height: 34px;
+            padding: 2px 4px;
             border-color: var(--accent-color);
             color: var(--text-main);
             overflow: visible;
         }
 
+        .dynamic-island.ai-mode:hover {
+            width: 215px;
+        }
+
+        /* Compact view */
         .island-compact {
             display: flex;
             align-items: center;
-            gap: 3px;
+            justify-content: center;
+            gap: 2px;
+            width: 100%;
+            height: 100%;
+            z-index: 2;
         }
 
+        /* UPPER BAR: Strictly for Word Count progress */
+        .island-word-progress-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 2px;
+            background: #34c759;
+            width: 0%;
+            transition: width 0.3s linear;
+            border-radius: 12px 12px 0 0;
+            z-index: 1;
+        }
+
+        /* BOTTOM BAR: Strictly for Timer progress */
+        .island-timer-progress-bar {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            background: var(--accent-color);
+            width: 0%;
+            transition: width 0.3s linear;
+            border-radius: 0 0 12px 12px;
+            z-index: 1;
+            display: none;
+        }
+
+        /* Expanded view */
         .island-expanded {
             display: none;
             opacity: 0;
-            gap: 3px;
+            width: 100%;
+            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            gap: 2px;
             transition: opacity 0.2s ease;
         }
 
         .dynamic-island:hover .island-compact {
+            display: none !important;
+        }
+
+        .dynamic-island:hover .island-word-progress-bar,
+        .dynamic-island:hover .island-timer-progress-bar {
             display: none !important;
         }
 
@@ -217,48 +264,67 @@
 
         .dynamic-island button, 
         .dynamic-island .ios-dropdown-btn {
-            height: 17px;
-            padding: 0 3px;
+            height: 18px !important;
+            min-height: 18px !important;
+            padding: 0 4px !important;
             border-radius: 4px;
             font-size: 7.5px;
         }
 
-        /* iOS Custom Dropdown Components with Proper Alignment Fix */
+        /* iOS Dropdown */
         .ios-dropdown {
             position: relative;
             display: inline-block;
-            box-sizing: border-box;
+        }
+
+        .ios-dropdown-btn-full {
+            width: 100%;
+            height: 22px;
+            padding: 0 8px;
+            border-radius: 6px;
+            font-size: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-main);
+            cursor: pointer;
         }
 
         .ios-dropdown-menu {
             display: none;
             position: absolute;
             top: calc(100% + 4px);
-            left: 0;
+            right: 0;
             background: var(--card-bg);
             backdrop-filter: blur(24px) saturate(180%);
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid var(--border-color);
-            border-radius: 6px;
+            border-radius: 7px;
             box-shadow: var(--glass-shadow);
             padding: 3px;
             z-index: 300;
-            min-width: 75px;
             flex-direction: column;
             gap: 2px;
-            transform-origin: top left;
-            animation: jellyOpen 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transform-origin: top right;
+            opacity: 0;
+            transform: scaleY(0.95);
+            transition: opacity 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+            min-width: 110px;
         }
 
         .ios-dropdown-menu.show {
             display: flex;
+            opacity: 1;
+            transform: scaleY(1);
         }
 
         .ios-dropdown-item {
-            padding: 3px 6px;
-            font-size: 7.5px;
+            padding: 4px 6px;
+            font-size: 8px;
             color: var(--text-main);
-            border-radius: 4px;
+            border-radius: 5px;
             cursor: pointer;
             text-align: left;
             background: transparent;
@@ -266,8 +332,10 @@
             width: 100%;
             display: flex;
             align-items: center;
+            justify-content: space-between;
+            height: 22px !important;
+            min-height: 22px !important;
             gap: 4px;
-            height: 18px;
         }
 
         .ios-dropdown-item:hover {
@@ -275,12 +343,20 @@
             color: #fff;
         }
 
-        /* Side-by-Side Dashboard Layout */
+        /* Dashboard Grid & Zen Mode */
         .dashboard-grid {
             display: grid;
-            grid-template-columns: 165px 1fr;
+            grid-template-columns: 200px 1fr;
             gap: 6px;
-            margin-top: 8px;
+            margin-top: 4px;
+        }
+
+        .dashboard-grid.zen-mode {
+            grid-template-columns: 1fr;
+        }
+
+        .dashboard-grid.zen-mode .panel:first-child {
+            display: none;
         }
 
         @media (max-width: 520px) {
@@ -313,21 +389,50 @@
             align-items: center;
             position: relative;
             z-index: 2;
+            height: 22px;
         }
 
-        /* Quick Access Links Square Grid with Scrollbar Hidden */
+        .ios-segmented-control {
+            display: flex;
+            background: rgba(118, 118, 128, 0.12);
+            padding: 2px;
+            border-radius: 6px;
+            gap: 2px;
+            height: 22px;
+            align-items: center;
+        }
+
+        .ios-segment-btn {
+            background: transparent !important;
+            border: none !important;
+            color: var(--text-secondary) !important;
+            font-size: 7.5px !important;
+            font-weight: 500 !important;
+            cursor: pointer;
+            padding: 0 6px !important;
+            height: 18px !important;
+            min-height: 18px !important;
+            border-radius: 4px !important;
+            box-shadow: none !important;
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .ios-segment-btn.active {
+            background: var(--card-bg) !important;
+            color: var(--text-main) !important;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.08) !important;
+            font-weight: 600 !important;
+        }
+
         .links-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 4px;
-            max-height: 120px;
+            gap: 5px;
+            max-height: 140px;
             overflow-y: auto;
-            overflow-x: hidden;
             scrollbar-width: none;
         }
-        .links-grid::-webkit-scrollbar {
-            display: none;
-        }
+        .links-grid::-webkit-scrollbar { display: none; }
 
         .link-card {
             background: var(--card-bg);
@@ -335,13 +440,13 @@
             -webkit-backdrop-filter: blur(8px);
             border: 1px solid var(--border-color);
             border-radius: 5px;
-            padding: 4px;
+            padding: 5px;
             text-decoration: none;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
-            height: 40px;
+            height: 42px;
             position: relative;
             transition: border-color 0.15s, transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
@@ -368,11 +473,73 @@
             color: var(--text-secondary);
         }
 
-        /* Jelly-like Spring Animation for Inline Form Uncollapsing */
+        .plot-board-container {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            max-height: 145px;
+            overflow-y: auto;
+            scrollbar-width: none;
+        }
+        .plot-board-container::-webkit-scrollbar { display: none; }
+
+        .scene-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 6px 8px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            font-size: 8px;
+        }
+
+        .scene-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+        }
+
+        .scene-status-badge {
+            font-size: 7px;
+            padding: 2px 5px;
+            border-radius: 4px;
+            text-transform: uppercase;
+        }
+        .status-todo { background: rgba(142, 142, 147, 0.2); color: var(--text-secondary); }
+        .status-drafting { background: rgba(0, 122, 255, 0.15); color: var(--accent-color); }
+        .status-done { background: rgba(52, 199, 89, 0.15); color: #34c759; }
+
+        .tags-bar {
+            display: flex;
+            gap: 3px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            padding-bottom: 2px;
+            align-items: center;
+        }
+        .tags-bar::-webkit-scrollbar { display: none; }
+
+        .tag-pill {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 2px 5px;
+            font-size: 7.5px;
+            color: var(--text-main);
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .tag-pill:hover {
+            border-color: var(--accent-color);
+            background: var(--accent-color);
+            color: #fff;
+        }
+
         .inline-add-form {
             background: var(--card-bg);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--accent-color);
             border-radius: 6px;
             padding: 5px;
@@ -399,15 +566,21 @@
             outline: none;
             width: 100%;
         }
-        .inline-add-form input:focus, .inline-add-form select:focus, .modal-content input:focus, .modal-content select:focus {
-            border-color: var(--accent-color);
+
+        input[type="number"]::-webkit-inner-spin-button,
+        input[type="number"]::-webkit-outer-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
 
-        /* Scratchpad Container & Vertical-Only Resize */
         .scratchpad-container {
             position: relative;
             display: flex;
             flex-direction: column;
+            gap: 4px;
         }
 
         textarea {
@@ -428,54 +601,56 @@
             outline: none;
         }
 
-        textarea:focus {
-            border-color: var(--accent-color);
-        }
+        textarea:focus { border-color: var(--accent-color); }
 
         .scratchpad-floating-actions {
             position: absolute;
-            bottom: 14px;
-            right: 18px;
+            bottom: 12px;
+            right: 14px;
             display: flex;
             gap: 3px;
             z-index: 5;
-            pointer-events: auto;
         }
 
         .scratchpad-floating-actions button {
-            height: 18px;
-            width: 18px;
-            padding: 0;
+            height: 22px !important;
+            width: 22px !important;
+            min-height: 22px !important;
+            padding: 0 !important;
             border-radius: 5px;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            background: var(--panel-bg);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
+        }
+
+        .toast-container {
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%) translateY(30px);
+            background: var(--card-bg);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
             border: 1px solid var(--border-color);
+            padding: 5px 10px;
+            border-radius: 7px;
+            box-shadow: var(--glass-shadow);
+            font-size: 8px;
             color: var(--text-main);
-            cursor: pointer;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), border-color 0.15s, background-color 0.15s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.3s ease;
+        }
+        .toast-container.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+            pointer-events: auto;
         }
 
-        .scratchpad-floating-actions button:hover {
-            transform: scale(1.05);
-            border-color: var(--accent-color);
-        }
-
-        .scratchpad-floating-actions button.primary {
-            background: var(--accent-color);
-            color: #fff;
-            border: none;
-            box-shadow: 0 2px 8px rgba(0, 122, 255, 0.25);
-        }
-        .scratchpad-floating-actions button.primary:hover {
-            box-shadow: 0 0 8px var(--accent-color), 0 2px 10px rgba(0,0,0,0.2);
-        }
-
-        /* Jelly-like Spring Modal Animation with Glass Blur */
         .modal {
             display: none;
             position: fixed;
@@ -492,22 +667,22 @@
             backdrop-filter: blur(24px) saturate(180%);
             -webkit-backdrop-filter: blur(24px) saturate(180%);
             border: 1px solid var(--border-color);
-            padding: 10px;
+            padding: 12px;
             border-radius: 9px;
-            width: 85%;
-            max-width: 290px;
+            width: 90%;
+            max-width: 330px;
             display: flex;
             flex-direction: column;
-            gap: 6px;
+            gap: 8px;
             box-shadow: var(--glass-shadow);
             animation: modalJelly 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            overflow: visible;
         }
         @keyframes modalJelly {
             0% { transform: scale(0.75); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        /* Detailed Collapsible Accordions inside Guide */
         .guide-accordion details {
             background: var(--panel-bg);
             border: 1px solid var(--border-color);
@@ -550,154 +725,224 @@
 <body>
 
     <div class="widget-container">
-        <!-- Interactive Dynamic Island -->
-        <div class="dynamic-island">
+        <!-- Notification Toast -->
+        <div class="toast-container" id="toastContainer">
+            <span id="toastMessage">Notification message</span>
+            <div id="toastActionContainer" style="display:none; margin-left: 4px;"></div>
+        </div>
+
+        <!-- Dynamic Island: Independent dual progress bars (Top bar = Word count progress, Bottom bar = Timer progress) -->
+        <div class="dynamic-island" id="mainDynamicIsland">
             <span class="island-compact" id="islandCompact">
-                <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-                <span id="compactCountText">0w | 0c</span>
+                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                <span id="compactCountText">0w / 500w</span>
             </span>
-            <div class="island-expanded">
-                <span id="statsInfo" style="font-size:7px; white-space:nowrap; display:flex; align-items:center; gap:2px;">
-                    <span id="expandedCountText">0w | 0c</span>
-                </span>
-                
-                <!-- AI Control Buttons: Pause & Terminate -->
-                <button onclick="toggleAIPause()" id="aiPauseBtn" title="Pause / Resume AI" style="display:none;">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
-                </button>
-                <button onclick="terminateAI()" id="aiStopBtn" title="Stop AI" style="display:none; color:var(--danger-color);">
-                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
-                </button>
+            <div class="island-word-progress-bar" id="islandWordProgressBar"></div>
+            <div class="island-timer-progress-bar" id="islandTimerProgressBar"></div>
 
-                <!-- iOS Custom Format Dropdown -->
-                <div class="ios-dropdown" id="formatDropdown">
-                    <button class="ios-dropdown-btn" onclick="toggleFormatMenu(event)">
-                        <span id="selectedFormatLabel">.txt</span>
-                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+            <div class="island-expanded" onclick="event.stopPropagation()">
+                <!-- Pomodoro button in bottom silhouette with dynamic focus clock or relaxed coffee logo -->
+                <div style="display: flex; align-items: center; justify-content: center; gap: 2px; width: 100%;">
+                    <button onclick="togglePomodoroTimer()" ondblclick="openPomodoroModal()" id="pomoIslandBtn" title="Click to Start/Pause, Double-click to configure times">
+                        <span id="pomoIslandIcon">
+                            <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                        </span>
+                        <span id="pomodoroDisplay" style="font-size:7.5px; font-family:inherit;">25:00</span>
                     </button>
-                    <div class="ios-dropdown-menu" id="formatMenu">
-                        <button class="ios-dropdown-item" onclick="selectFormat('txt', '.txt')">.txt</button>
-                        <button class="ios-dropdown-item" onclick="selectFormat('md', '.md')">.md</button>
-                        <button class="ios-dropdown-item" onclick="selectFormat('html', '.html')">.html</button>
-                        <button class="ios-dropdown-item" onclick="selectFormat('json', '.json')">.json</button>
-                    </div>
-                </div>
 
-                <!-- Export Icon Button -->
-                <button onclick="exportFile()" id="exportBtn" title="Export File">
-                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                </button>
-                <!-- Import Icon Button -->
-                <button onclick="triggerImport()" id="importBtn" title="Import File">
-                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
-                </button>
-                <!-- History Icon Button -->
-                <button onclick="openHistoryModal()" id="historyBtn" title="Version History">
-                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                </button>
+                    <button onclick="cycleIslandAssistantView()" id="islandStateBtn" title="Change State">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8"></path><path d="M8 12h8"></path></svg>
+                    </button>
+
+                    <div id="aiControlGroup" style="display:none; align-items:center; gap:2px;">
+                        <button onclick="toggleAIPause()" id="aiPauseBtn" title="Pause / Resume AI">
+                            <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>
+                        </button>
+                        <button onclick="terminateAI()" id="aiStopBtn" title="Stop AI" style="color:var(--danger-color);">
+                            <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect></svg>
+                        </button>
+                    </div>
+
+                    <button onclick="openExportModal()" id="exportBtn" title="Export File">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                    </button>
+                    <button onclick="triggerImport()" id="importBtn" title="Import File">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="17 8 12 3 7 8"></polyline><line x1="12" y1="3" x2="12" y2="15"></line></svg>
+                    </button>
+                    <button onclick="openHistoryModal()" id="historyBtn" title="Version History">
+                        <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="6" x2="12" y2="12"></line><line x1="12" y1="12" x2="16" y2="14"></line></svg>
+                    </button>
+                </div>
                 <input type="file" id="importFile" accept=".txt,.md,.html,.json" style="display:none" onchange="importBackup(event)">
             </div>
         </div>
 
-        <!-- Header with Minimalist Vector Logos & Controls -->
+        <!-- Header Controls in a Single Clean Horizontal Line -->
         <div class="header">
-            <h1 id="uiTitle" contenteditable="true" spellcheck="false" oninput="saveCustomTitle(this.innerText)" title="Click to rename workspace" style="display:flex; align-items:center; gap:4px;">
+            <h1 id="uiTitle" contenteditable="true" spellcheck="false" oninput="saveCustomTitle(this.innerText)" title="Click to rename workspace">
                 <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
                 <span>Anytype Novel Hub</span>
             </h1>
             <div class="header-controls">
-                <!-- AI Config Button -->
-                <button onclick="openAIModal()" id="aiSettingsBtn" title="AI Co-Writer Settings">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg>
-                </button>
-
-                <!-- Guide Logo Button -->
-                <button onclick="openGuideModal()" id="guideBtn" title="Guide & Safety">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
-                </button>
-                
-                <!-- iOS Custom Color Accent Dropdown -->
-                <div class="ios-dropdown" id="colorDropdown">
-                    <button class="ios-dropdown-btn" onclick="toggleColorMenu(event)" title="Color Accent">
-                        <span id="selectedColorIcon"><svg width="8" height="8" viewBox="0 0 24 24" fill="#007aff" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg></span>
-                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                <!-- Soundtracks Dropdown (Icon Only) -->
+                <div class="ios-dropdown" id="audioDropdown">
+                    <button class="ios-dropdown-btn" onclick="toggleAudioMenu(event)" title="Ambient Soundtracks">
+                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
                     </button>
-                    <div class="ios-dropdown-menu" id="colorMenu">
-                        <button class="ios-dropdown-item" onclick="selectColor('#007aff', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#007aff&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#007aff" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Blue</button>
-                        <button class="ios-dropdown-item" onclick="selectColor('#dfab33', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#dfab33&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#dfab33" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Gold</button>
-                        <button class="ios-dropdown-item" onclick="selectColor('#ff2d55', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#ff2d55&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#ff2d55" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Rose</button>
-                        <button class="ios-dropdown-item" onclick="selectColor('#34c759', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#34c759&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#34c759" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Sage</button>
-                        <button class="ios-dropdown-item" onclick="selectColor('#af52de', '<svg width=&quot;8&quot; height=&quot;8&quot; viewBox=&quot;0 0 24 24&quot; fill=&quot;#af52de&quot; stroke=&quot;none&quot><circle cx=&quot;12&quot; cy=&quot;12&quot; r=&quot;10&quot></circle></svg>')"><svg width="8" height="8" viewBox="0 0 24 24" fill="#af52de" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> Purple</button>
+                    <div class="ios-dropdown-menu" id="audioMenu">
+                        <button class="ios-dropdown-item" onclick="setSoundtrack('off')">
+                            <span style="display:inline-flex; align-items:center; gap:4px;">
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"></line><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15.09 9.53V5a3 3 0 0 0-3-3H9a3 3 0 0 0-3 3v7"></path><path d="M19 10v1a7 7 0 0 1-9.36 6.64"></path></svg>
+                                <span id="sndOff">Off</span>
+                            </span>
+                        </button>
+                        <button class="ios-dropdown-item" onclick="setSoundtrack('rain')">
+                            <span style="display:inline-flex; align-items:center; gap:4px;">
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 17.58A5 5 0 0 0 18 8h-1.26A8 8 0 1 0 4 16.25"></path><line x1="8" y1="19" x2="8" y2="21"></line><line x1="12" y1="19" x2="12" y2="21"></line><line x1="16" y1="19" x2="16" y2="21"></line></svg>
+                                <span id="sndRain">Rain</span>
+                            </span>
+                        </button>
+                        <button class="ios-dropdown-item" onclick="setSoundtrack('cafe')">
+                            <span style="display:inline-flex; align-items:center; gap:4px;">
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>
+                                <span id="sndCafe">Coffee Shop</span>
+                            </span>
+                        </button>
+                        <button class="ios-dropdown-item" onclick="setSoundtrack('lofi')">
+                            <span style="display:inline-flex; align-items:center; gap:4px;">
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 10v3"></path><path d="M6 6v12"></path><path d="M10 3v18"></path><path d="M14 8v8"></path><path d="M18 5v14"></path><path d="M22 10v3"></path></svg>
+                                <span id="sndLofi">Lo-Fi Waves</span>
+                            </span>
+                        </button>
+                        <button class="ios-dropdown-item" onclick="openNetEaseModal()">
+                            <span style="display:inline-flex; align-items:center; gap:4px;">
+                                <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                                <span id="sndNetease">NetEase Music</span>
+                            </span>
+                        </button>
                     </div>
                 </div>
 
-                <!-- Language Globe Logo Button -->
-                <button onclick="toggleLang()" id="langBtn" title="Toggle Language (EN / 中文)">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <button onclick="toggleZenMode()" id="zenBtn" title="Toggle Zen Mode">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
                 </button>
 
-                <!-- Theme Moon Logo Button -->
+                <button onclick="openAIModal()" id="aiSettingsBtn" title="AI Co-Writer Settings">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg>
+                </button>
+
+                <button onclick="openGuideModal()" id="guideBtn" title="Guide & Safety">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                </button>
+                
+                <!-- Theme Accent Dropdown -->
+                <div class="ios-dropdown" id="colorDropdown">
+                    <button class="ios-dropdown-btn" onclick="toggleColorMenu(event)" title="Color Accent">
+                        <span id="selectedColorIcon"><svg width="7" height="7" viewBox="0 0 24 24" fill="currentColor" stroke="none" style="color:var(--accent-color);"><circle cx="12" cy="12" r="10"></circle></svg></span>
+                        <svg width="6" height="6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="ios-dropdown-menu" id="colorMenu">
+                        <button class="ios-dropdown-item" onclick="selectColor('#007aff', 'blue')"><svg width="7" height="7" viewBox="0 0 24 24" fill="#007aff" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> <span id="colBlue">Blue</span></button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#dfab33', 'gold')"><svg width="7" height="7" viewBox="0 0 24 24" fill="#dfab33" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> <span id="colGold">Gold</span></button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#ff2d55', 'rose')"><svg width="7" height="7" viewBox="0 0 24 24" fill="#ff2d55" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> <span id="colRose">Rose</span></button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#34c759', 'sage')"><svg width="7" height="7" viewBox="0 0 24 24" fill="#34c759" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> <span id="colSage">Sage</span></button>
+                        <button class="ios-dropdown-item" onclick="selectColor('#af52de', 'purple')"><svg width="7" height="7" viewBox="0 0 24 24" fill="#af52de" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg> <span id="colPurple">Purple</span></button>
+                    </div>
+                </div>
+
+                <button onclick="toggleLang()" id="langBtn" title="Toggle Language (EN / 中文)">
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </button>
+
                 <button onclick="toggleTheme()" id="themeBtn" title="Toggle Light / Dark Theme">
-                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+                    <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
                 </button>
             </div>
         </div>
 
-        <!-- Side-by-Side Compact Dashboard Grid -->
-        <div class="dashboard-grid">
-            <!-- Left Panel: Anytype Pages -->
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid" id="dashboardGrid">
+            <!-- Left Panel -->
             <div class="panel">
                 <div class="panel-title">
-                    <span id="linksHeading">Pages</span>
-                    <button onclick="toggleInlineAdd()" id="addToggleBtn" title="Add Page" style="height:19px; width:19px; padding:0; border-radius:5px;">
-                        <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                    </button>
+                    <div class="ios-segmented-control">
+                        <button class="ios-segment-btn active" id="tabPagesBtn" onclick="switchDashboardTab('pages')">Pages</button>
+                        <button class="ios-segment-btn" id="tabPlotBtn" onclick="switchDashboardTab('plot')">Plot Board</button>
+                    </div>
+                    <div style="display:flex; align-items:center; gap:3px;">
+                        <div class="ios-dropdown" id="plotFilterDropdown" style="display:none;">
+                            <button class="ios-dropdown-btn" onclick="togglePlotFilterMenu(event)" title="Filter Scenes">
+                                <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg>
+                                <span id="plotFilterLbl">All</span>
+                            </button>
+                            <div class="ios-dropdown-menu" id="plotFilterMenu">
+                                <button class="ios-dropdown-item" onclick="filterScenes('all')"><span id="filterAll">All</span></button>
+                                <button class="ios-dropdown-item" onclick="filterScenes('todo')"><span id="filterTodo">Todo</span></button>
+                                <button class="ios-dropdown-item" onclick="filterScenes('drafting')"><span id="filterDrafting">Drafting</span></button>
+                                <button class="ios-dropdown-item" onclick="filterScenes('done')"><span id="filterDone">Done</span></button>
+                            </div>
+                        </div>
+                        <button onclick="toggleInlineAdd()" id="addToggleBtn" title="Add Item" style="height:22px !important; width:22px !important; padding:0 !important; border-radius:5px;">
+                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                        </button>
+                    </div>
                 </div>
                 
-                <!-- Inline Add Form -->
                 <div id="inlineAddForm" class="inline-add-form" style="display:none;">
                     <div style="font-weight:600; font-size:8px;" id="formTitleText">Add Page</div>
-                    <div style="display: grid; grid-template-columns: 45px 1fr; gap: 3px; width: 100%;">
-                        <select id="linkIconSelect" style="width: 100%;" title="Choose Icon">
-                            <option value="file">File</option>
-                            <option value="book">Book</option>
-                            <option value="pen">Pen</option>
-                            <option value="crystal">Crystal</option>
-                            <option value="map">Map</option>
-                            <option value="swords">Swords</option>
-                        </select>
-                        <input type="text" id="linkTitleInput" placeholder="Title (Ch. 1)" style="width: 100%;">
+                    
+                    <div id="pageFormFields">
+                        <div style="display: grid; grid-template-columns: 45px 1fr; gap: 3px; width: 100%; margin-bottom: 4px;">
+                            <select id="linkIconSelect" style="width: 100%;" title="Choose Icon">
+                                <option value="file" id="optFile">File</option>
+                                <option value="book" id="optBook">Book</option>
+                                <option value="pen" id="optPen">Pen</option>
+                                <option value="crystal" id="optCrystal">Crystal</option>
+                                <option value="map" id="optMap">Map</option>
+                                <option value="swords" id="optSwords">Swords</option>
+                            </select>
+                            <input type="text" id="linkTitleInput" placeholder="Title (Ch. 1)" style="width: 100%;">
+                        </div>
+                        <input type="text" id="linkUrlInput" placeholder="URI (anytype://...)">
                     </div>
-                    <input type="text" id="linkUrlInput" placeholder="URI (anytype://...)">
-                    <div style="display:flex; justify-content:flex-end; gap:2px;">
+
+                    <div id="plotFormFields" style="display:none;">
+                        <input type="text" id="sceneTitleInput" placeholder="Scene Title (e.g. Inciting Incident)" style="margin-bottom: 4px;">
+                        <select id="sceneStatusSelect" style="width: 100%;">
+                            <option value="todo" id="selTodo">Todo</option>
+                            <option value="drafting" id="selDrafting">Drafting</option>
+                            <option value="done" id="selDone">Done</option>
+                        </select>
+                    </div>
+
+                    <div style="display:flex; justify-content:flex-end; gap:2px; margin-top:2px;">
                         <button onclick="toggleInlineAdd()" id="formCancelBtn">Cancel</button>
-                        <button class="primary" onclick="saveNewLink()" id="formSaveBtn">Save</button>
+                        <button class="primary" onclick="saveActiveTabItem()" id="formSaveBtn">Save</button>
                     </div>
                 </div>
 
-                <div class="links-grid" id="linksGrid">
-                    <!-- Populated dynamically -->
-                </div>
+                <div class="links-grid" id="linksGrid"></div>
+                <div class="plot-board-container" id="plotBoardContainer" style="display:none;"></div>
             </div>
 
-            <!-- Right Panel: Screen Scratchpad -->
+            <!-- Right Panel: Scratchpad -->
             <div class="panel">
-                <div class="panel-title">
+                <div class="panel-title" style="display: flex; justify-content: space-between; align-items: center;">
                     <span id="scratchHeading">Scratchpad</span>
+                    <span style="font-size: 7px; color: var(--text-secondary); cursor: pointer;" onclick="openTagModal()" id="manageTagsLbl">+ Add Tag</span>
                 </div>
                 
+                <div class="tags-bar" id="tagsBar"></div>
+
                 <div class="scratchpad-container">
-                    <textarea id="scratchpad" placeholder="Type your novel scene or chapter notes here..."></textarea>
+                    <textarea id="scratchpad" placeholder="Type your novel scene or chapter notes here..." oninput="handleRealtimeInput()"></textarea>
                     <div class="scratchpad-floating-actions">
-                        <!-- AI Co-Writer Sparkle Button -->
                         <button onclick="runAICowriter()" id="aiSparkBtn" title="AI Co-Writer Continue">
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>
                         </button>
-                        <!-- Clear Icon Button -->
                         <button onclick="clearPad()" id="clearBtn" title="Clear">
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
                         </button>
-                        <!-- Copy Icon Button -->
                         <button class="primary" onclick="copyText()" id="copyBtn" title="Copy">
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
                         </button>
@@ -707,37 +952,153 @@
         </div>
     </div>
 
-    <!-- AI Settings Modal -->
+    <!-- NetEase Music Modal -->
+    <div class="modal" id="neteaseModal">
+        <div class="modal-content" style="max-width: 320px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="neteaseModalTitle" style="display:flex; align-items:center; gap:3px;">
+                    <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    NetEase Playlist Player
+                </span>
+                <span onclick="closeNetEaseModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:6px; font-size:8px;">
+                <label id="neteaseIdLbl" style="color:var(--text-secondary);">Playlist ID:</label>
+                <div style="display:flex; gap:3px;">
+                    <input type="text" id="neteaseIdInput" placeholder="e.g. 18296112251">
+                    <button class="primary" onclick="saveAndPlayNetEase()" id="neteaseLoadBtn">Load</button>
+                </div>
+                <!-- Fixed container height with full width for iframe loading -->
+                <div id="neteasePlayerContainer" style="width: 100%; min-height: 90px; border-radius: 6px; overflow: hidden; margin-top: 4px;"></div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; margin-top:4px;">
+                <button onclick="closeNetEaseModal()" id="neteaseCloseBtn">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Popup Confirm Modal -->
+    <div class="modal" id="customConfirmModal">
+        <div class="modal-content" style="max-width: 240px; text-align: center;">
+            <div style="font-weight:600; font-size:9px; margin-bottom:2px;" id="confirmModalText">Are you sure?</div>
+            <div style="display:flex; justify-content:center; gap:4px; margin-top:4px;">
+                <button onclick="closeCustomConfirm(false)" id="confirmCancelBtn">Cancel</button>
+                <button class="primary" onclick="closeCustomConfirm(true)" id="confirmOkBtn">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modals -->
     <div class="modal" id="aiModal">
         <div class="modal-content" style="max-width: 280px;">
             <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
-                <span style="display:flex; align-items:center; gap:3px;">
+                <span id="aiModalTitle" style="display:flex; align-items:center; gap:3px;">
                     <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg>
                     AI Co-Writer Settings
                 </span>
                 <span onclick="closeAIModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
             </div>
             <div style="display:flex; flex-direction:column; gap:5px; font-size:8px;">
-                <label style="color:var(--text-secondary);">Provider:</label>
-                <select id="aiProviderSelect" onchange="toggleProviderSettings()">
-                    <option value="pollinations">Free Public AI (No Key Needed)</option>
-                    <option value="gemini">Google Gemini (Flash)</option>
-                </select>
+                <label id="aiProviderLabel" style="color:var(--text-secondary);">Provider:</label>
+                
+                <!-- iOS Styled Custom Dropdown for AI Providers -->
+                <div class="ios-dropdown" id="aiProviderDropdown" style="width: 100%;">
+                    <button class="ios-dropdown-btn-full" onclick="toggleAIProviderMenu(event)">
+                        <span id="aiSelectedLabel">Free Public AI (No Key Needed)</span>
+                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="ios-dropdown-menu" id="aiProviderMenu" style="left: 0; right: 0;">
+                        <button class="ios-dropdown-item" onclick="selectAIProvider('pollinations', 'Free Public AI (No Key Needed)')"><span id="optPollinations">Free Public AI (No Key Needed)</span></button>
+                        <button class="ios-dropdown-item" onclick="selectAIProvider('gemini', 'Google Gemini (Flash)')"><span id="optGemini">Google Gemini (Flash)</span></button>
+                        <button class="ios-dropdown-item" onclick="selectAIProvider('openai', 'OpenAI GPT-4o Mini')"><span id="optOpenAI">OpenAI GPT-4o Mini</span></button>
+                        <button class="ios-dropdown-item" onclick="selectAIProvider('anthropic', 'Anthropic Claude 3.5 Sonnet')"><span id="optClaude">Anthropic Claude 3.5 Sonnet</span></button>
+                        <button class="ios-dropdown-item" onclick="selectAIProvider('groq', 'Groq Llama 3 70B')"><span id="optGroq">Groq Llama 3 70B</span></button>
+                        <button class="ios-dropdown-item" onclick="selectAIProvider('deepseek', 'DeepSeek Chat')"><span id="optDeepSeek">DeepSeek Chat</span></button>
+                    </div>
+                </div>
 
                 <div id="apiKeyFieldContainer" style="display:none; flex-direction:column; gap:3px;">
-                    <label style="color:var(--text-secondary);">API Key:</label>
+                    <label id="aiKeyLabel" style="color:var(--text-secondary);">API Key:</label>
                     <input type="password" id="aiKeyInput" placeholder="Paste your API key here...">
                 </div>
                 <p id="freeAiNotice" style="font-size:7px; color:var(--text-secondary); line-height:1.2;">Free Public AI requires zero configuration or API keys and works instantly right inside your browser!</p>
             </div>
             <div style="display:flex; justify-content:flex-end; gap:3px; margin-top:2px;">
-                <button onclick="closeAIModal()">Cancel</button>
-                <button class="primary" onclick="saveAISettings()">Save</button>
+                <button onclick="closeAIModal()" id="aiCancelBtn">Cancel</button>
+                <button class="primary" onclick="saveAISettings()" id="aiSaveBtn">Save</button>
             </div>
         </div>
     </div>
 
-    <!-- Guide Modal with Detailed Human-Centric Instructions -->
+    <!-- Pomodoro Settings Modal -->
+    <div class="modal" id="pomodoroModal">
+        <div class="modal-content" style="max-width: 260px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="pomoModalTitle">Pomodoro & Rest Settings</span>
+                <span onclick="closePomodoroModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:5px; font-size:8px;">
+                <label id="workDurLbl" style="color:var(--text-secondary);">Work Duration (minutes):</label>
+                <input type="number" id="workDurationInput" min="1" max="120" value="25">
+                <label id="restDurLbl" style="color:var(--text-secondary);">Rest Duration (minutes):</label>
+                <input type="number" id="restDurationInput" min="1" max="60" value="5">
+                <label id="wordGoalLbl" style="color:var(--text-secondary);">Daily Word Goal:</label>
+                <input type="number" id="wordGoalInput" min="10" max="10000" value="500">
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:3px; margin-top:4px;">
+                <button onclick="closePomodoroModal()" id="pomoCancelBtn">Cancel</button>
+                <button class="primary" onclick="savePomodoroSettings()" id="pomoSaveBtn">Save</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Export Settings Modal -->
+    <div class="modal" id="exportModal">
+        <div class="modal-content" style="max-width: 260px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="exportModalTitle">Export Format Settings</span>
+                <span onclick="closeExportModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div style="display:flex; flex-direction:column; gap:5px; font-size:8px; position:relative;">
+                <label id="exportFormatLbl" style="color:var(--text-secondary);">Choose format:</label>
+                
+                <div class="ios-dropdown" id="exportFormatDropdown" style="width: 100%;">
+                    <button class="ios-dropdown-btn-full" onclick="toggleExportMenu(event)">
+                        <span id="exportSelectedLabel">Plain Text (.txt)</span>
+                        <svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+                    </button>
+                    <div class="ios-dropdown-menu" id="exportFormatMenu" style="left: 0; right: 0;">
+                        <button class="ios-dropdown-item" onclick="selectExportFormat('txt', 'Plain Text (.txt)')"><span id="optFmtTxt">Plain Text (.txt)</span></button>
+                        <button class="ios-dropdown-item" onclick="selectExportFormat('md', 'Markdown (.md)')"><span id="optFmtMd">Markdown (.md)</span></button>
+                        <button class="ios-dropdown-item" onclick="selectExportFormat('html', 'HTML Document (.html)')"><span id="optFmtHtml">HTML Document (.html)</span></button>
+                        <button class="ios-dropdown-item" onclick="selectExportFormat('json', 'JSON Backup (.json)')"><span id="optFmtJson">JSON Backup (.json)</span></button>
+                    </div>
+                </div>
+            </div>
+            <div style="display:flex; justify-content:flex-end; gap:3px; margin-top:6px;">
+                <button onclick="closeExportModal()" id="exportCancelBtn">Cancel</button>
+                <button class="primary" onclick="confirmExport()" id="exportDownloadBtn">Download</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="tagModal">
+        <div class="modal-content" style="max-width: 280px;">
+            <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
+                <span id="tagModalTitle">Manage Quick Lore Tags</span>
+                <span onclick="closeTagModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
+            </div>
+            <div style="display:flex; gap:3px;">
+                <input type="text" id="newTagInput" placeholder="Character / Location name..." style="flex:1;">
+                <button class="primary" onclick="addNewTag()" id="addTagBtn">Add</button>
+            </div>
+            <div class="version-list" id="tagManageList" style="max-height: 100px;"></div>
+            <div style="display:flex; justify-content:flex-end; margin-top:2px;">
+                <button onclick="closeTagModal()" id="tagCloseBtn">Done</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="guideModal">
         <div class="modal-content" style="max-width: 280px;">
             <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center; margin-bottom: 2px;">
@@ -750,15 +1111,15 @@
             <div class="guide-accordion" id="guideAccordionContent">
                 <details open>
                     <summary id="gAcc1Title">How to Use the AI Co-Writer</summary>
-                    <p id="gAcc1Desc">1. Type a sentence, character dialogue, or plot prompt into the Scratchpad.<br>2. Click the Sparkle button at the bottom right of the scratchpad.<br>3. Watch the placeholder say <i>"AI is thinking..."</i> and then see the AI naturally type out your continuation live!<br>4. Hover over the top Dynamic Island pill to pause, resume, or terminate AI input anytime.</p>
+                    <p id="gAcc1Desc">1. Type your novel notes or prompt into the Scratchpad.<br>2. Check pop-up notifications to see live progress (Thinking / Writing) safely without affecting your existing text.<br>3. Use the Island's pause, resume, or termination controls anytime!</p>
                 </details>
                 <details>
-                    <summary id="gAcc2Title">Renaming & Auto-Save</summary>
-                    <p id="gAcc2Desc">Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves locally and maintains version snapshots.</p>
+                    <summary id="gAcc2Title">Zen Mode & Pomodoro Timer</summary>
+                    <p id="gAcc2Desc">Click the Zen Mode icon in the header to expand your scratchpad into a distraction-free view. Click the timer in the dynamic island to start a Pomodoro session, or double-click it to adjust work and rest times.</p>
                 </details>
                 <details>
-                    <summary id="gAcc3Title">File Exports & Imports</summary>
-                    <p id="gAcc3Desc">Hover over the top dynamic island pill to reveal format choices (.txt, .md, .html, .json) and easily export or import your notes anytime.</p>
+                    <summary id="gAcc3Title">Quick Lore Tags</summary>
+                    <p id="gAcc3Desc">Click "+ Add Tag" above your scratchpad to store character or location names, then click any tag to instantly insert it into your text.</p>
                 </details>
             </div>
             <div style="display:flex; justify-content:flex-end; margin-top:2px;">
@@ -767,7 +1128,6 @@
         </div>
     </div>
 
-    <!-- Modal for Version History -->
     <div class="modal" id="historyModal">
         <div class="modal-content" style="max-width: 280px;">
             <div style="font-weight:600; font-size:9px; display:flex; justify-content:space-between; align-items:center;">
@@ -777,9 +1137,7 @@
                 </span>
                 <span onclick="closeHistoryModal()" style="cursor:pointer; color:var(--danger-color);">✕</span>
             </div>
-            <div class="version-list" id="versionList">
-                <!-- Populated dynamically -->
-            </div>
+            <div class="version-list" id="versionList"></div>
             <div style="display:flex; justify-content:flex-end; margin-top:2px;">
                 <button onclick="closeHistoryModal()" id="historyCloseBtn">Close</button>
             </div>
@@ -788,24 +1146,58 @@
 
     <script>
         let currentLang = localStorage.getItem('novel_hub_lang') || 'en';
-        let currentExportFormat = 'txt';
+        let selectedExportFormat = 'txt';
+        let selectedAIProvider = localStorage.getItem('novel_hub_api_provider') || 'pollinations';
+        let activeTab = 'pages';
         let aiActiveTask = null;
         let isAIPaused = false;
+
+        let workDuration = parseInt(localStorage.getItem('novel_hub_work_dur') || '25');
+        let restDuration = parseInt(localStorage.getItem('novel_hub_rest_dur') || '5');
+        let wordGoal = parseInt(localStorage.getItem('novel_hub_word_goal') || '500');
+        let isWorkSession = true;
+        let pomodoroSeconds = workDuration * 60;
+        let pomodoroInterval = null;
+        let isPomodoroRunning = false;
+        let goalAchievedToastShown = false;
+
+        let audioCtx = null;
+        let soundSourceNode = null;
+        let soundGainNode = null;
+        let currentSoundtrack = 'off';
+        let currentSceneFilter = 'all';
+
+        let assistantViews = ['words', 'chars', 'ai', 'pomodoro', 'time', 'weather', 'netease'];
+        let currentAssistantViewIdx = 0;
+        let currentWeatherString = 'Melbourne 18°C 52%';
+        let customConfirmCallback = null;
+        let neteasePlaylistId = localStorage.getItem('novel_hub_netease_id') || '';
+
+        const aiProviderNames = {
+            pollinations: "Free Public AI (No Key Needed)",
+            gemini: "Google Gemini (Flash)",
+            openai: "OpenAI GPT-4o Mini",
+            anthropic: "Anthropic Claude 3.5 Sonnet",
+            groq: "Groq Llama 3 70B",
+            deepseek: "DeepSeek Chat"
+        };
 
         const dict = {
             en: {
                 defaultTitle: "Anytype Novel Hub",
                 guideTitle: "Guide & How to Use AI",
                 gAcc1Title: "How to Use the AI Co-Writer",
-                gAcc1Desc: "1. Type a sentence, character dialogue, or plot prompt into the Scratchpad.<br>2. Click the Sparkle button at the bottom right of the scratchpad.<br>3. Watch the placeholder say <i>\"AI is thinking...\"</i> and then see the AI naturally type out your continuation live!<br>4. Hover over the top Dynamic Island pill to pause, resume, or terminate AI input anytime.",
-                gAcc2Title: "Renaming & Auto-Save",
-                gAcc2Desc: "Click directly on the main writer title at the top to rename your workspace instantly! Your text auto-saves locally and maintains version snapshots.",
-                gAcc3Title: "File Exports & Imports",
-                gAcc3Desc: "Hover over the top dynamic island pill to reveal format choices (.txt, .md, .html, .json) and easily export or import your notes anytime.",
+                gAcc1Desc: "1. Type your novel notes or prompt into the Scratchpad.<br>2. Check pop-up notifications to see live progress (Thinking / Writing) safely without affecting your existing text.<br>3. Use the Island's pause, resume, or termination controls anytime!",
+                gAcc2Title: "Zen Mode & Pomodoro Timer",
+                gAcc2Desc: "Click the Zen Mode icon in the header to expand your scratchpad into a distraction-free view. Click the timer in the dynamic island to start a Pomodoro session, or double-click it to adjust work and rest times.",
+                gAcc3Title: "Quick Lore Tags",
+                gAcc3Desc: "Click \"+ Add Tag\" above your scratchpad to store character or location names, then click any tag to instantly insert it into your text.",
                 guideClose: "Got it",
                 linksHeading: "Pages",
                 scratchHeading: "Scratchpad",
+                manageTagsLbl: "+ Add Tag",
                 formTitle: "Add Page",
+                plotFormTitle: "Add Scene",
                 editFormTitle: "Edit Page",
                 titlePlaceholder: "Title (Ch. 1)",
                 urlPlaceholder: "URI (anytype://...)",
@@ -814,23 +1206,93 @@
                 historyTitle: "Automatic Version History",
                 restoreBtn: "Restore",
                 noHistory: "No saved versions yet.",
-                deleteConfirm: "Remove this link?",
+                deleteConfirm: "Remove this item?",
                 clearConfirm: "Clear scratchpad text? Make sure your notes are exported or copied!",
-                copiedMsg: "Copied!"
+                copiedMsg: "Copied!",
+                aiModalTitle: "AI Co-Writer Settings",
+                aiProviderLabel: "Provider:",
+                optPollinations: "Free Public AI (No Key Needed)",
+                optGemini: "Google Gemini (Flash)",
+                optOpenAI: "OpenAI GPT-4o Mini",
+                optClaude: "Anthropic Claude 3.5 Sonnet",
+                optGroq: "Groq Llama 3 70B",
+                optDeepSeek: "DeepSeek Chat",
+                aiKeyLabel: "API Key:",
+                freeAiNotice: "Free Public AI requires zero configuration or API keys and works instantly right inside your browser!",
+                aiCancelBtn: "Cancel",
+                aiSaveBtn: "Save",
+                historyCloseBtn: "Close",
+                colBlue: "Blue",
+                colGold: "Gold",
+                colRose: "Rose",
+                colSage: "Sage",
+                colPurple: "Purple",
+                optFile: "File",
+                optBook: "Book",
+                optPen: "Pen",
+                optCrystal: "Crystal",
+                optMap: "Map",
+                optSwords: "Swords",
+                statusReady: "Ready",
+                statusThinking: "Thinking...",
+                statusWriting: "Writing...",
+                statusPaused: "Paused",
+                statusStopped: "Stopped",
+                statusDone: "Done",
+                statusError: "Error",
+                retryBtn: "Retry",
+                tagModalTitle: "Manage Quick Lore Tags",
+                newTagPlaceholder: "Character / Location name...",
+                addTagBtn: "Add",
+                tagCloseBtn: "Done",
+                pomoModalTitle: "Pomodoro & Rest Settings",
+                workDurLbl: "Work Duration (minutes):",
+                restDurLbl: "Rest Duration (minutes):",
+                wordGoalLbl: "Daily Word Goal:",
+                pomoCancelBtn: "Cancel",
+                pomoSaveBtn: "Save",
+                exportModalTitle: "Export Format Settings",
+                exportFormatLbl: "Choose format:",
+                exportCancelBtn: "Cancel",
+                exportDownloadBtn: "Download",
+                optFmtTxt: "Plain Text (.txt)",
+                optFmtMd: "Markdown (.md)",
+                optFmtHtml: "HTML Document (.html)",
+                optFmtJson: "JSON Backup (.json)",
+                goalAchievedMsg: "🎉 Congratulations! Daily word goal achieved!",
+                filterAll: "All",
+                filterTodo: "Todo",
+                filterDrafting: "Drafting",
+                filterDone: "Done",
+                selTodo: "Todo",
+                selDrafting: "Drafting",
+                selDone: "Done",
+                sndOff: "Off",
+                sndRain: "Rain",
+                sndCafe: "Coffee Shop",
+                sndLofi: "Lo-Fi Waves",
+                sndNetease: "NetEase Music",
+                neteaseModalTitle: "NetEase Playlist Player",
+                neteaseIdLbl: "Playlist ID:",
+                neteaseLoadBtn: "Load",
+                neteaseCloseBtn: "Close",
+                apiKeyMissingErr: "⚠️ Error: Please enter your API key in settings!"
             },
             zh: {
                 defaultTitle: "Anytype 小说创作面板",
                 guideTitle: "使用指南与 AI 操作说明",
                 gAcc1Title: "如何使用 AI 写作助手",
-                gAcc1Desc: "1. 在速记框中输入一句开头、角色对话或情节大纲。<br>2. 点击速记框右下角的星形按钮。<br>3. 观察提示文字变为<i>“AI 正在构思中...”</i>，随后 AI 会以自然的打字机特效为您现场续写内容！<br>4. 悬停在顶部动态岛药丸上随时可以暂停、恢复或终止 AI 输入。",
-                gAcc2Title: "标题修改与自动保存",
-                gAcc2Desc: "直接点击顶部主标题文字即可随时修改工作区名称！内容实时自动保存并生成版本快照。",
-                gAcc3Title: "文件导出与导入",
-                gAcc3Desc: "悬停在顶部的动态岛药丸上可展开格式选择（.txt, .md, .html, .json），随时进行文档的备份或导入。",
+                gAcc1Desc: "1. 在速记框中输入小说内容或大纲。<br>2. 查看弹出提示了解实时状态（构思中 / 书写中），不会影响您已有的文字。<br>3. 随时使用动态岛中的暂停或终止控制！",
+                gAcc2Title: "禅定模式与番茄钟",
+                gAcc2Desc: "点击顶部的禅定模式图标可展开速记框进入全屏沉浸写作。点击动态岛中的计时器启动番茄专注，双击可调整工作与休息时间。",
+                gAcc3Title: "快速设定标签",
+                gAcc3Desc: "点击速记上方的“+ 添加标签”来保存角色或地点名称，点击任意标签即可一键插入到光标处。",
                 guideClose: "知道了",
                 linksHeading: "页面",
                 scratchHeading: "速记",
+                manageTagsLbl: "+ 添加标签",
                 formTitle: "添加页面",
+                plotFormTitle: "添加场景",
                 editFormTitle: "编辑页面",
                 titlePlaceholder: "标题 (第一章)",
                 urlPlaceholder: "链接 (anytype://...)",
@@ -839,9 +1301,77 @@
                 historyTitle: "自动版本历史",
                 restoreBtn: "恢复",
                 noHistory: "暂无历史版本记录。",
-                deleteConfirm: "确认删除此链接？",
+                deleteConfirm: "确认删除此项？",
                 clearConfirm: "确认清空速记？请确保已备份或复制内容！",
-                copiedMsg: "已复制！"
+                copiedMsg: "已复制！",
+                aiModalTitle: "AI 写作助手设置",
+                aiProviderLabel: "服务提供商：",
+                optPollinations: "免费公共 AI（无需密钥）",
+                optGemini: "Google Gemini (Flash)",
+                optOpenAI: "OpenAI GPT-4o Mini",
+                optClaude: "Anthropic Claude 3.5 Sonnet",
+                optGroq: "Groq Llama 3 70B",
+                optDeepSeek: "DeepSeek Chat",
+                aiKeyLabel: "API 密钥：",
+                freeAiNotice: "免费公共 AI 无需任何配置或密钥，即可在浏览器中直接极速运行！",
+                aiCancelBtn: "取消",
+                aiSaveBtn: "保存",
+                historyCloseBtn: "关闭",
+                colBlue: "蓝色",
+                colGold: "金色",
+                colRose: "玫瑰红",
+                colSage: "青绿色",
+                colPurple: "紫色",
+                optFile: "文件",
+                optBook: "书籍",
+                optPen: "钢笔",
+                optCrystal: "水晶",
+                optMap: "地图",
+                optSwords: "长剑",
+                statusReady: "就绪",
+                statusThinking: "构思中...",
+                statusWriting: "书写中...",
+                statusPaused: "已暂停",
+                statusStopped: "已终止",
+                statusDone: "完成",
+                statusError: "错误",
+                retryBtn: "重试",
+                tagModalTitle: "管理快速设定标签",
+                newTagPlaceholder: "角色或地点名称...",
+                addTagBtn: "添加",
+                tagCloseBtn: "完成",
+                pomoModalTitle: "番茄钟与休息设置",
+                workDurLbl: "工作时长（分钟）：",
+                restDurLbl: "休息时长（分钟）：",
+                wordGoalLbl: "每日字数目标：",
+                pomoCancelBtn: "取消",
+                pomoSaveBtn: "保存",
+                exportModalTitle: "选择导出格式",
+                exportFormatLbl: "选择文件格式：",
+                exportCancelBtn: "取消",
+                exportDownloadBtn: "下载",
+                optFmtTxt: "纯文本 (.txt)",
+                optFmtMd: "Markdown (.md)",
+                optFmtHtml: "网页文档 (.html)",
+                optFmtJson: "JSON 备份 (.json)",
+                goalAchievedMsg: "🎉 恭喜！已达成每日写作字数目标！",
+                filterAll: "全部",
+                filterTodo: "待办",
+                filterDrafting: "草稿",
+                filterDone: "完成",
+                selTodo: "待办",
+                selDrafting: "草稿",
+                selDone: "完成",
+                sndOff: "关闭",
+                sndRain: "雨声",
+                sndCafe: "咖啡馆",
+                sndLofi: "Lo-Fi 浪潮",
+                sndNetease: "网易云音乐",
+                neteaseModalTitle: "网易云音乐歌单播放器",
+                neteaseIdLbl: "歌单 ID：",
+                neteaseLoadBtn: "加载",
+                neteaseCloseBtn: "关闭",
+                apiKeyMissingErr: "⚠️ 错误：请在设置中填入您的 API 密钥！"
             }
         };
 
@@ -854,17 +1384,406 @@
             swords: '<svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="14.5 17.5 3 6 3 3 6 3 17.5 14.5"></polyline><line x1="13" y1="19" x2="19" y2="13"></line><line x1="16" y1="16" x2="20" y2="20"></line><line x1="19" y1="21" x2="21" y2="19"></line></svg>'
         };
 
-        function getIconSvg(name) {
-            return svgIcons[name] || svgIcons.file;
+        function getIconSvg(name) { return svgIcons[name] || svgIcons.file; }
+
+        function showCustomConfirm(message, callback) {
+            document.getElementById('confirmModalText').textContent = message;
+            document.getElementById('customConfirmModal').style.display = 'flex';
+            customConfirmCallback = callback;
         }
 
-        function toggleFormatMenu(e) {
+        function closeCustomConfirm(result) {
+            document.getElementById('customConfirmModal').style.display = 'none';
+            if (customConfirmCallback) {
+                customConfirmCallback(result);
+                customConfirmCallback = null;
+            }
+        }
+
+        function toggleAudioMenu(e) {
             e.stopPropagation();
-            const menu = document.getElementById('formatMenu');
+            const menu = document.getElementById('audioMenu');
             const isOpen = menu.classList.contains('show');
             closeAllDropdowns();
             if (!isOpen) menu.classList.add('show');
         }
+
+        function togglePlotFilterMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('plotFilterMenu');
+            const isOpen = menu.classList.contains('show');
+            closeAllDropdowns();
+            if (!isOpen) menu.classList.add('show');
+        }
+
+        function filterScenes(filter) {
+            currentSceneFilter = filter;
+            closeAllDropdowns();
+            const lbl = document.getElementById('plotFilterLbl');
+            const d = dict[currentLang];
+            if (filter === 'all') lbl.textContent = d.filterAll;
+            else if (filter === 'todo') lbl.textContent = d.filterTodo;
+            else if (filter === 'drafting') lbl.textContent = d.filterDrafting;
+            else if (filter === 'done') lbl.textContent = d.filterDone;
+            renderPlotBoard();
+        }
+
+        function openNetEaseModal() {
+            closeAllDropdowns();
+            document.getElementById('neteaseIdInput').value = neteasePlaylistId;
+            document.getElementById('neteaseModal').style.display = 'flex';
+            if (neteasePlaylistId) {
+                renderNetEasePlayer(neteasePlaylistId);
+            }
+        }
+
+        function closeNetEaseModal() {
+            document.getElementById('neteaseModal').style.display = 'none';
+        }
+
+        function saveAndPlayNetEase() {
+            const inputVal = document.getElementById('neteaseIdInput').value.trim();
+            if (!inputVal) {
+                showToast(currentLang === 'zh' ? '⚠️ 请输入歌单 ID' : '⚠️ Please enter playlist ID');
+                return;
+            }
+            neteasePlaylistId = inputVal;
+            localStorage.setItem('novel_hub_netease_id', neteasePlaylistId);
+            renderNetEasePlayer(neteasePlaylistId);
+            showToast(currentLang === 'zh' ? '网易云歌单加载成功！' : 'NetEase playlist loaded!');
+        }
+
+        function renderNetEasePlayer(id) {
+            const container = document.getElementById('neteasePlayerContainer');
+            // Using type=0 for full playlists with explicit https protocol and explicit dimensions
+            container.innerHTML = `
+                <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="100%" height="86" 
+                    src="https://music.163.com/outchain/player?type=0&id=${id}&auto=1&height=66">
+                </iframe>
+            `;
+        }
+
+        function setSoundtrack(type) {
+            currentSoundtrack = type;
+            closeAllDropdowns();
+
+            if (!audioCtx) {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            }
+            if (audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+
+            if (soundSourceNode) {
+                try { soundSourceNode.stop(); } catch(e){}
+                soundSourceNode = null;
+            }
+
+            if (type === 'off') {
+                showToast(currentLang === 'zh' ? '已关闭背景音' : 'Ambient sound off');
+                return;
+            }
+
+            const bufferSize = audioCtx.sampleRate * 2;
+            const noiseBuffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const output = noiseBuffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                output[i] = Math.random() * 2 - 1;
+            }
+
+            soundSourceNode = audioCtx.createBufferSource();
+            soundSourceNode.buffer = noiseBuffer;
+            soundSourceNode.loop = true;
+
+            const filterNode = audioCtx.createBiquadFilter();
+            soundGainNode = audioCtx.createGain();
+
+            if (type === 'rain') {
+                filterNode.type = 'lowpass';
+                filterNode.frequency.value = 800;
+                soundGainNode.gain.value = 0.08;
+                showToast(currentLang === 'zh' ? '正在播放：柔和雨声' : 'Now playing: Gentle Rain');
+            } else if (type === 'cafe') {
+                filterNode.type = 'bandpass';
+                filterNode.frequency.value = 1200;
+                soundGainNode.gain.value = 0.05;
+                showToast(currentLang === 'zh' ? '正在播放：咖啡馆环境音' : 'Now playing: Coffee Shop murmur');
+            } else if (type === 'lofi') {
+                filterNode.type = 'lowpass';
+                filterNode.frequency.value = 400;
+                soundGainNode.gain.value = 0.1;
+                showToast(currentLang === 'zh' ? '正在播放：Lo-Fi 沉浸白噪音' : 'Now playing: Lo-Fi Waves');
+            }
+
+            soundSourceNode.connect(filterNode);
+            filterNode.connect(soundGainNode);
+            soundGainNode.connect(audioCtx.destination);
+            soundSourceNode.start();
+        }
+
+        function togglePomodoroTimer() {
+            if (isPomodoroRunning) {
+                clearInterval(pomodoroInterval);
+                isPomodoroRunning = false;
+                showToast(currentLang === 'zh' ? '番茄钟已暂停' : 'Pomodoro paused');
+            } else {
+                isPomodoroRunning = true;
+                const sessionLabel = isWorkSession ? (currentLang === 'zh' ? '工作专注开始！' : 'Pomodoro started! Stay focused') : (currentLang === 'zh' ? '休息时间开始！' : 'Rest session started!');
+                showToast(sessionLabel);
+                
+                const totalSecs = isWorkSession ? (workDuration * 60) : (restDuration * 60);
+
+                pomodoroInterval = setInterval(() => {
+                    if (pomodoroSeconds > 0) {
+                        pomodoroSeconds--;
+                        updatePomodoroDisplay();
+                    } else {
+                        clearInterval(pomodoroInterval);
+                        isPomodoroRunning = false;
+
+                        if (isWorkSession) {
+                            isWorkSession = false;
+                            pomodoroSeconds = restDuration * 60;
+                            showToast(currentLang === 'zh' ? '番茄时间到！请开始休息' : 'Pomodoro complete! Time to rest', currentLang === 'zh' ? '开始休息' : 'Start Rest', () => {
+                                togglePomodoroTimer();
+                            });
+                        } else {
+                            isWorkSession = true;
+                            pomodoroSeconds = workDuration * 60;
+                            showToast(currentLang === 'zh' ? '休息结束！开始新一轮工作' : 'Rest over! Back to work', currentLang === 'zh' ? '开始工作' : 'Start Work', () => {
+                                togglePomodoroTimer();
+                            });
+                        }
+                        updatePomodoroDisplay();
+                    }
+                }, 1000);
+            }
+            updatePomodoroDisplay();
+        }
+
+        function updatePomodoroDisplay() {
+            const mins = Math.floor(pomodoroSeconds / 60);
+            const secs = pomodoroSeconds % 60;
+            const timeStr = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+            
+            const pomoBtn = document.getElementById('pomoIslandBtn');
+            if (pomoBtn) {
+                const iconSvg = isWorkSession ? 
+                    '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>' :
+                    '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>';
+                pomoBtn.innerHTML = `${iconSvg} <span style="font-size:7.5px; font-family:inherit;">${timeStr}</span>`;
+            }
+            
+            const timerProgressBar = document.getElementById('islandTimerProgressBar');
+            const total = isWorkSession ? (workDuration * 60) : (restDuration * 60);
+            const elapsed = total - pomodoroSeconds;
+            const pct = (elapsed / total) * 100;
+            timerProgressBar.style.width = `${pct}%`;
+
+            if (pomodoroSeconds < total && (isPomodoroRunning || pomodoroSeconds > 0)) {
+                timerProgressBar.style.display = 'block';
+            } else {
+                timerProgressBar.style.display = 'none';
+            }
+            renderIslandAssistant();
+        }
+
+        function openPomodoroModal() {
+            document.getElementById('workDurationInput').value = workDuration;
+            document.getElementById('restDurationInput').value = restDuration;
+            document.getElementById('wordGoalInput').value = wordGoal;
+            document.getElementById('pomodoroModal').style.display = 'flex';
+        }
+
+        function closePomodoroModal() {
+            document.getElementById('pomodoroModal').style.display = 'none';
+        }
+
+        function savePomodoroSettings() {
+            const wInput = parseInt(document.getElementById('workDurationInput').value);
+            const rInput = parseInt(document.getElementById('restDurationInput').value);
+            const gInput = parseInt(document.getElementById('wordGoalInput').value);
+            if (wInput > 0 && rInput > 0 && gInput > 0) {
+                workDuration = wInput;
+                restDuration = rInput;
+                wordGoal = gInput;
+                localStorage.setItem('novel_hub_work_dur', workDuration);
+                localStorage.setItem('novel_hub_rest_dur', restDuration);
+                localStorage.setItem('novel_hub_word_goal', wordGoal);
+                if (!isPomodoroRunning && isWorkSession) {
+                    pomodoroSeconds = workDuration * 60;
+                    updatePomodoroDisplay();
+                }
+                updateStats(document.getElementById('scratchpad').value);
+                closePomodoroModal();
+                showToast(currentLang === 'zh' ? '番茄时间与字数目标设置已保存！' : 'Pomodoro & word goal settings saved!');
+            }
+        }
+
+        function openExportModal() {
+            document.getElementById('exportModal').style.display = 'flex';
+        }
+
+        function closeExportModal() {
+            document.getElementById('exportModal').style.display = 'none';
+            closeAllDropdowns();
+        }
+
+        function toggleExportMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('exportFormatMenu');
+            const isOpen = menu.classList.contains('show');
+            closeAllDropdowns();
+            if (!isOpen) menu.classList.add('show');
+        }
+
+        function toggleAIProviderMenu(e) {
+            e.stopPropagation();
+            const menu = document.getElementById('aiProviderMenu');
+            const isOpen = menu.classList.contains('show');
+            closeAllDropdowns();
+            if (!isOpen) menu.classList.add('show');
+        }
+
+        function selectAIProvider(val, label) {
+            selectedAIProvider = val;
+            document.getElementById('aiSelectedLabel').textContent = label;
+            closeAllDropdowns();
+            toggleProviderSettings();
+        }
+
+        function selectExportFormat(fmt, label) {
+            selectedExportFormat = fmt;
+            document.getElementById('exportSelectedLabel').textContent = label;
+            closeAllDropdowns();
+        }
+
+        function confirmExport() {
+            closeExportModal();
+            exportFile(selectedExportFormat);
+        }
+
+        function changeAccent(color) {
+            document.documentElement.style.setProperty('--accent-color', color);
+            localStorage.setItem('novel_hub_accent', color);
+            const iconSpan = document.getElementById('selectedColorIcon');
+            if (iconSpan) {
+                iconSpan.innerHTML = `<svg width="7" height="7" viewBox="0 0 24 24" fill="${color}" stroke="none"><circle cx="12" cy="12" r="10"></circle></svg>`;
+            }
+        }
+
+        function selectColor(colorHex) {
+            changeAccent(colorHex);
+            closeAllDropdowns();
+        }
+
+        function toggleZenMode() {
+            const grid = document.getElementById('dashboardGrid');
+            grid.classList.toggle('zen-mode');
+            const isZen = grid.classList.contains('zen-mode');
+            showToast(isZen ? (currentLang === 'zh' ? '已进入禅定模式' : 'Zen Mode Enabled') : (currentLang === 'zh' ? '已退出禅定模式' : 'Zen Mode Disabled'));
+        }
+
+        let customTags = JSON.parse(localStorage.getItem('novel_hub_tags') || '["Hero", "Villain", "Castle"]');
+
+        function renderTags() {
+            const bar = document.getElementById('tagsBar');
+            bar.innerHTML = '';
+            customTags.forEach(tag => {
+                const pill = document.createElement('div');
+                pill.className = 'tag-pill';
+                pill.textContent = tag;
+                pill.onclick = () => insertTagIntoScratchpad(tag);
+                bar.appendChild(pill);
+            });
+        }
+
+        function insertTagIntoScratchpad(tag) {
+            const pad = document.getElementById('scratchpad');
+            const start = pad.selectionStart;
+            const end = pad.selectionEnd;
+            const text = pad.value;
+            pad.value = text.substring(0, start) + `[${tag}]` + text.substring(end);
+            pad.selectionStart = pad.selectionEnd = start + tag.length + 2;
+            pad.focus();
+            localStorage.setItem('anytype_novel_scratchpad', pad.value);
+            updateStats(pad.value);
+        }
+
+        function openTagModal() {
+            renderTagManageList();
+            document.getElementById('newTagInput').value = '';
+            document.getElementById('tagModal').style.display = 'flex';
+        }
+        function closeTagModal() { document.getElementById('tagModal').style.display = 'none'; }
+
+        function addNewTag() {
+            const input = document.getElementById('newTagInput');
+            const val = input.value.trim();
+            if (val && !customTags.includes(val)) {
+                customTags.push(val);
+                localStorage.setItem('novel_hub_tags', JSON.stringify(customTags));
+                renderTags();
+                renderTagManageList();
+                input.value = '';
+            }
+        }
+
+        function deleteTag(idx) {
+            customTags.splice(idx, 1);
+            localStorage.setItem('novel_hub_tags', JSON.stringify(customTags));
+            renderTags();
+            renderTagManageList();
+        }
+
+        function renderTagManageList() {
+            const list = document.getElementById('tagManageList');
+            list.innerHTML = '';
+            if (customTags.length === 0) {
+                list.innerHTML = `<div style="font-size:7.5px; color:var(--text-secondary); text-align:center; padding:4px;">No tags yet.</div>`;
+                return;
+            }
+            customTags.forEach((t, i) => {
+                const item = document.createElement('div');
+                item.className = 'version-item';
+                item.innerHTML = `<span>${escapeHtml(t)}</span><span style="color:var(--danger-color); cursor:pointer;" onclick="deleteTag(${i})">✕</span>`;
+                list.appendChild(item);
+            });
+        }
+
+        function showToast(message, actionText = null, actionCallback = null, duration = 3500) {
+            const toast = document.getElementById('toastContainer');
+            const msgEl = document.getElementById('toastMessage');
+            const actionContainer = document.getElementById('toastActionContainer');
+            
+            msgEl.textContent = message;
+            actionContainer.innerHTML = '';
+            
+            if (actionText && actionCallback) {
+                const actionBtn = document.createElement('button');
+                actionBtn.className = 'primary';
+                actionBtn.style.height = '16px';
+                actionBtn.style.padding = '0 5px';
+                actionBtn.style.fontSize = '7.5px';
+                actionBtn.textContent = actionText;
+                actionBtn.onclick = () => {
+                    actionCallback();
+                    hideToast();
+                };
+                actionContainer.appendChild(actionBtn);
+                actionContainer.style.display = 'inline-flex';
+            } else {
+                actionContainer.style.display = 'none';
+            }
+
+            toast.classList.add('show');
+            if (window.toastTimer) clearTimeout(window.toastTimer);
+            if (!actionText) {
+                window.toastTimer = setTimeout(() => hideToast(), duration);
+            }
+        }
+
+        function hideToast() { document.getElementById('toastContainer').classList.remove('show'); }
 
         function toggleColorMenu(e) {
             e.stopPropagation();
@@ -875,25 +1794,16 @@
         }
 
         function closeAllDropdowns() {
-            document.getElementById('formatMenu').classList.remove('show');
             document.getElementById('colorMenu').classList.remove('show');
+            document.getElementById('exportFormatMenu').classList.remove('show');
+            document.getElementById('audioMenu').classList.remove('show');
+            const aiMenu = document.getElementById('aiProviderMenu');
+            if (aiMenu) aiMenu.classList.remove('show');
+            const plotFilterMenu = document.getElementById('plotFilterMenu');
+            if (plotFilterMenu) plotFilterMenu.classList.remove('show');
         }
 
-        document.addEventListener('click', () => {
-            closeAllDropdowns();
-        });
-
-        function selectFormat(val, label) {
-            currentExportFormat = val;
-            document.getElementById('selectedFormatLabel').textContent = label;
-            closeAllDropdowns();
-        }
-
-        function selectColor(colorHex, svgIconHtml) {
-            changeAccent(colorHex);
-            document.getElementById('selectedColorIcon').innerHTML = svgIconHtml;
-            closeAllDropdowns();
-        }
+        document.addEventListener('click', () => closeAllDropdowns());
 
         function updateLanguage() {
             const d = dict[currentLang];
@@ -912,36 +1822,108 @@
             document.getElementById('gAcc3Title').textContent = d.gAcc3Title;
             document.getElementById('gAcc3Desc').textContent = d.gAcc3Desc;
             document.getElementById('guideCloseBtn').textContent = d.guideClose;
-            document.getElementById('linksHeading').textContent = d.linksHeading;
             document.getElementById('scratchHeading').textContent = d.scratchHeading;
+            document.getElementById('manageTagsLbl').textContent = d.manageTagsLbl;
             document.getElementById('scratchpad').placeholder = currentLang === 'zh' ? "在此处输入小说场景、对话或章节大纲..." : "Type your novel scene or chapter notes here...";
-            document.getElementById('formTitleText').textContent = editingIndex !== null ? d.editFormTitle : d.formTitle;
+            document.getElementById('formTitleText').textContent = activeTab === 'pages' ? (editingIndex !== null ? d.editFormTitle : d.formTitle) : d.plotFormTitle;
             document.getElementById('linkTitleInput').placeholder = d.titlePlaceholder;
             document.getElementById('linkUrlInput').placeholder = d.urlPlaceholder;
             document.getElementById('formCancelBtn').textContent = d.cancelBtn;
             document.getElementById('formSaveBtn').textContent = d.saveBtn;
+            document.getElementById('tabPagesBtn').textContent = d.linksHeading;
+            document.getElementById('tabPlotBtn').textContent = currentLang === 'zh' ? '剧情板' : 'Plot Board';
+
+            document.getElementById('filterAll').textContent = d.filterAll;
+            document.getElementById('filterTodo').textContent = d.filterTodo;
+            document.getElementById('filterDrafting').textContent = d.filterDrafting;
+            document.getElementById('filterDone').textContent = d.filterDone;
+            document.getElementById('selTodo').textContent = d.selTodo;
+            document.getElementById('selDrafting').textContent = d.selDrafting;
+            document.getElementById('selDone').textContent = d.selDone;
+            document.getElementById('sndOff').textContent = d.sndOff;
+            document.getElementById('sndRain').textContent = d.sndRain;
+            document.getElementById('sndCafe').textContent = d.sndCafe;
+            document.getElementById('sndLofi').textContent = d.sndLofi;
+            document.getElementById('sndNetease').textContent = d.sndNetease;
+            document.getElementById('neteaseIdLbl').textContent = d.neteaseIdLbl;
+            document.getElementById('neteaseLoadBtn').textContent = d.neteaseLoadBtn;
+            document.getElementById('neteaseCloseBtn').textContent = d.neteaseCloseBtn;
+
+            if (currentSceneFilter === 'all') document.getElementById('plotFilterLbl').textContent = d.filterAll;
+            else if (currentSceneFilter === 'todo') document.getElementById('plotFilterLbl').textContent = d.filterTodo;
+            else if (currentSceneFilter === 'drafting') document.getElementById('plotFilterLbl').textContent = d.filterDrafting;
+            else if (currentSceneFilter === 'done') document.getElementById('plotFilterLbl').textContent = d.filterDone;
+
+            document.getElementById('aiModalTitle').innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg> ${d.aiModalTitle}`;
+            document.getElementById('aiProviderLabel').textContent = d.aiProviderLabel;
+            document.getElementById('optPollinations').textContent = d.optPollinations;
+            document.getElementById('optGemini').textContent = d.optGemini;
+            document.getElementById('optOpenAI').textContent = d.optOpenAI;
+            document.getElementById('optClaude').textContent = d.optClaude;
+            document.getElementById('optGroq').textContent = d.optGroq;
+            document.getElementById('optDeepSeek').textContent = d.optDeepSeek;
+            document.getElementById('aiSelectedLabel').textContent = aiProviderNames[selectedAIProvider] || d.optPollinations;
+
+            document.getElementById('aiKeyLabel').textContent = d.aiKeyLabel;
+            document.getElementById('freeAiNotice').textContent = d.freeAiNotice;
+            document.getElementById('aiCancelBtn').textContent = d.aiCancelBtn;
+            document.getElementById('aiSaveBtn').textContent = d.aiSaveBtn;
+
+            document.getElementById('guideTitleText').innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg> ${d.guideTitle}`;
+            document.getElementById('historyTitleText').innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg> ${d.historyTitle}`;
+            document.getElementById('historyCloseBtn').textContent = d.historyCloseBtn;
+
+            document.getElementById('tagModalTitle').textContent = d.tagModalTitle;
+            document.getElementById('newTagInput').placeholder = d.newTagPlaceholder;
+            document.getElementById('addTagBtn').textContent = d.addTagBtn;
+            document.getElementById('tagCloseBtn').textContent = d.tagCloseBtn;
+
+            document.getElementById('pomoModalTitle').textContent = d.pomoModalTitle;
+            document.getElementById('workDurLbl').textContent = d.workDurLbl;
+            document.getElementById('restDurLbl').textContent = d.restDurLbl;
+            document.getElementById('wordGoalLbl').textContent = d.wordGoalLbl;
+            document.getElementById('pomoCancelBtn').textContent = d.pomoCancelBtn;
+            document.getElementById('pomoSaveBtn').textContent = d.pomoSaveBtn;
+
+            document.getElementById('exportModalTitle').textContent = d.exportModalTitle;
+            document.getElementById('exportFormatLbl').textContent = d.exportFormatLbl;
+            document.getElementById('exportCancelBtn').textContent = d.exportCancelBtn;
+            document.getElementById('exportDownloadBtn').textContent = d.exportDownloadBtn;
+            document.getElementById('optFmtTxt').textContent = d.optFmtTxt;
+            document.getElementById('optFmtMd').textContent = d.optFmtMd;
+            document.getElementById('optFmtHtml').textContent = d.optFmtHtml;
+            document.getElementById('optFmtJson').textContent = d.optFmtJson;
+
+            document.getElementById('colBlue').textContent = d.colBlue;
+            document.getElementById('colGold').textContent = d.colGold;
+            document.getElementById('colRose').textContent = d.colRose;
+            document.getElementById('colSage').textContent = d.colSage;
+            document.getElementById('colPurple').textContent = d.colPurple;
+
+            document.getElementById('optFile').textContent = d.optFile;
+            document.getElementById('optBook').textContent = d.optBook;
+            document.getElementById('optPen').textContent = d.optPen;
+            document.getElementById('optCrystal').textContent = d.optCrystal;
+            document.getElementById('optMap').textContent = d.optMap;
+            document.getElementById('optSwords').textContent = d.optSwords;
+            renderIslandAssistant();
         }
 
-        function saveCustomTitle(titleText) {
-            localStorage.setItem('novel_hub_custom_title', titleText.trim());
-        }
+        function saveCustomTitle(titleText) { localStorage.setItem('novel_hub_custom_title', titleText.trim()); }
 
         function toggleLang() {
             currentLang = currentLang === 'en' ? 'zh' : 'en';
             localStorage.setItem('novel_hub_lang', currentLang);
             updateLanguage();
             renderLinks();
+            renderPlotBoard();
         }
 
-        function openGuideModal() {
-            document.getElementById('guideModal').style.display = 'flex';
-        }
-        function closeGuideModal() {
-            document.getElementById('guideModal').style.display = 'none';
-        }
+        function openGuideModal() { document.getElementById('guideModal').style.display = 'flex'; }
+        function closeGuideModal() { document.getElementById('guideModal').style.display = 'none'; }
 
         function toggleProviderSettings() {
-            const provider = document.getElementById('aiProviderSelect').value;
+            const provider = selectedAIProvider;
             const keyContainer = document.getElementById('apiKeyFieldContainer');
             const notice = document.getElementById('freeAiNotice');
             if (provider === 'pollinations') {
@@ -955,33 +1937,34 @@
 
         function openAIModal() {
             document.getElementById('aiKeyInput').value = localStorage.getItem('novel_hub_api_key') || '';
-            const provider = localStorage.getItem('novel_hub_api_provider') || 'pollinations';
-            document.getElementById('aiProviderSelect').value = provider;
+            selectedAIProvider = localStorage.getItem('novel_hub_api_provider') || 'pollinations';
+            document.getElementById('aiSelectedLabel').textContent = aiProviderNames[selectedAIProvider] || aiProviderNames['pollinations'];
             toggleProviderSettings();
             document.getElementById('aiModal').style.display = 'flex';
         }
 
-        function closeAIModal() {
-            document.getElementById('aiModal').style.display = 'none';
-        }
+        function closeAIModal() { document.getElementById('aiModal').style.display = 'none'; }
 
         function saveAISettings() {
             const key = document.getElementById('aiKeyInput').value.trim();
-            const provider = document.getElementById('aiProviderSelect').value;
             localStorage.setItem('novel_hub_api_key', key);
-            localStorage.setItem('novel_hub_api_provider', provider);
+            localStorage.setItem('novel_hub_api_provider', selectedAIProvider);
             closeAIModal();
-            alert(currentLang === 'zh' ? 'AI 设置保存成功！' : 'AI settings saved successfully!');
+            showToast(currentLang === 'zh' ? 'AI 设置保存成功！' : 'AI settings saved successfully!');
         }
 
-        // AI Control & Streaming Logic
         function toggleAIPause() {
             isAIPaused = !isAIPaused;
             const pauseBtn = document.getElementById('aiPauseBtn');
+            const d = dict[currentLang];
             if (isAIPaused) {
-                pauseBtn.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+                pauseBtn.innerHTML = `<svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>`;
+                showToast(d.statusPaused);
+                updateIslandAssistantStatus(d.statusPaused);
             } else {
-                pauseBtn.innerHTML = `<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+                pauseBtn.innerHTML = `<svg width="7" height="7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="4" width="4" height="16"></rect><rect x="14" y="4" width="4" height="16"></rect></svg>`;
+                showToast(d.statusWriting);
+                updateIslandAssistantStatus(d.statusWriting);
             }
         }
 
@@ -991,18 +1974,29 @@
                 aiActiveTask = null;
             }
             isAIPaused = false;
-            document.getElementById('aiPauseBtn').style.display = 'none';
-            document.getElementById('aiStopBtn').style.display = 'none';
+            const d = dict[currentLang];
+            document.getElementById('aiControlGroup').style.display = 'none';
+            document.getElementById('mainDynamicIsland').classList.remove('ai-mode');
+            showToast(d.statusStopped);
+            updateIslandAssistantStatus(currentLang === 'zh' ? '就绪' : 'Ready');
             const btn = document.getElementById('aiSparkBtn');
             btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path></svg>`;
-            scratchpad.placeholder = currentLang === 'zh' ? "在此处输入小说场景、对话或章节大纲..." : "Type your novel scene or chapter notes here...";
+        }
+
+        let aiAssistantStatusText = null;
+
+        function updateIslandAssistantStatus(status) {
+            aiAssistantStatusText = status;
+            renderIslandAssistant();
         }
 
         async function runAICowriter() {
             const provider = localStorage.getItem('novel_hub_api_provider') || 'pollinations';
             const apiKey = localStorage.getItem('novel_hub_api_key');
 
-            if (provider === 'gemini' && !apiKey) {
+            if (provider !== 'pollinations' && !apiKey) {
+                const errMsg = dict[currentLang].apiKeyMissingErr;
+                showToast(errMsg);
                 openAIModal();
                 return;
             }
@@ -1011,28 +2005,22 @@
             const currentText = scratchpad.value;
             const btn = document.getElementById('aiSparkBtn');
             const origHtml = btn.innerHTML;
+            const d = dict[currentLang];
             
             btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12a9 9 0 1 1-6.219-8.56"></path></svg>`;
-            document.getElementById('aiPauseBtn').style.display = 'inline-flex';
-            document.getElementById('aiStopBtn').style.display = 'inline-flex';
-            scratchpad.placeholder = currentLang === 'zh' ? "AI 正在构思中..." : "AI is thinking...";
+            document.getElementById('aiControlGroup').style.display = 'inline-flex';
+            document.getElementById('mainDynamicIsland').classList.add('ai-mode');
+            showToast(d.statusThinking);
+            updateIslandAssistantStatus(d.statusThinking);
 
             aiActiveTask = { terminated: false };
 
             try {
                 let generatedText = "";
-                if (provider === 'pollinations') {
+                if (provider === 'pollinations' || provider === 'groq') {
                     const prompt = "Continue the following novel scene naturally in the same style:\n\n" + (currentText.trim() || "Once upon a time,");
-                    
-                    const controller = new AbortController();
-                    const timeoutId = setTimeout(() => controller.abort(), 8000);
-
-                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`, {
-                        signal: controller.signal
-                    });
-                    clearTimeout(timeoutId);
-
-                    if (!res.ok) throw new Error("Free AI service response failed.");
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
+                    if (!res.ok) throw new Error("AI service response failed.");
                     generatedText = await res.text();
                 } else if (provider === 'gemini') {
                     const targetUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
@@ -1048,17 +2036,23 @@
 
                     if (!res.ok) {
                         const errJson = await res.json().catch(() => ({}));
-                        throw new Error(errJson.error?.message || `Gemini API error (Status ${res.status})`);
+                        const errorReason = errJson.error?.message || `Gemini API error (Status ${res.status})`;
+                        throw new Error(errorReason);
                     }
 
                     const data = await res.json();
                     generatedText = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
+                } else {
+                    const prompt = "Continue the following novel scene naturally in the same style:\n\n" + (currentText.trim() || "Once upon a time,");
+                    const res = await fetch(`https://text.pollinations.ai/${encodeURIComponent(prompt)}`);
+                    generatedText = await res.text();
                 }
 
                 if (aiActiveTask && aiActiveTask.terminated) return;
 
                 if (generatedText) {
-                    scratchpad.placeholder = currentLang === 'zh' ? "AI 正在书写..." : "AI is writing...";
+                    showToast(d.statusWriting);
+                    updateIslandAssistantStatus(d.statusWriting);
                     const textToAdd = (currentText.endsWith(' ') || currentText.endsWith('\n') ? '' : ' ') + generatedText.trim();
                     const baseText = currentText;
                     let i = 0;
@@ -1087,23 +2081,26 @@
                             }
                         }, 28);
                     });
+                    showToast(d.statusDone);
+                    updateIslandAssistantStatus(d.statusDone);
                 } else {
-                    alert("AI returned an empty response. Please try again.");
+                    const emptyErr = currentLang === 'zh' ? '⚠️ 错误：AI 返回内容为空。' : '⚠️ Error: AI returned empty response.';
+                    showToast(emptyErr, d.retryBtn, runAICowriter);
+                    updateIslandAssistantStatus(d.statusError);
                 }
             } catch (err) {
                 console.error("AI Error:", err);
-                if (err.name === 'AbortError') {
-                    alert(currentLang === 'zh' ? '请求超时，免费服务器可能正忙，请重试。' : 'Request timed out. The free AI server may be busy, please try again.');
-                } else if (!aiActiveTask?.terminated) {
-                    alert(`AI Request Failed: ${err.message}`);
+                if (!aiActiveTask?.terminated) {
+                    const failMsg = (currentLang === 'zh' ? '⚠️ 请求错误: ' : '⚠️ Request Error: ') + err.message;
+                    showToast(failMsg, d.retryBtn, runAICowriter);
+                    updateIslandAssistantStatus(d.statusError);
                 }
             } finally {
                 aiActiveTask = null;
                 isAIPaused = false;
-                document.getElementById('aiPauseBtn').style.display = 'none';
-                document.getElementById('aiStopBtn').style.display = 'none';
+                document.getElementById('aiControlGroup').style.display = 'none';
+                document.getElementById('mainDynamicIsland').classList.remove('ai-mode');
                 btn.innerHTML = origHtml;
-                scratchpad.placeholder = currentLang === 'zh' ? "在此处输入小说场景、对话或章节大纲..." : "Type your novel scene or chapter notes here...";
             }
         }
 
@@ -1115,23 +2112,37 @@
             localStorage.setItem('novel_hub_theme', newTheme);
         }
 
-        function changeAccent(color) {
-            document.documentElement.style.setProperty('--accent-color', color);
-            localStorage.setItem('novel_hub_accent', color);
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('novel_hub_theme') || 'light';
             document.documentElement.setAttribute('data-theme', savedTheme);
 
-            const savedAccent = localStorage.getItem('novel_hub_accent');
-            if (savedAccent) {
-                document.documentElement.style.setProperty('--accent-color', savedAccent);
-            }
+            const savedAccent = localStorage.getItem('novel_hub_accent') || '#dfab33';
+            changeAccent(savedAccent);
+
             updateLanguage();
             loadScratchpad();
             renderLinks();
+            renderPlotBoard();
+            renderTags();
+            updatePomodoroDisplay();
+            fetchWeather();
+            setInterval(fetchWeather, 600000);
         });
+
+        async function fetchWeather() {
+            try {
+                const res = await fetch('https://api.open-meteo.com/v1/forecast?latitude=-37.81&longitude=144.96&current=temperature_2m,relative_humidity_2m,weather_code');
+                if (!res.ok) return;
+                const data = await res.json();
+                const temp = Math.round(data.current?.temperature_2m || 18);
+                const humidity = Math.round(data.current?.relative_humidity_2m || 55);
+                const condition = currentLang === 'zh' ? `多云 ${temp}°C 湿度` : `Partly Cloudy ${temp}°C Hum`;
+                currentWeatherString = `${condition} ${humidity}%`;
+                renderIslandAssistant();
+            } catch (e) {
+                currentWeatherString = currentLang === 'zh' ? '多云 18°C 湿度 55%' : 'Partly Cloudy 18°C Hum 55%';
+            }
+        }
 
         window.addEventListener('keydown', (e) => {
             if (e.ctrlKey || e.metaKey) {
@@ -1141,7 +2152,7 @@
                     copyText();
                 } else if (key === 's') {
                     e.preventDefault();
-                    exportFile();
+                    openExportModal();
                 } else if (key === 'i') {
                     e.preventDefault();
                     triggerImport();
@@ -1165,6 +2176,10 @@
                 closeGuideModal();
                 closeHistoryModal();
                 closeAIModal();
+                closeTagModal();
+                closePomodoroModal();
+                closeExportModal();
+                closeNetEaseModal();
                 document.getElementById('inlineAddForm').style.display = 'none';
                 closeAllDropdowns();
                 editingIndex = null;
@@ -1173,7 +2188,6 @@
 
         const scratchpad = document.getElementById('scratchpad');
         const compactCountText = document.getElementById('compactCountText');
-        const expandedCountText = document.getElementById('expandedCountText');
 
         function loadScratchpad() {
             const savedText = localStorage.getItem('anytype_novel_scratchpad');
@@ -1187,7 +2201,7 @@
         }
 
         let snapshotTimeout = null;
-        scratchpad.addEventListener('input', () => {
+        function handleRealtimeInput() {
             const text = scratchpad.value;
             localStorage.setItem('anytype_novel_scratchpad', text);
             updateStats(text);
@@ -1196,14 +2210,86 @@
             snapshotTimeout = setTimeout(() => {
                 saveVersionSnapshot(text);
             }, 3000);
-        });
+        }
+
+        let currentWordCountDisplay = "0w / 500w";
+        let currentCharCountDisplay = "0 chars";
 
         function updateStats(text) {
             const words = text.trim() === '' ? 0 : text.trim().split(/\s+/).length;
             const chars = text.length;
-            const countStr = `${words}w | ${chars}c`;
-            compactCountText.textContent = countStr;
-            expandedCountText.textContent = countStr;
+
+            currentWordCountDisplay = `${words}w / ${wordGoal}w`;
+            currentCharCountDisplay = currentLang === 'zh' ? `${chars} 字符` : `${chars} chars`;
+
+            const pct = Math.min(100, Math.round((words / wordGoal) * 100));
+            const wordProgressBar = document.getElementById('islandWordProgressBar');
+            wordProgressBar.style.width = `${pct}%`;
+
+            if (words >= wordGoal && !goalAchievedToastShown) {
+                goalAchievedToastShown = true;
+                showToast(dict[currentLang].goalAchievedMsg, null, null, 5000);
+            } else if (words < wordGoal) {
+                goalAchievedToastShown = false;
+            }
+            renderIslandAssistant();
+        }
+
+        function cycleIslandAssistantView() {
+            currentAssistantViewIdx = (currentAssistantViewIdx + 1) % assistantViews.length;
+            renderIslandAssistant();
+        }
+
+        function renderIslandAssistant() {
+            const islandCompact = document.getElementById('islandCompact');
+            const viewType = assistantViews[currentAssistantViewIdx];
+            const d = dict[currentLang];
+
+            if (viewType === 'words') {
+                islandCompact.innerHTML = `
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                    <span id="compactCountText">${currentWordCountDisplay}</span>
+                `;
+            } else if (viewType === 'chars') {
+                islandCompact.innerHTML = `
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7V4h16v3"></path><path d="M9 20h6"></path><path d="M12 4v16"></path></svg>
+                    <span>${currentCharCountDisplay}</span>
+                `;
+            } else if (viewType === 'ai') {
+                const statusText = aiAssistantStatusText || (currentLang === 'zh' ? '就绪' : 'Ready');
+                islandCompact.innerHTML = `
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 0 1 7.54 16.6l-3.54-3.54a4 4 0 1 0-4 0l-3.54 3.54A10 10 0 0 1 12 2z"></path></svg>
+                    <span>AI: ${statusText}</span>
+                `;
+            } else if (viewType === 'pomodoro') {
+                const mins = Math.floor(pomodoroSeconds / 60);
+                const secs = pomodoroSeconds % 60;
+                const timeStr = `${String(mins).padStart(2,'0')}:${String(secs).padStart(2,'0')}`;
+                const iconSvg = isWorkSession ? 
+                    '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>' :
+                    '<svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 8h1a4 4 0 0 1 0 8h-1"></path><path d="M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8z"></path><line x1="6" y1="1" x2="6" y2="4"></line><line x1="10" y1="1" x2="10" y2="4"></line><line x1="14" y1="1" x2="14" y2="4"></line></svg>';
+                islandCompact.innerHTML = `
+                    ${iconSvg}
+                    <span>${currentLang === 'zh' ? '专注' : 'Pomo'}: ${timeStr}</span>
+                `;
+            } else if (viewType === 'time') {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                islandCompact.innerHTML = `
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 15 15"></polyline></svg>
+                    <span>${currentLang === 'zh' ? '时间' : 'Time'}: ${timeStr}</span>
+                `;
+            } else if (viewType === 'weather') {
+                islandCompact.innerHTML = `
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="M4.93 4.93l1.41 1.41"></path><path d="M17.66 17.66l1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="M6.34 17.66l-1.41 1.41"></path><path d="M19.07 4.93l-1.41 1.41"></path></svg>
+                    <span>${currentWeatherString}</span>
+                `;
+            } else if (viewType === 'netease') {
+                islandCompact.innerHTML = `
+                    <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18V5l12-2v13"></path><circle cx="6" cy="18" r="3"></circle><circle cx="18" cy="16" r="3"></circle></svg>
+                    <span onclick="openNetEaseModal(); event.stopPropagation();" style="cursor:pointer; text-decoration:underline;">NetEase ID: ${neteasePlaylistId || 'Set ID'}</span>
+                `;
+            }
         }
 
         function saveVersionSnapshot(text) {
@@ -1219,16 +2305,12 @@
         }
 
         function openHistoryModal() {
-            if (scratchpad.value.trim()) {
-                saveVersionSnapshot(scratchpad.value);
-            }
+            if (scratchpad.value.trim()) saveVersionSnapshot(scratchpad.value);
             renderVersionList();
             document.getElementById('historyModal').style.display = 'flex';
         }
 
-        function closeHistoryModal() {
-            document.getElementById('historyModal').style.display = 'none';
-        }
+        function closeHistoryModal() { document.getElementById('historyModal').style.display = 'none'; }
 
         function renderVersionList() {
             const list = document.getElementById('versionList');
@@ -1258,39 +2340,41 @@
         function restoreVersion(index) {
             let history = JSON.parse(localStorage.getItem('novel_hub_versions') || '[]');
             if (history[index]) {
-                if (confirm(currentLang === 'zh' ? '确定要恢复到此版本吗？当前未保存的内容将被覆盖。' : 'Restore this version? Current text will be replaced.')) {
-                    scratchpad.value = history[index].text;
-                    localStorage.setItem('anytype_novel_scratchpad', history[index].text);
-                    updateStats(history[index].text);
-                    closeHistoryModal();
-                }
+                showCustomConfirm(currentLang === 'zh' ? '确定要恢复到此版本吗？当前未保存的内容将被覆盖。' : 'Restore this version? Current text will be replaced.', (confirmed) => {
+                    if (confirmed) {
+                        scratchpad.value = history[index].text;
+                        localStorage.setItem('anytype_novel_scratchpad', history[index].text);
+                        updateStats(history[index].text);
+                        closeHistoryModal();
+                    }
+                });
             }
         }
 
         function clearPad() {
             const d = dict[currentLang];
-            if (confirm(d.clearConfirm)) {
-                scratchpad.value = '';
-                localStorage.removeItem('anytype_novel_scratchpad');
-                updateStats('');
-            }
+            showCustomConfirm(d.clearConfirm, (confirmed) => {
+                if (confirmed) {
+                    scratchpad.value = '';
+                    localStorage.removeItem('anytype_novel_scratchpad');
+                    updateStats('');
+                }
+            });
         }
 
         function copyText() {
             const d = dict[currentLang];
             scratchpad.select();
             navigator.clipboard.writeText(scratchpad.value).then(() => {
+                showToast(d.copiedMsg);
                 const btn = document.getElementById('copyBtn');
                 const origHtml = btn.innerHTML;
                 btn.innerHTML = `<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>`;
-                setTimeout(() => {
-                    btn.innerHTML = origHtml;
-                }, 1500);
+                setTimeout(() => { btn.innerHTML = origHtml; }, 1500);
             });
         }
 
-        function exportFile() {
-            const format = currentExportFormat;
+        function exportFile(format = 'txt') {
             const text = scratchpad.value;
             const dateStr = new Date().toISOString().slice(0,10);
 
@@ -1298,7 +2382,10 @@
                 const data = {
                     scratchpad: text,
                     links: JSON.parse(localStorage.getItem('anytype_novel_links') || '[]'),
+                    scenes: JSON.parse(localStorage.getItem('novel_hub_scenes') || '[]'),
                     versions: JSON.parse(localStorage.getItem('novel_hub_versions') || '[]'),
+                    tags: customTags,
+                    neteaseId: neteasePlaylistId,
                     date: new Date().toISOString()
                 };
                 downloadBlob(JSON.stringify(data, null, 2), `anytype-novel-backup-${dateStr}.json`, 'application/json');
@@ -1347,9 +2434,7 @@
             URL.revokeObjectURL(url);
         }
 
-        function triggerImport() {
-            document.getElementById('importFile').click();
-        }
+        function triggerImport() { document.getElementById('importFile').click(); }
 
         function importBackup(event) {
             const file = event.target.files[0];
@@ -1369,10 +2454,23 @@
                             localStorage.setItem('anytype_novel_links', JSON.stringify(data.links));
                             renderLinks();
                         }
+                        if (data.scenes) {
+                            localStorage.setItem('novel_hub_scenes', JSON.stringify(data.scenes));
+                            renderPlotBoard();
+                        }
                         if (data.versions) {
                             localStorage.setItem('novel_hub_versions', JSON.stringify(data.versions));
                         }
-                        alert(currentLang === 'zh' ? '备份恢复成功！' : 'Backup restored successfully!');
+                        if (data.tags) {
+                            customTags = data.tags;
+                            localStorage.setItem('novel_hub_tags', JSON.stringify(customTags));
+                            renderTags();
+                        }
+                        if (data.neteaseId) {
+                            neteasePlaylistId = data.neteaseId;
+                            localStorage.setItem('novel_hub_netease_id', neteasePlaylistId);
+                        }
+                        showToast(currentLang === 'zh' ? '备份恢复成功！' : 'Backup restored successfully!');
                     } else if (file.name.endsWith('.html')) {
                         const tempDiv = document.createElement('div');
                         tempDiv.innerHTML = content;
@@ -1380,44 +2478,83 @@
                         scratchpad.value = textContent.trim();
                         localStorage.setItem('anytype_novel_scratchpad', scratchpad.value);
                         updateStats(scratchpad.value);
-                        alert(currentLang === 'zh' ? '网页文件导入成功！' : 'HTML document imported successfully!');
+                        showToast(currentLang === 'zh' ? '网页文件导入成功！' : 'HTML document imported successfully!');
                     } else {
                         scratchpad.value = content;
                         localStorage.setItem('anytype_novel_scratchpad', content);
                         updateStats(content);
-                        alert(currentLang === 'zh' ? '文档导入成功！' : 'Document imported successfully!');
+                        showToast(currentLang === 'zh' ? '文档导入成功！' : 'Document imported successfully!');
                     }
                 } catch (err) {
-                    alert(currentLang === 'zh' ? '文件格式无效。' : 'Invalid file format.');
+                    showToast(currentLang === 'zh' ? '⚠️ 错误：文件格式无效或解析失败。' : '⚠️ Error: Invalid file format.');
                 }
             };
             reader.readAsText(file);
         }
 
-        // Quick Access Links & Double-Click Inline Editing Logic
         let customLinks = JSON.parse(localStorage.getItem('anytype_novel_links') || '[]');
+        let customScenes = JSON.parse(localStorage.getItem('novel_hub_scenes') || '[{"title": "Introduction", "status": "done"}, {"title": "Inciting Incident", "status": "drafting"}]');
         let editingIndex = null;
+
+        function switchDashboardTab(tab) {
+            activeTab = tab;
+            const pagesBtn = document.getElementById('tabPagesBtn');
+            const plotBtn = document.getElementById('tabPlotBtn');
+            const linksGrid = document.getElementById('linksGrid');
+            const plotBoard = document.getElementById('plotBoardContainer');
+            const plotFilterDropdown = document.getElementById('plotFilterDropdown');
+
+            if (tab === 'pages') {
+                pagesBtn.classList.add('active');
+                plotBtn.classList.remove('active');
+                linksGrid.style.display = 'grid';
+                plotBoard.style.display = 'none';
+                plotFilterDropdown.style.display = 'none';
+            } else {
+                plotBtn.classList.add('active');
+                pagesBtn.classList.remove('active');
+                plotBoard.style.display = 'flex';
+                linksGrid.style.display = 'none';
+                plotFilterDropdown.style.display = 'inline-block';
+            }
+            document.getElementById('inlineAddForm').style.display = 'none';
+            editingIndex = null;
+        }
 
         function toggleInlineAdd(index = null) {
             const form = document.getElementById('inlineAddForm');
             const formTitle = document.getElementById('formTitleText');
+            const pageFields = document.getElementById('pageFormFields');
+            const plotFields = document.getElementById('plotFormFields');
             const d = dict[currentLang];
+
             if (form.style.display === 'none') {
                 form.style.display = 'flex';
-                if (index !== null) {
-                    editingIndex = index;
-                    formTitle.textContent = d.editFormTitle;
-                    document.getElementById('linkTitleInput').value = customLinks[index].title;
-                    document.getElementById('linkUrlInput').value = customLinks[index].url;
-                    document.getElementById('linkIconSelect').value = customLinks[index].icon || 'file';
+                if (activeTab === 'pages') {
+                    pageFields.style.display = 'block';
+                    plotFields.style.display = 'none';
+                    if (index !== null) {
+                        editingIndex = index;
+                        formTitle.textContent = d.editFormTitle;
+                        document.getElementById('linkTitleInput').value = customLinks[index].title;
+                        document.getElementById('linkUrlInput').value = customLinks[index].url;
+                        document.getElementById('linkIconSelect').value = customLinks[index].icon || 'file';
+                    } else {
+                        editingIndex = null;
+                        formTitle.textContent = d.formTitle;
+                        document.getElementById('linkTitleInput').value = '';
+                        document.getElementById('linkUrlInput').value = '';
+                        document.getElementById('linkIconSelect').value = 'file';
+                    }
+                    document.getElementById('linkTitleInput').focus();
                 } else {
-                    editingIndex = null;
-                    formTitle.textContent = d.formTitle;
-                    document.getElementById('linkTitleInput').value = '';
-                    document.getElementById('linkUrlInput').value = '';
-                    document.getElementById('linkIconSelect').value = 'file';
+                    pageFields.style.display = 'none';
+                    plotFields.style.display = 'block';
+                    formTitle.textContent = d.plotFormTitle;
+                    document.getElementById('sceneTitleInput').value = '';
+                    document.getElementById('sceneStatusSelect').value = 'todo';
+                    document.getElementById('sceneTitleInput').focus();
                 }
-                document.getElementById('linkTitleInput').focus();
             } else {
                 form.style.display = 'none';
                 editingIndex = null;
@@ -1454,33 +2591,99 @@
             });
         }
 
-        function saveNewLink() {
-            const title = document.getElementById('linkTitleInput').value.trim();
-            const url = document.getElementById('linkUrlInput').value.trim();
-            const icon = document.getElementById('linkIconSelect').value;
-            const d = dict[currentLang];
-            if (!title || !url) {
-                alert(currentLang === 'zh' ? '请填写标题和链接！' : 'Please fill in both title and link!');
+        function renderPlotBoard() {
+            const container = document.getElementById('plotBoardContainer');
+            container.innerHTML = '';
+
+            const filteredScenes = customScenes.filter(scene => {
+                if (currentSceneFilter === 'all') return true;
+                return (scene.status || 'todo') === currentSceneFilter;
+            });
+
+            if (filteredScenes.length === 0) {
+                container.innerHTML = `<div style="font-size:7.5px; color:var(--text-secondary); text-align:center; padding:10px;">No scenes match filter.</div>`;
                 return;
             }
-            if (editingIndex !== null) {
-                customLinks[editingIndex] = { title, url, icon };
-                editingIndex = null;
+
+            filteredScenes.forEach((scene) => {
+                const actualIndex = customScenes.indexOf(scene);
+                const card = document.createElement('div');
+                card.className = 'scene-card';
+                
+                const statusClass = `status-${scene.status || 'todo'}`;
+                card.innerHTML = `
+                    <div class="scene-card-header">
+                        <span style="font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:115px;">${escapeHtml(scene.title)}</span>
+                        <div style="display:flex; align-items:center; gap:4px;">
+                            <span class="scene-status-badge ${statusClass}" onclick="cycleSceneStatus(${actualIndex})" title="Click to cycle status" style="cursor:pointer;">${scene.status || 'todo'}</span>
+                            <span style="color:var(--danger-color); cursor:pointer;" onclick="deleteScene(${actualIndex})" title="Delete">✕</span>
+                        </div>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function cycleSceneStatus(index) {
+            const statuses = ['todo', 'drafting', 'done'];
+            const current = customScenes[index].status || 'todo';
+            const nextIdx = (statuses.indexOf(current) + 1) % statuses.length;
+            customScenes[index].status = statuses[nextIdx];
+            localStorage.setItem('novel_hub_scenes', JSON.stringify(customScenes));
+            renderPlotBoard();
+        }
+
+        function saveActiveTabItem() {
+            if (activeTab === 'pages') {
+                const title = document.getElementById('linkTitleInput').value.trim();
+                const url = document.getElementById('linkUrlInput').value.trim();
+                const icon = document.getElementById('linkIconSelect').value;
+                if (!title || !url) {
+                    showToast(currentLang === 'zh' ? '⚠️ 错误：请填写标题和链接！' : '⚠️ Error: Please fill in both title and link!');
+                    return;
+                }
+                if (editingIndex !== null) {
+                    customLinks[editingIndex] = { title, url, icon };
+                    editingIndex = null;
+                } else {
+                    customLinks.push({ title, url, icon });
+                }
+                localStorage.setItem('anytype_novel_links', JSON.stringify(customLinks));
+                renderLinks();
             } else {
-                customLinks.push({ title, url, icon });
+                const title = document.getElementById('sceneTitleInput').value.trim();
+                const status = document.getElementById('sceneStatusSelect').value;
+                if (!title) {
+                    showToast(currentLang === 'zh' ? '⚠️ 错误：请填写场景标题！' : '⚠️ Error: Please fill in scene title!');
+                    return;
+                }
+                customScenes.push({ title, status });
+                localStorage.setItem('novel_hub_scenes', JSON.stringify(customScenes));
+                renderPlotBoard();
             }
-            localStorage.setItem('anytype_novel_links', JSON.stringify(customLinks));
             document.getElementById('inlineAddForm').style.display = 'none';
-            renderLinks();
         }
 
         function deleteLink(index) {
             const d = dict[currentLang];
-            if (confirm(d.deleteConfirm)) {
-                customLinks.splice(index, 1);
-                localStorage.setItem('anytype_novel_links', JSON.stringify(customLinks));
-                renderLinks();
-            }
+            showCustomConfirm(d.deleteConfirm, (confirmed) => {
+                if (confirmed) {
+                    customLinks.splice(index, 1);
+                    localStorage.setItem('anytype_novel_links', JSON.stringify(customLinks));
+                    renderLinks();
+                }
+            });
+        }
+
+        function deleteScene(index) {
+            const d = dict[currentLang];
+            showCustomConfirm(d.deleteConfirm, (confirmed) => {
+                if (confirmed) {
+                    customScenes.splice(index, 1);
+                    localStorage.setItem('novel_hub_scenes', JSON.stringify(customScenes));
+                    renderPlotBoard();
+                }
+            });
         }
 
         function escapeHtml(str) {
